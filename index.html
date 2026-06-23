@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -292,24 +291,54 @@ html,body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   z-index: 800;
-  transition: opacity .3s;
+  transition: opacity .4s;
 }
-#scroll-progress.hidden { opacity: 0; pointer-events: none; }
+/* Auf Startseite leicht ausgeblendet, in Modulen voll sichtbar */
+#scroll-progress.on-home { opacity: 0.35; }
+#scroll-progress.on-module { opacity: 1; }
+
 .sp-dot {
+  position: relative;
   width: 8px; height: 8px; border-radius: 50%;
   background: var(--bdr2);
   cursor: pointer;
-  transition: all .2s;
+  transition: all .25s cubic-bezier(.4,0,.2,1);
   border: 1.5px solid transparent;
+  flex-shrink: 0;
 }
 .sp-dot.active {
   background: var(--acc);
-  transform: scale(1.4);
+  transform: scale(1.5);
   border-color: var(--acd);
+  box-shadow: 0 0 0 3px var(--acl);
 }
-.sp-dot:hover { background: var(--acd); transform: scale(1.3); }
+.sp-dot:hover { background: var(--acd); transform: scale(1.35); }
+
+/* Tooltip-Label beim Hover */
+.sp-dot::after {
+  content: attr(title);
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--t1);
+  color: var(--bg);
+  font-size: 10.5px;
+  font-family: 'DM Sans', sans-serif;
+  white-space: nowrap;
+  padding: 3px 8px;
+  border-radius: 5px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .15s, transform .15s;
+  transform: translateY(-50%) translateX(-4px);
+}
+.sp-dot:hover::after {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
 </style>
 </head>
 <body>
@@ -410,7 +439,7 @@ html,body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:
 
 
 <!-- SCROLL PROGRESS DOTS -->
-<div id="scroll-progress" class="hidden">
+<div id="scroll-progress" class="on-home">
   <div class="sp-dot" onclick="zoomTo('pse')"    title="Periodensystem"></div>
   <div class="sp-dot" onclick="zoomTo('wiki')"   title="Chemie-Wiki"></div>
   <div class="sp-dot" onclick="zoomTo('learn')"  title="Lernbereich"></div>
@@ -644,35 +673,145 @@ const ATOM_R={C:14,H:11,O:14,N:13,S:14,Cl:16};
 const MAX_VAL={C:4,N:3,O:2,S:2,Cl:1,F:1,H:1};
 
 const QUIZ_Q={
+
+/* ── ELEMENTE ──────────────────────────────────────────────────── */
 elements:[
 {q:'Welches Element hat das Symbol Fe?',el:26,answers:['Eisen','Fluor','Francium','Fermium'],correct:0,exp:'Fe kommt vom lateinischen "ferrum" (Eisen).'},
 {q:'Ordnungszahl von Gold?',el:79,answers:['78','79','80','81'],correct:1,exp:'Gold (Au) hat die Ordnungszahl 79.'},
-{q:'Leichtestes Element?',el:1,answers:['Helium','Lithium','Wasserstoff','Beryllium'],correct:2,exp:'Wasserstoff (H, Z=1) ist das leichteste Element.'},
-{q:'Höchste Elektronegativität?',el:9,answers:['Sauerstoff','Stickstoff','Chlor','Fluor'],correct:3,exp:'Fluor hat EN=3,98 – die höchste aller Elemente.'},
-{q:'Welches Element ist bei RT flüssig (außer Hg)?',el:35,answers:['Iod','Brom','Chlor','Phosphor'],correct:1,exp:'Brom ist neben Hg das einzige bei RT flüssige Element.'},
-{q:'Elektronen von Natrium (Na)?',el:11,answers:['10','11','12','13'],correct:1,exp:'Natrium (Z=11) hat 11 Elektronen.'},
-{q:'Häufigstes Edelgas in der Atmosphäre?',el:18,answers:['Helium','Neon','Argon','Krypton'],correct:2,exp:'Argon macht 0,93% der Erdatmosphäre aus.'},
-{q:'Atommasse von Kohlenstoff?',el:6,answers:['11','12','13','14'],correct:1,exp:'Kohlenstoff hat die Atommasse 12,011 u.'},
-{q:'Welches Element ist im Hämoglobin?',el:26,answers:['Kupfer','Zink','Eisen','Mangan'],correct:2,exp:'Fe²⁺ ist das Zentralion im Hämoglobin.'},
-{q:'Symbol für Kalium?',el:19,answers:['Ka','K','Kal','Kt'],correct:1,exp:'Kalium hat das Symbol K (vom lat. "kalium").'},
+{q:'Leichtestes Element im PSE?',el:1,answers:['Helium','Lithium','Wasserstoff','Beryllium'],correct:2,exp:'Wasserstoff (H, Z=1) ist das leichteste Element.'},
+{q:'Welches Element hat die höchste Elektronegativität?',el:9,answers:['Sauerstoff','Stickstoff','Chlor','Fluor'],correct:3,exp:'Fluor hat EN=3,98 – die höchste aller Elemente.'},
+{q:'Welches Element ist bei Raumtemperatur flüssig (außer Hg)?',el:35,answers:['Iod','Brom','Chlor','Phosphor'],correct:1,exp:'Brom ist neben Quecksilber das einzige bei RT flüssige Element.'},
+{q:'Wie viele Elektronen hat Natrium (Na)?',el:11,answers:['10','11','12','13'],correct:1,exp:'Natrium (Z=11) hat 11 Elektronen.'},
+{q:'Häufigstes Edelgas in der Erdatmosphäre?',el:18,answers:['Helium','Neon','Argon','Krypton'],correct:2,exp:'Argon macht ca. 0,93% der Erdatmosphäre aus.'},
+{q:'Atommasse von Kohlenstoff (C)?',el:6,answers:['11 u','12 u','13 u','14 u'],correct:1,exp:'¹²C ist das häufigste Isotop; Atommasse ≈ 12,011 u.'},
+{q:'Welches Element ist das Zentralatom im Hämoglobin?',el:26,answers:['Kupfer','Zink','Eisen','Mangan'],correct:2,exp:'Fe²⁺ ist das Zentralion im Häm-Komplex des Hämoglobins.'},
+{q:'Symbol für Kalium?',el:19,answers:['Ka','K','Kal','Kt'],correct:1,exp:'K stammt vom lateinischen „kalium".'},
+{q:'Welches Element leuchtet in Leuchtstoffröhren orange-rot?',el:10,answers:['Argon','Neon','Xenon','Krypton'],correct:1,exp:'Neon (Ne) emittiert charakteristisches orange-rotes Licht.'},
+{q:'Was ist das häufigste Element im Universum?',el:1,answers:['Helium','Kohlenstoff','Sauerstoff','Wasserstoff'],correct:3,exp:'Wasserstoff macht ca. 75% der Baryonischen Masse des Universums aus.'},
+{q:'Welches Element hat das Symbol Pb?',el:82,answers:['Phosphor','Platin','Blei','Praseodym'],correct:2,exp:'Pb kommt von „plumbum" (lat. für Blei).'},
+{q:'Welches Metall ist bei Raumtemperatur flüssig?',el:80,answers:['Gallium','Caesium','Quecksilber','Francium'],correct:2,exp:'Quecksilber (Hg) ist das einzige Metall, das bei RT flüssig ist.'},
+{q:'Welches Element hat die Ordnungszahl 6?',el:6,answers:['Calcium','Kohlenstoff','Chrom','Cobalt'],correct:1,exp:'C = Kohlenstoff, Z=6. Grundbaustein organischer Verbindungen.'},
+{q:'Halbwertszeit von ¹⁴C (Radiokohlenstoff)?',el:6,answers:['~570 Jahre','~5730 Jahre','~57300 Jahre','~573 Jahre'],correct:1,exp:'¹⁴C zerfällt mit t½ ≈ 5730 Jahren – Basis der C14-Datierung.'},
+{q:'Welches Element ist in Rubinen für die rote Farbe verantwortlich?',el:24,answers:['Eisen','Mangan','Chrom','Cobalt'],correct:2,exp:'Cr³⁺-Ionen in Al₂O₃ (Korund) erzeugen die rote Farbe.'},
+{q:'Elektronenkonfiguration von Natrium (Kurzform)?',el:11,answers:['[He] 2s¹','[Ne] 3s¹','[Ar] 3s¹','[He] 3s¹'],correct:1,exp:'Na: [Ne] 3s¹ — ein Valenzelektron in der 3. Schale.'},
 ],
+
+/* ── REAKTIONEN ────────────────────────────────────────────────── */
 reactions:[
-{q:'Produkte der vollst. Verbrennung von Methan?',answers:['CO+H₂O','CO₂+H₂O','CO₂+H₂','CH₄O'],correct:1,exp:'CH₄+2O₂→CO₂+2H₂O.'},
-{q:'Reaktion von Na mit H₂O?',answers:['NaO+H₂','NaOH+H₂','Na₂O+H₂O','NaH+O₂'],correct:1,exp:'2Na+2H₂O→2NaOH+H₂.'},
-{q:'Was ist Oxidation?',answers:['Aufnahme von Elektronen','Abgabe von Elektronen','Aufnahme von Protonen','Abgabe von Neutronen'],correct:1,exp:'Oxidation = Elektronenabgabe (OIL).'},
-{q:'Was entsteht an der Kathode bei Wasserelektrolyse?',answers:['Sauerstoff','Ozon','Wasserstoff','Wasser'],correct:2,exp:'Kathode: 4H⁺+4e⁻→2H₂.'},
-{q:'Was ist der Haber-Bosch-Prozess?',answers:['H₂SO₄-Synthese','NH₃-Synthese','Fe-Reduktion','Al-Gewinnung'],correct:1,exp:'N₂+3H₂⇌2NH₃.'},
-{q:'Hauptursache sauren Regens?',answers:['CO₂','NO','SO₂','NH₃'],correct:2,exp:'SO₂+H₂O→H₂SO₃.'},
-{q:'Was ist ein Puffer?',answers:['Gemisch starker Säuren','pH-stabilisierendes Gemisch','konzentrierte Lauge','Salz'],correct:1,exp:'Schwache Säure+Konjugatbase stabilisiert pH.'},
-{q:'Welche Reaktion ist EXOTHERM?',answers:['CaCO₃→CaO+CO₂','2H₂O→2H₂+O₂','2Na+2H₂O→2NaOH+H₂','Fotosynthese'],correct:2,exp:'Na+H₂O: stark exotherm (ΔH<0).'},
+{q:'Produkte der vollständigen Verbrennung von Methan?',answers:['CO + H₂O','CO₂ + H₂O','CO₂ + H₂','CH₄O'],correct:1,exp:'CH₄ + 2O₂ → CO₂ + 2H₂O.'},
+{q:'Was entsteht bei der Reaktion von Na mit Wasser?',answers:['NaO + H₂','NaOH + H₂','Na₂O + H₂O','NaH + O₂'],correct:1,exp:'2Na + 2H₂O → 2NaOH + H₂↑'},
+{q:'Was ist Oxidation (Redox-Definition)?',answers:['Aufnahme von Elektronen','Abgabe von Elektronen','Aufnahme von Protonen','Abgabe von Neutronen'],correct:1,exp:'Oxidation = Elektronenabgabe (Merkregel: OIL RIG).'},
+{q:'Was entsteht an der Kathode bei der Wasserelektrolyse?',answers:['Sauerstoff','Ozon','Wasserstoff','Wasser'],correct:2,exp:'Kathode (–): 4H⁺ + 4e⁻ → 2H₂↑'},
+{q:'Was ist der Haber-Bosch-Prozess?',answers:['H₂SO₄-Synthese','NH₃-Synthese','HCl-Gewinnung','Al-Schmelzflusselektrolyse'],correct:1,exp:'N₂ + 3H₂ ⇌ 2NH₃  (Katalysator: Eisen, 400–500°C, 200 bar).'},
+{q:'Hauptursache des sauren Regens?',answers:['CO₂','NO','SO₂','NH₃'],correct:2,exp:'SO₂ + H₂O → H₂SO₃; in der Atmosphäre auch → H₂SO₄.'},
+{q:'Was ist ein Puffer?',answers:['Gemisch starker Säuren','pH-stabilisierendes System','konzentrierte Lauge','Salz starker Säure'],correct:1,exp:'Puffer = schwache Säure + Konjugatbase; stabilisiert den pH-Wert.'},
+{q:'Welche Reaktion ist exotherm?',answers:['CaCO₃ → CaO + CO₂','2H₂O → 2H₂ + O₂','2Na + 2H₂O → 2NaOH + H₂','Fotosynthese'],correct:2,exp:'Na + H₂O ist stark exotherm (ΔH < 0).'},
+{q:'Was ist eine Neutralisationsreaktion?',answers:['Metall + Säure','Säure + Base → Salz + Wasser','Oxidation eines Metalls','Säure + Metall → H₂'],correct:1,exp:'HCl + NaOH → NaCl + H₂O. Charakteristisch: Wasser + Salz.'},
+{q:'Welche Reaktion läuft beim Rosten von Eisen ab?',answers:['Reduktion','Komplexbildung','Oxidation','Verbrennung'],correct:2,exp:'4Fe + 3O₂ + 2H₂O → 2Fe₂O₃·H₂O (Rost). Eisen wird oxidiert.'},
+{q:'Was versteht man unter dem Prinzip von Le Chatelier?',answers:['Energieerhaltung','Gleichgewicht weicht Störungen aus','Reaktionsrate steigt mit Temp.','Katalysatoren senken Aktivierungsenergie'],correct:1,exp:'Bei Störung eines Gleichgewichts verschiebt es sich entgegen der Störung.'},
+{q:'Was ist eine Kondensationsreaktion?',answers:['Addition von H₂O','Abspaltung von H₂O','Anlagerung von H₂','Abspaltung von CO₂'],correct:1,exp:'Kondensation = Verknüpfung zweier Moleküle unter Wasserabspaltung.'},
 ],
+
+/* ── THEORIE / PSE ─────────────────────────────────────────────── */
 theory:[
-{q:'Was gibt die Periode im PSE an?',answers:['Neutronen','Elektronen','besetzte Schalen','Valenzelektronen'],correct:2,exp:'Periode = Anzahl der besetzten Elektronenschalen.'},
-{q:'Gemeinsames Merkmal einer Gruppe?',answers:['Gleiche Atommasse','Gleiche Protonenzahl','Gleiche Valenzelektronen','Gleicher Aggregatzustand'],correct:2,exp:'Gleiche Valenzelektronenzahl → ähnliche Eigenschaften.'},
-{q:'Was ist Elektronegativität?',answers:['Elektronen abgeben','Elektronen anziehen','Anzahl der Elektronen','Verhältnis p/e'],correct:1,exp:'EN = Fähigkeit, Bindungselektronen anzuziehen.'},
-{q:'Bindung zwischen zwei Nichtmetallen?',answers:['Ionenbindung','Metallische Bindung','Kovalente Bindung','Van-der-Waals'],correct:2,exp:'Zwei Nichtmetalle: kovalente Bindungen.'},
-{q:'Was ist die Oktettregel?',answers:['Atome wollen 10e⁻','8 Valenzelektronen','Atome haben 8 Protonen','8 Bindungen'],correct:1,exp:'Atome streben nach 8 Valenzelektronen.'},
-]};
+{q:'Was gibt die Periode im PSE an?',answers:['Neutronenzahl','Gesamtelektronenzahl','Anzahl besetzter Schalen','Valenzelektronen'],correct:2,exp:'Periode = Anzahl der besetzten Elektronenschalen.'},
+{q:'Was haben alle Elemente einer Gruppe gemeinsam?',answers:['Gleiche Atommasse','Gleiche Protonenzahl','Gleiche Valenzelektronenzahl','Gleicher Aggregatzustand'],correct:2,exp:'Gleiche Valenzelektronenzahl → ähnliche chemische Eigenschaften.'},
+{q:'Was ist Elektronegativität?',answers:['Tendenz, Elektronen abzugeben','Tendenz, Elektronen anzuziehen','Anzahl der Elektronen','Verhältnis von Protonen zu Elektronen'],correct:1,exp:'EN = Fähigkeit eines Atoms, Bindungselektronen anzuziehen (Pauling-Skala).'},
+{q:'Welche Bindung entsteht zwischen zwei Nichtmetallen?',answers:['Ionenbindung','Metallische Bindung','Kovalente Bindung','Van-der-Waals-Bindung'],correct:2,exp:'Nichtmetall + Nichtmetall: Elektronenpaare werden geteilt (kovalent).'},
+{q:'Was besagt die Oktettregel?',answers:['Atome wollen 10 Valenzelektronen','Atome streben 8 Valenzelektronen an','Atome haben immer 8 Protonen','Jedes Atom bildet 8 Bindungen'],correct:1,exp:'Atome streben nach der Edelgaskonfiguration (8 Valenzelektronen).'},
+{q:'Was ist Ionisierungsenergie?',answers:['Energie, die bei Bindungsbruch frei wird','Energie, um ein Elektron zu entfernen','Energie des Kerns','Bindungsenergie im Kristall'],correct:1,exp:'IE = Energie, die nötig ist, ein Elektron aus dem gasförmigen Atom zu entfernen.'},
+{q:'Wie nimmt der Atomradius im PSE von links nach rechts zu?',answers:['Er nimmt zu','Er bleibt gleich','Er nimmt ab','Er schwankt unregelmäßig'],correct:2,exp:'Mehr Protonen ziehen die Elektronen stärker an → Radius nimmt ab.'},
+{q:'Was ist ein Isotop?',answers:['Atom mit gleicher Protonenzahl, anderer Neutronenzahl','Atom anderer Elemente','Ion mit zusätzlichen Elektronen','Radioaktives Atom'],correct:0,exp:'Isotope: gleiche Z (Protonen), unterschiedliche Neutronenzahl.'},
+{q:'Was ist ein Molekül-Ion?',answers:['Neutrales Molekül','Molekül mit Ladung (Ionisierung)','Metallkomplex','Radioaktives Teilchen'],correct:1,exp:'Molekül-Ionen entstehen durch Aufnahme oder Abgabe von Elektronen.'},
+],
+
+/* ── ORGANISCHE CHEMIE / ALKANE ────────────────────────────────── */
+alkane:[
+{q:'Wie lautet die allgemeine Summenformel der Alkane?',answers:['CₙH₂ₙ','CₙH₂ₙ₊₂','CₙH₂ₙ₋₂','CₙHₙ'],correct:1,exp:'Alkane sind gesättigte Kohlenwasserstoffe: CₙH₂ₙ₊₂.'},
+{q:'Wie heißt der einfachste Alkan mit einem C-Atom?',answers:['Ethan','Propan','Methan','Butan'],correct:2,exp:'CH₄ = Methan, n=1. Hauptbestandteil von Erdgas.'},
+{q:'Welche Bindungsart haben Alkane ausschließlich?',answers:['C=C-Doppelbindungen','C≡C-Dreifachbindungen','C-C-Einfachbindungen','Aromatische Ringe'],correct:2,exp:'Alkane sind gesättigt – nur Einfachbindungen (sp³-hybridisiertes C).'},
+{q:'Wie heißt Alkan mit 4 C-Atomen?',answers:['Propan','Butan','Pentan','Hexan'],correct:1,exp:'C₄H₁₀ = Butan. In Feuerzeuggas und Campingkocher.'},
+{q:'Was ist die typische Reaktion von Alkanen?',answers:['Elektrophile Addition','Nucleophile Substitution','Radikalische Substitution','Eliminierung'],correct:2,exp:'Alkane reagieren v.a. durch radikalische Substitution (z.B. Halogenierung).'},
+{q:'Wie heißt das Alkan mit 3 C-Atomen?',answers:['Methan','Ethan','Propan','Butan'],correct:2,exp:'C₃H₈ = Propan. Wird z.B. als Flüssiggas verwendet.'},
+{q:'Was sind Konstitutionsisomere?',answers:['Gleiche Summenformel, gleiche Struktur','Gleiche Summenformel, verschiedene Verknüpfung','Verschiedene Summenformel, gleiche Eigenschaften','Spiegelbilder voneinander'],correct:1,exp:'Konstitutionsisomere: C₄H₁₀ = n-Butan und iso-Butan, gleiches CₙH₂ₙ₊₂.'},
+{q:'Welches Alkan siedet am höchsten?',answers:['Methan (CH₄)','Ethan (C₂H₆)','Propan (C₃H₈)','Octan (C₈H₁₈)'],correct:3,exp:'Höheres Molekulargewicht → stärkere Van-der-Waals-Kräfte → höherer Siedepunkt.'},
+{q:'Was entsteht bei vollständiger Verbrennung eines Alkans?',answers:['CO + H₂','CO₂ + H₂O','C + H₂O','CH₄ + O₂'],correct:1,exp:'CₙH₂ₙ₊₂ + O₂ → n CO₂ + (n+1) H₂O (vollständige Verbrennung).'},
+{q:'Welche Hybridisierung hat Kohlenstoff in Alkanen?',answers:['sp','sp²','sp³','sp³d'],correct:2,exp:'sp³-Hybridisierung: 4 gleichwertige Bindungen, Tetraeder-Geometrie.'},
+],
+
+/* ── PROTEINE ──────────────────────────────────────────────────── */
+proteins:[
+{q:'Aus welchen Grundbausteinen bestehen Proteine?',answers:['Fettsäuren','Nucleotide','Aminosäuren','Monosaccharide'],correct:2,exp:'Proteine sind Polypeptide aus Aminosäuren, verknüpft durch Peptidbindungen.'},
+{q:'Was ist eine Peptidbindung?',answers:['Bindung zwischen zwei NH₂-Gruppen','CO-NH-Bindung zwischen Aminosäuren','Esterbindung zwischen Zuckern','Disulfidbrücke zwischen Cysteinen'],correct:1,exp:'Peptidbindung: –CO–NH– entsteht durch Kondensation (Wasserabspaltung).'},
+{q:'Wie viele proteinogene Aminosäuren gibt es?',answers:['10','20','30','64'],correct:1,exp:'Es gibt 20 standardmäßige proteinogene Aminosäuren im genetischen Code.'},
+{q:'Was beschreibt die Primärstruktur eines Proteins?',answers:['3D-Faltung','Helix-Strukturen','Abfolge der Aminosäuren','Quartärstruktur-Komplexe'],correct:2,exp:'Primärstruktur = lineare Aminosäuresequenz (vom N- zum C-Terminus).'},
+{q:'Was ist eine α-Helix?',answers:['Primärstruktur','Sekundärstruktur','Tertiärstruktur','Quartärstruktur'],correct:1,exp:'α-Helix ist eine Sekundärstruktur, stabilisiert durch Wasserstoffbrücken.'},
+{q:'Was ist Denaturierung eines Proteins?',answers:['Spaltung der Peptidbindungen','Verlust der räumlichen Struktur','Synthese neuer Aminosäuren','Reduktion von Disulfidbrücken'],correct:1,exp:'Denaturierung = Verlust der Raumstruktur durch Hitze, pH-Änderung etc.'},
+{q:'Welche Bindung stabilisiert die α-Helix hauptsächlich?',answers:['Ionenbindungen','Disulfidbrücken','Wasserstoffbrücken','Kovalente C–C-Bindungen'],correct:2,exp:'Intramolekulare H-Brücken zwischen C=O und N–H der Peptidbindungen.'},
+{q:'Was ist ein Enzym?',answers:['Strukturprotein','Biologischer Katalysator','Transportprotein','Hormon'],correct:1,exp:'Enzyme sind Proteine (selten RNA), die biochemische Reaktionen katalysieren.'},
+{q:'Welche Aminosäure enthält Schwefel und kann Disulfidbrücken bilden?',answers:['Glycin','Alanin','Cystein','Serin'],correct:2,exp:'Cystein (Cys) enthält –SH (Thiolgruppe), bildet –S–S– Disulfidbrücken.'},
+{q:'Was ist der isoelektrische Punkt (pI) einer Aminosäure?',answers:['pH, bei dem sie positiv geladen ist','pH der maximalen Löslichkeit','pH, bei dem die Nettoladung 0 ist','Optimaler pH für Enzymaktivität'],correct:2,exp:'Am pI hat die Aminosäure keine Nettoladung (Zwitterion-Gleichgewicht).'},
+],
+
+/* ── KOHLENHYDRATE ─────────────────────────────────────────────── */
+carbs:[
+{q:'Welche allgemeine Formel haben Monosaccharide?',answers:['(CH₂O)ₙ','CₙH₂ₙO₂','CₙHₙOₙ','C₆H₁₂O₆ immer'],correct:0,exp:'Monosaccharide: (CH₂O)ₙ, z.B. Glucose C₆H₁₂O₆ mit n=6.'},
+{q:'Was ist der Unterschied zwischen Glucose und Fructose?',answers:['Verschiedene Summenformeln','Verschiedene Anzahl C-Atome','Konstitutionsisomere','Verschiedene Ladungen'],correct:2,exp:'Glucose und Fructose haben beide C₆H₁₂O₆, unterscheiden sich in der Struktur (Konstitutionsisomere).'},
+{q:'Welches Disaccharid entsteht aus Glucose + Fructose?',answers:['Maltose','Lactose','Saccharose','Cellobiose'],correct:2,exp:'Glucose + Fructose → Saccharose (Rohrzucker) + H₂O (glykosidische Bindung).'},
+{q:'Was ist der Hauptspeicherstoff für Glucose im menschlichen Körper?',answers:['Cellulose','Stärke','Glykogen','Saccharose'],correct:2,exp:'Glykogen ist das tierische Speicherkohlenhydrat, gespeichert in Leber und Muskel.'},
+{q:'Wodurch unterscheidet sich Stärke von Cellulose?',answers:['Verschiedene Monosaccharide','α- vs. β-glykosidische Bindung','Verschiedene Kettenlänge','Stärke hat Verzweigungen, Cellulose nicht'],correct:1,exp:'Stärke: α-1,4-Bindung (verdaubar); Cellulose: β-1,4-Bindung (unverdaubar für Menschen).'},
+{q:'Was zeigt die Fehlingprobe an?',answers:['Proteine','Reduzierende Zucker','Fette','Stärke'],correct:1,exp:'Fehling: Cu²⁺ (blau) → Cu₂O (roter Niederschlag) bei reduzierenden Zuckern (z.B. Glucose).'},
+{q:'Welches Polysaccharid gibt Pflanzen ihre Strukturfestigkeit?',answers:['Glykogen','Stärke','Chitin','Cellulose'],correct:3,exp:'Cellulose ist das häufigste organische Polymer der Erde – bildet die Pflanzenzellwand.'},
+{q:'Wie viele C-Atome hat Ribose?',answers:['3','4','5','6'],correct:2,exp:'Ribose (C₅H₁₀O₅) ist eine Pentose (5 C-Atome) – Bestandteil von RNA.'},
+{q:'Was ist ein glykämischer Index?',answers:['Zuckergehalt in Lebensmitteln','Maß für Blutzuckeranstieg nach Konsum','Süßkraft relativ zu Saccharose','Löslichkeit von Zucker in Wasser'],correct:1,exp:'GI = wie stark ein Lebensmittel den Blutzucker im Vergleich zu reiner Glucose anhebt.'},
+{q:'Welche Bindung verknüpft Monosaccharide in Polysacchariden?',answers:['Peptidbindung','Esterbindung','Glykosidische Bindung','Wasserstoffbrücke'],correct:2,exp:'Glykosidische Bindung (C–O–C) verknüpft Zucker unter Wasserabspaltung.'},
+],
+
+/* ── SÄUREN & BASEN ────────────────────────────────────────────── */
+acids:[
+{q:'Was ist nach Brønsted eine Säure?',answers:['Elektronenpaardonor','Protonendonor','Elektronenpaarakzeptor','Protonenakzeptor'],correct:1,exp:'Brønsted-Säure = Protonendonor (gibt H⁺ ab).'},
+{q:'Was ist der pH-Wert einer 0,01 M HCl-Lösung?',answers:['1','2','7','12'],correct:1,exp:'pH = –log[H⁺] = –log(0,01) = 2.'},
+{q:'Welche Säure ist in Essig enthalten?',answers:['Salzsäure','Schwefelsäure','Essigsäure','Zitronensäure'],correct:2,exp:'Essig enthält 5–20% Essigsäure (CH₃COOH, Ethansäure).'},
+{q:'Was ist eine Amphotere Verbindung?',answers:['Nur Säure','Nur Base','Säure und Base gleichzeitig möglich','Weder Säure noch Base'],correct:2,exp:'Amphotere Stoffe können je nach Bedingung als Säure ODER Base reagieren (z.B. Wasser).'},
+{q:'Was ist der pKs-Wert?',answers:['Negativer dekadischer Log der Säurekonstante','pH des Äquivalenzpunkts','Konzentration der Säure','Summe aus pH + pOH'],correct:0,exp:'pKs = –log(Ks). Kleiner pKs → stärkere Säure.'},
+{q:'Welche Säure ist die stärkste?',answers:['Essigsäure','Salzsäure','Kohlensäure','Blausäure'],correct:1,exp:'HCl ist eine starke Säure (vollständig dissoziiert), die anderen sind schwach.'},
+{q:'Was ist pH + pOH bei 25°C?',answers:['7','14','1','0'],correct:1,exp:'Kw = [H⁺][OH⁻] = 10⁻¹⁴ → pH + pOH = 14 bei 25°C.'},
+{q:'Was ist Natronlauge (NaOH)?',answers:['Schwache Säure','Starke Säure','Schwache Base','Starke Base'],correct:3,exp:'NaOH ist eine starke Base – dissoziiert vollständig zu Na⁺ + OH⁻.'},
+{q:'Bei welchem pH ist eine Lösung neutral?',answers:['0','7','14','1'],correct:1,exp:'pH 7 = neutral bei 25°C ([H⁺] = [OH⁻] = 10⁻⁷ mol/L).'},
+{q:'Was ist Titration?',answers:['Destillation einer Säure','Quantitative Analyse durch Zugabe einer Maßlösung','Messung des pH-Werts','Neutralisation mit Indikatoren'],correct:1,exp:'Bei der Titration wird eine Maßlösung bekannter Konzentration zugetropft bis zum Äquivalenzpunkt.'},
+],
+
+/* ── LIPIDE & FETTE ────────────────────────────────────────────── */
+lipids:[
+{q:'Aus welchen Bausteinen bestehen Triglyceride?',answers:['Aminosäuren + Glycerin','Fettsäuren + Glycerin','Glucose + Fettsäuren','Fettsäuren + Phosphat'],correct:1,exp:'Triglyceride = 3 Fettsäuren + 1 Glycerin, verknüpft über Esterbindungen.'},
+{q:'Was ist der Unterschied zwischen gesättigten und ungesättigten Fettsäuren?',answers:['Anzahl der C-Atome','Vorhandensein von C=C-Doppelbindungen','Löslichkeit in Wasser','Anzahl der OH-Gruppen'],correct:1,exp:'Gesättigt: keine Doppelbindungen; ungesättigt: ≥1 C=C-Doppelbindung.'},
+{q:'Warum sind ungesättigte Fette bei RT oft flüssig?',answers:['Sie haben weniger C-Atome','Doppelbindungen erzeugen Knicke → weniger Packungsdichte','Sie haben mehr Sauerstoff','Sie sind ionisch'],correct:1,exp:'Cis-Doppelbindungen stören die Packung → niedrigerer Schmelzpunkt.'},
+{q:'Was ist Verseifung?',answers:['Oxidation von Fetten','Hydrolyse von Fetten mit Lauge','Addition von H₂ an Fette','Verbrennung von Fetten'],correct:1,exp:'Verseifung: Fett + NaOH → Glycerin + Fettsäure-Salze (Seifen).'},
+{q:'Was sind Phospholipide?',answers:['Fette mit Phosphatgruppe','Zucker-Fett-Verbindungen','Proteine mit Fettanteil','Cholesterin-Derivate'],correct:0,exp:'Phospholipide: Glycerin + 2 Fettsäuren + Phosphatgruppe; bilden die Zellmembran.'},
+{q:'Was ist der Schmelzpunkt von Palmitin­säure (C16:0) im Vergleich zur Ölsäure (C18:1)?',answers:['Beide gleich','Palmitinsäure höher','Ölsäure höher','Nicht vergleichbar'],correct:1,exp:'Gesättigte Palmitinsäure (Smp. 63°C) > ungesättigte Ölsäure (Smp. 16°C).'},
+{q:'Was sind essentielle Fettsäuren?',answers:['Vom Körper synthetisierbar','Müssen mit der Nahrung aufgenommen werden','Kommen nur in Tieren vor','Sind gesättigt'],correct:1,exp:'Essentiell = der Körper kann sie nicht selbst herstellen (z.B. Linolsäure, Linolensäure).'},
+{q:'Wo werden Fette im menschlichen Körper hauptsächlich gespeichert?',answers:['Leber','Muskeln','Fettgewebe (Adipozyten)','Knochen'],correct:2,exp:'Triglyceride werden in Fettzellen (Adipozyten) als Langzeitspeicher gespeichert.'},
+],
+
+/* ── ELEKTROCHEMIE ─────────────────────────────────────────────── */
+electrochem:[
+{q:'Was passiert an der Anode einer galvanischen Zelle?',answers:['Reduktion','Oxidation','Protonenabgabe','Nichts'],correct:1,exp:'Anode = Oxidation (Merksatz: AnOx). Elektronen werden abgegeben.'},
+{q:'Was ist die Nernstsche Gleichung?',answers:['Berechnet pH aus Konzentration','Berechnet Zellspannung in Abhängigkeit von Konz.','Beschreibt Gleichgewichtslagen','Bestimmt Aktivierungsenergie'],correct:1,exp:'Nernst: E = E° – (RT/nF)·ln(Q). Beschreibt konzentrationsabhängige Zellspannung.'},
+{q:'Was ist die Standardwasserstoffelektrode?',answers:['Elektrode aus reinem H₂O','Referenzelektrode mit E° = 0 V','Kathode in der Elektrolyse','Elektrode mit pH 7'],correct:1,exp:'SHE: Pt | H₂(1 bar) | H⁺(1 mol/L), per Definition E° = 0,00 V.'},
+{q:'Welches Metall hat das negativste Standardpotential?',answers:['Lithium','Natrium','Zink','Kupfer'],correct:0,exp:'Li: E° = –3,04 V. Stärkstes Reduktionsmittel in der Spannungsreihe.'},
+{q:'Was ist Korrosion?',answers:['Thermische Zersetzung','Elektrochemische Oxidation von Metallen','Mechanischer Verschleiß','Sublimation'],correct:1,exp:'Korrosion = unerwünschte elektrochemische Oxidation von Metallen (z.B. Rosten).'},
+],
+
+/* ── ANALYTIK & LABORMETHODEN ──────────────────────────────────── */
+analytics:[
+{q:'Was trennt die Gaschromatografie?',answers:['Feststoffe nach Dichte','Flüchtige Verbindungen nach Siedepunkt/Polarität','Ionen nach Ladung','Proteine nach Größe'],correct:1,exp:'GC trennt flüchtige Substanzen durch Wechselwirkung mit der stationären Phase.'},
+{q:'Was misst ein Massenspektrometer?',answers:['Lichtabsorption','Masse-Ladungs-Verhältnis (m/z)','pH-Wert','Elektrische Leitfähigkeit'],correct:1,exp:'MS ionisiert Moleküle und trennt sie nach m/z. Gibt Molmasse und Fragmentierungsmuster.'},
+{q:'Was ist die Funktion eines Indikators in der Titration?',answers:['Puffert den pH','Zeigt den Äquivalenzpunkt durch Farbwechsel an','Beschleunigt die Reaktion','Fällt Ionen aus'],correct:1,exp:'Indikatoren (z.B. Phenolphthalein) ändern ihre Farbe im Äquivalenzpunkt-Bereich.'},
+{q:'Was untersucht die IR-Spektroskopie?',answers:['Elektronenübergänge','Kernspins','Schwingungen von Bindungen','Röntgenbeugung'],correct:2,exp:'IR-Strahlung regt Bindungsschwingungen an. Charakteristische Absorptionen = funktionelle Gruppen.'},
+{q:'Wozu dient die DC (Dünnschichtchromatografie)?',answers:['Massen bestimmen','Substanzen schnell identifizieren/trennen','pH messen','Leitfähigkeit messen'],correct:1,exp:'DC: Substanzgemisch wandert per Kapillarkraft auf Kieselgelplatte – Trennung nach Polarität.'},
+]
+
+};
 
 /* ═══════════════════════════════════════════
    INFINITY ZOOM ENGINE
@@ -692,43 +831,78 @@ const PAGE_NAMES = {
 };
 
 function zoomTo(page) {
+  const prevPage = CURRENT_PAGE;
   CURRENT_PAGE = page;
-  const world = document.getElementById('zoom-world');
-  const homeLayer = document.getElementById('layer-home');
+  _transitioning = true;
+
+  const world        = document.getElementById('zoom-world');
+  const homeLayer    = document.getElementById('layer-home');
   const contentLayer = document.getElementById('layer-content');
+  const panel        = document.getElementById('content-panel');
 
-  // Phase 1: zoom in animation on home
-  world.style.transform = 'scale(2.5) translateZ(200px)';
-  homeLayer.style.opacity = '0';
-  homeLayer.style.transition = 'opacity 0.5s';
+  const fromHome    = prevPage === 'home';
+  const fromModule  = !fromHome;
 
-  setTimeout(() => {
-    // Phase 2: switch layers
-    homeLayer.classList.remove('active');
-    contentLayer.classList.add('active');
-    world.style.transition = 'none';
-    world.style.transform = 'scale(0.6) translateZ(-200px)';
+  if (fromModule) {
+    // ── Modul → Modul: kurzes Zoom-Out, dann Zoom-In auf neues Modul ──
+    contentLayer.style.transition = 'opacity 0.25s';
+    contentLayer.style.opacity    = '0';
+    world.style.transition        = 'transform 0.35s cubic-bezier(.77,0,.175,1)';
+    world.style.transform         = 'scale(0.85) translateZ(-80px)';
 
-    // Render content
-    const panel = document.getElementById('content-panel');
-    panel.innerHTML = renderPage(page);
-    if (page === 'struc') initCanvas();
+    setTimeout(() => {
+      panel.innerHTML = renderPage(page);
+      if (page === 'struc') initCanvas();
+      panel.scrollTop = 0; // Immer oben beginnen
 
-    // Phase 3: zoom into content
-    requestAnimationFrame(() => {
-      world.style.transition = 'transform 0.9s cubic-bezier(.77,0,.175,1)';
-      world.style.transform = 'scale(1) translateZ(0)';
-    });
+      world.style.transition = 'none';
+      world.style.transform  = 'scale(0.85) translateZ(-80px)';
 
-    // Update HUD
-    document.getElementById('breadcrumb').style.display = 'flex';
-    document.getElementById('crumb-current').textContent = PAGE_NAMES[page] || page;
-    document.getElementById('back-btn').classList.add('show');
-    const hudBack = document.getElementById('hud-back'); if(hudBack) hudBack.style.display='flex';
-    document.getElementById('zoom-hint').classList.add('hidden');
-    const spEl = document.getElementById('scroll-progress');
-    if (spEl) spEl.classList.add('hidden');
-  }, 500);
+      requestAnimationFrame(() => {
+        contentLayer.style.opacity    = '1';
+        world.style.transition        = 'transform 0.45s cubic-bezier(.77,0,.175,1)';
+        world.style.transform         = 'scale(1) translateZ(0)';
+        setTimeout(() => { _transitioning = false; }, 500);
+      });
+    }, 280);
+
+  } else {
+    // ── Home → Modul: klassischer Zoom-In ──
+    world.style.transform         = 'scale(2.5) translateZ(200px)';
+    homeLayer.style.opacity       = '0';
+    homeLayer.style.transition    = 'opacity 0.5s';
+
+    setTimeout(() => {
+      homeLayer.classList.remove('active');
+      contentLayer.classList.add('active');
+      contentLayer.style.opacity = '1';
+      world.style.transition     = 'none';
+      world.style.transform      = 'scale(0.6) translateZ(-200px)';
+
+      panel.innerHTML = renderPage(page);
+      if (page === 'struc') initCanvas();
+      panel.scrollTop = 0;
+
+      requestAnimationFrame(() => {
+        world.style.transition = 'transform 0.9s cubic-bezier(.77,0,.175,1)';
+        world.style.transform  = 'scale(1) translateZ(0)';
+        setTimeout(() => { _transitioning = false; }, 950);
+      });
+    }, 500);
+  }
+
+  // HUD aktualisieren
+  document.getElementById('breadcrumb').style.display        = 'flex';
+  document.getElementById('crumb-current').textContent       = PAGE_NAMES[page] || page;
+  document.getElementById('back-btn').classList.add('show');
+  const hudBack = document.getElementById('hud-back'); if(hudBack) hudBack.style.display='flex';
+  document.getElementById('zoom-hint').classList.add('hidden');
+
+  // Nav-Dots: aktives Modul hervorheben
+  _updateNavDots(page);
+
+  // Navigations-Hint am unteren Rand anzeigen
+  _showNavHint(page);
 }
 
 function zoomHome() {
@@ -760,141 +934,308 @@ function zoomHome() {
     CURRENT_PAGE = 'home';
     PSE_SEL = null;
     WIKI_KEY = null;
+    _edgeAccum = 0;
+    _transitioning = false;
     document.getElementById('breadcrumb').style.display = 'none';
     document.getElementById('back-btn').classList.remove('show');
     const hudBackEl = document.getElementById('hud-back'); if(hudBackEl) hudBackEl.style.display='none';
     document.getElementById('zoom-hint').classList.remove('hidden');
-    // Reset scroll state
-    _scrollY = 0; _scrollTarget = 0; _highlightIdx = -1; _zoomActive = false;
-    document.querySelectorAll('.module-orbit').forEach(m => {
-      m.style.transform = ''; m.style.boxShadow = ''; m.style.borderColor = '';
-    });
+    // Reset scroll state vollständig
+    _resetHomeScroll();
+    _updateNavDots('home');
     const w = document.getElementById('zoom-world');
     if(w) w.style.transform = 'scale(1) translateZ(0)';
     const hint = document.getElementById('zoom-hint');
     if(hint) hint.textContent = '↓ Scrollen zum Einzoomen · Klick auf Kachel zum Öffnen';
-    const spRestore = document.getElementById('scroll-progress');
-    if(spRestore) spRestore.classList.add('hidden');
-    document.querySelectorAll('.sp-dot').forEach(d => d.classList.remove('active'));
   }, 400);
 }
 
-// ── SCROLL-TO-ZOOM ENGINE ──
-// Maps scroll position to zoom depth on home screen
-let _scrollY = 0;
-let _scrollTarget = 0;
-let _scrollRaf = null;
-let _zoomActive = false;
+// ─── Nav-Dots immer aktuell halten ────────────────────────────────
+function _updateNavDots(page) {
+  const sp   = document.getElementById('scroll-progress');
+  const dots = document.querySelectorAll('.sp-dot');
+  if (!sp) return;
+  if (page === 'home' || !page) {
+    sp.className = 'on-home';
+    dots.forEach(d => d.classList.remove('active'));
+  } else {
+    sp.className = 'on-module';
+    const idx = MODULES_ORDER.indexOf(page);
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+  }
+}
+
+// ─── Navigations-Hint im Modul anzeigen ───────────────────────────
+// (MODULES_ORDER und MODULE_NAMES werden im Scroll-Engine-Block deklariert,
+//  der direkt darunter folgt — wegen var-Hoisting via const/let kein Problem
+//  solange _showNavHint erst zur Laufzeit aufgerufen wird.)
+function _showNavHint(page) {
+  const idx   = MODULES_ORDER.indexOf(page);
+  const prev  = idx === 0              ? 'Startseite'                    : MODULE_NAMES[idx - 1];
+  const next  = idx === MODULES_ORDER.length - 1 ? 'Startseite'         : MODULE_NAMES[idx + 1];
+  const hint  = document.getElementById('zoom-hint');
+  if (!hint) return;
+  hint.textContent = `↑ ${prev}  ·  Scrollen zum Weiterblättern  ·  ${next} ↓`;
+  hint.classList.remove('hidden');
+  // Nach 4s ausblenden
+  clearTimeout(hint._t);
+  hint._t = setTimeout(() => hint.classList.add('hidden'), 4000);
+}
+
+// ══════════════════════════════════════════════════════════════════
+// INFINITY SCROLL ENGINE — echter Endlos-Loop durch alle Module
+// Funktioniert sowohl auf dem Homescreen als auch innerhalb eines
+// Moduls. Scrollen im Modul → nächstes Modul. Letztes Modul →
+// Startseite. Startseite nach oben → letztes Modul (echter Loop).
+// ══════════════════════════════════════════════════════════════════
+
 const MODULES_ORDER = ['pse','wiki','learn','struc','rxn','quiz'];
+const MODULE_NAMES  = ['Periodensystem','Chemie-Wiki','Lernbereich',
+                       'Strukturzeichner','Reaktionsrechner','Quiz'];
+
+// Virtueller Scroll-Zustand (nur für Homescreen-Zoom-Animation)
+let _scrollY      = 0;
+let _scrollTarget = 0;
+let _scrollRaf    = null;
+
+// Verhindert doppeltes Feuern während einer Übergangs-Animation
+let _transitioning = false;
+
+// Index des aktuell gehighlighteten Moduls auf dem Homescreen (-1 = keins)
 let _highlightIdx = -1;
 
-window.addEventListener('wheel', (e) => {
-  if (CURRENT_PAGE !== 'home') return;
-  e.preventDefault();
-  _scrollTarget += e.deltaY * 0.8;
-  _scrollTarget = Math.max(-100, Math.min(_scrollTarget, MODULES_ORDER.length * 180));
-  if (!_scrollRaf) _scrollRaf = requestAnimationFrame(_scrollTick);
-}, {passive: false});
+// ─── Hilfsfunktion: aktuellen Modul-Index ermitteln ───────────────
+function _currentModuleIdx() {
+  return MODULES_ORDER.indexOf(CURRENT_PAGE); // -1 wenn 'home'
+}
 
+// ─── Zum nächsten Modul springen (vorwärts im Loop) ───────────────
+function _goNext() {
+  if (_transitioning) return;
+  _transitioning = true;
+  setTimeout(() => { _transitioning = false; }, 900);
+
+  const idx = _currentModuleIdx();
+  if (idx === -1) {
+    // Auf Homescreen: erstes Modul öffnen
+    _resetHomeScroll();
+    zoomTo(MODULES_ORDER[0]);
+  } else if (idx < MODULES_ORDER.length - 1) {
+    // Nächstes Modul
+    zoomTo(MODULES_ORDER[idx + 1]);
+  } else {
+    // Nach letztem Modul → zurück zur Startseite
+    zoomHome();
+  }
+}
+
+// ─── Zum vorherigen Modul springen (rückwärts im Loop) ────────────
+function _goPrev() {
+  if (_transitioning) return;
+  _transitioning = true;
+  setTimeout(() => { _transitioning = false; }, 900);
+
+  const idx = _currentModuleIdx();
+  if (idx === -1) {
+    // Auf Homescreen nach oben → letztes Modul (echter Loop!)
+    _resetHomeScroll();
+    zoomTo(MODULES_ORDER[MODULES_ORDER.length - 1]);
+  } else if (idx === 0) {
+    // Vom ersten Modul nach oben → Startseite
+    zoomHome();
+  } else {
+    // Vorheriges Modul
+    zoomTo(MODULES_ORDER[idx - 1]);
+  }
+}
+
+// ─── Homescreen-Scroll-Zustand zurücksetzen ────────────────────────
+function _resetHomeScroll() {
+  _scrollY = 0; _scrollTarget = 0; _highlightIdx = -1;
+  if (_scrollRaf) { cancelAnimationFrame(_scrollRaf); _scrollRaf = null; }
+  document.querySelectorAll('.module-orbit').forEach(m => {
+    m.style.transform=''; m.style.boxShadow=''; m.style.borderColor='';
+  });
+  document.querySelectorAll('.sp-dot').forEach(d => d.classList.remove('active'));
+  const sp = document.getElementById('scroll-progress');
+  if (sp) sp.classList.add('hidden');
+}
+
+// ─── Prüfen ob der interne Content-Scroller am Ende/Anfang ist ────
+// Gibt 'bottom', 'top' oder 'middle' zurück.
+function _panelEdge(direction) {
+  const panel = document.getElementById('content-panel');
+  if (!panel) return direction > 0 ? 'bottom' : 'top';
+  const tolerance = 4; // px Toleranz gegen Subpixel-Fehler
+  if (direction > 0) {
+    // Scrollen nach unten: sind wir am Ende?
+    return (panel.scrollTop + panel.clientHeight >= panel.scrollHeight - tolerance)
+      ? 'bottom' : 'middle';
+  } else {
+    // Scrollen nach oben: sind wir am Anfang?
+    return panel.scrollTop <= tolerance ? 'top' : 'middle';
+  }
+}
+
+// ─── Akkumulator für Edge-Scroll (verhindert versehentliches Wechseln) ──
+let _edgeAccum = 0;
+const EDGE_THRESHOLD = 180; // px akkumulierter Delta nötig zum Wechsel
+
+// ─── WHEEL EVENT — greift überall, capture:true für sicheres preventDefault ──
+document.addEventListener('wheel', (e) => {
+  const delta = e.deltaMode === 1 ? e.deltaY * 30 : e.deltaY;
+
+  // ── HOMESCREEN ────────────────────────────────────────────────────
+  if (CURRENT_PAGE === 'home') {
+    e.preventDefault();
+    _scrollTarget += delta * 0.8;
+    _scrollTarget = Math.max(-200, Math.min(_scrollTarget, MODULES_ORDER.length * 180 + 60));
+
+    // Nach oben über den Anfang hinaus → letztes Modul (Loop rückwärts)
+    if (_scrollTarget < -160 && !_transitioning) {
+      _scrollTarget = 0; _scrollY = 0;
+      _goPrev();
+      return;
+    }
+
+    if (!_scrollRaf) _scrollRaf = requestAnimationFrame(_scrollTick);
+    return;
+  }
+
+  // ── MODUL-ANSICHT ─────────────────────────────────────────────────
+  const edge = _panelEdge(delta);
+
+  if (edge === 'middle') {
+    // Noch nicht am Rand: normales internes Scrollen, nicht blockieren
+    _edgeAccum = 0;
+    return;
+  }
+
+  // Am Rand angekommen: Event blockieren und Akkumulator befüllen
+  e.preventDefault();
+  _edgeAccum += Math.abs(delta);
+
+  if (_edgeAccum >= EDGE_THRESHOLD) {
+    _edgeAccum = 0;
+    if (delta > 0) _goNext(); else _goPrev();
+  }
+
+}, { passive: false, capture: true });
+
+// ─── ANIMATION LOOP für Homescreen-Zoom (Lerp) ────────────────────
 function _scrollTick() {
   _scrollY += (_scrollTarget - _scrollY) * 0.12;
-  const world = document.getElementById('zoom-world');
-  const modules = document.querySelectorAll('.module-orbit');
+  if (Math.abs(_scrollTarget - _scrollY) < 0.4) _scrollY = _scrollTarget;
 
-  if (_scrollY < 0) {
-    // Scrolled up past start — reset
+  const world   = document.getElementById('zoom-world');
+  const modules = document.querySelectorAll('.module-orbit');
+  const hint    = document.getElementById('zoom-hint');
+  const dots    = document.querySelectorAll('.sp-dot');
+  const sp      = document.getElementById('scroll-progress');
+
+  if (_scrollY <= 0) {
+    _scrollY = 0;
     world.style.transform = 'scale(1) translateZ(0)';
     _highlightIdx = -1;
-    modules.forEach(m => m.style.transform = '');
+    modules.forEach(m => { m.style.transform=''; m.style.boxShadow=''; m.style.borderColor=''; });
+    if (hint) { hint.textContent = '↓ Scrollen zum Einzoomen · Klick auf Kachel zum Öffnen'; hint.classList.remove('hidden'); }
+    _updateNavDots('home');
     _scrollRaf = null;
     return;
   }
 
-  // Each 180px scroll = highlight next module
-  const idx = Math.floor(_scrollY / 180);
-  const frac = (_scrollY % 180) / 180;
-  const clampedIdx = Math.min(idx, MODULES_ORDER.length - 1);
-
-  // Zoom world slightly as you scroll
+  // Zoom-Tiefe
   const zoomLevel = 1 + Math.min(_scrollY / 3000, 0.4);
-  const tz = Math.min(_scrollY / 8, 60);
+  const tz        = Math.min(_scrollY / 8, 60);
   world.style.transform = `scale(${zoomLevel}) translateZ(${tz}px)`;
 
-  // Highlight current module
+  // Modul-Index & Slot-Fortschritt
+  const idx        = Math.floor(_scrollY / 180);
+  const frac       = (_scrollY % 180) / 180;
+  const clampedIdx = Math.min(idx, MODULES_ORDER.length - 1);
+
+  // Kachel-Highlighting
   if (clampedIdx !== _highlightIdx) {
-    modules.forEach((m, i) => {
-      m.style.transform = '';
-      m.style.boxShadow = '';
-      m.style.borderColor = '';
-    });
+    modules.forEach(m => { m.style.transform=''; m.style.boxShadow=''; m.style.borderColor=''; });
     if (modules[clampedIdx]) {
-      modules[clampedIdx].style.transform = 'translateY(-8px) scale(1.06)';
-      modules[clampedIdx].style.boxShadow = '0 12px 40px rgba(26,92,58,.25)';
+      modules[clampedIdx].style.transform   = 'translateY(-8px) scale(1.06)';
+      modules[clampedIdx].style.boxShadow   = '0 12px 40px rgba(26,92,58,.25)';
       modules[clampedIdx].style.borderColor = 'var(--acd)';
     }
     _highlightIdx = clampedIdx;
-
-    // Update hint
-    const hint = document.getElementById('zoom-hint');
-    const names = ['Periodensystem','Chemie-Wiki','Lernbereich','Strukturzeichner','Reaktionsrechner','Quiz'];
-    if (hint) { hint.textContent = `↵ Enter oder Klick → ${names[clampedIdx] || ''}`; hint.classList.remove('hidden'); }
-    // Update progress dots
-    const dots = document.querySelectorAll('.sp-dot');
-    dots.forEach((d,i) => d.classList.toggle('active', i === clampedIdx));
-    const sp = document.getElementById('scroll-progress');
-    if (sp) sp.classList.remove('hidden');
+    if (hint) { hint.textContent = `↵ Enter oder Klick → ${MODULE_NAMES[clampedIdx]}`; hint.classList.remove('hidden'); }
+    // Dots auf Homescreen: on-home bleibt, nur aktiver Dot wechselt
+    dots.forEach((d, i) => d.classList.toggle('active', i === clampedIdx));
   }
 
-  // At end of a module slot (frac > 0.85) → auto-zoom in
-  if (frac > 0.88 && !_zoomActive && idx < MODULES_ORDER.length) {
-    _zoomActive = true;
-    // Reset scroll state so coming back works
-    _scrollY = 0; _scrollTarget = 0;
-    modules.forEach(m => { m.style.transform = ''; m.style.boxShadow = ''; m.style.borderColor = ''; });
-    _highlightIdx = -1;
-    setTimeout(() => { _zoomActive = false; }, 1200);
+  // Auto-Zoom wenn Slot fast durchgescrollt
+  if (frac > 0.88 && !_transitioning && idx < MODULES_ORDER.length) {
+    _resetHomeScroll();
     zoomTo(MODULES_ORDER[idx]);
-    _scrollRaf = null;
     return;
   }
 
-  _scrollRaf = requestAnimationFrame(_scrollTick);
+  if (Math.abs(_scrollTarget - _scrollY) > 0.1) {
+    _scrollRaf = requestAnimationFrame(_scrollTick);
+  } else {
+    _scrollRaf = null;
+  }
 }
 
-
-// ── TOUCH / SWIPE SUPPORT (Mobile) ──
+// ─── TOUCH / SWIPE (Mobile) ───────────────────────────────────────
 let _touchStartY = 0;
-let _touchLastY = 0;
+let _touchLastY  = 0;
+let _touchEdgeAccum = 0;
 
 document.addEventListener('touchstart', (e) => {
   _touchStartY = e.touches[0].clientY;
-  _touchLastY = _touchStartY;
-}, {passive: true});
+  _touchLastY  = _touchStartY;
+  _touchEdgeAccum = 0;
+}, { passive: true });
 
 document.addEventListener('touchmove', (e) => {
-  if (CURRENT_PAGE !== 'home') return;
-  const dy = _touchLastY - e.touches[0].clientY;
+  const dy    = _touchLastY - e.touches[0].clientY; // positiv = runter
   _touchLastY = e.touches[0].clientY;
-  _scrollTarget += dy * 1.5;
-  _scrollTarget = Math.max(-100, Math.min(_scrollTarget, MODULES_ORDER.length * 180));
-  if (!_scrollRaf) _scrollRaf = requestAnimationFrame(_scrollTick);
-}, {passive: true});
 
-document.addEventListener('touchend', () => {
-  // snap to nearest module on lift
-  if (CURRENT_PAGE !== 'home') return;
-  const nearestSlot = Math.round(_scrollTarget / 180);
-  _scrollTarget = Math.max(0, nearestSlot) * 180;
-}, {passive: true});
-
-// Keyboard: Enter zooms into highlighted module
-window.addEventListener('keydown', (e) => {
-  if (CURRENT_PAGE !== 'home') {
-    if (e.key === 'Escape') zoomHome();
+  if (CURRENT_PAGE === 'home') {
+    _scrollTarget += dy * 1.5;
+    _scrollTarget = Math.max(-200, Math.min(_scrollTarget, MODULES_ORDER.length * 180 + 60));
+    if (!_scrollRaf) _scrollRaf = requestAnimationFrame(_scrollTick);
     return;
   }
-  if ((e.key === 'Enter' || e.key === ' ') && _highlightIdx >= 0 && _highlightIdx < MODULES_ORDER.length) {
-    zoomTo(MODULES_ORDER[_highlightIdx]);
+
+  // Im Modul: Edge-Erkennung
+  const edge = _panelEdge(dy);
+  if (edge === 'middle') { _touchEdgeAccum = 0; return; }
+  _touchEdgeAccum += Math.abs(dy);
+  if (_touchEdgeAccum >= 80) {
+    _touchEdgeAccum = 0;
+    if (dy > 0) _goNext(); else _goPrev();
+  }
+}, { passive: true });
+
+document.addEventListener('touchend', () => {
+  if (CURRENT_PAGE !== 'home') return;
+  // Zum nächsten Modul-Slot einrasten
+  const nearestSlot = Math.round(_scrollTarget / 180);
+  _scrollTarget = Math.max(0, nearestSlot) * 180;
+  if (_scrollTarget < -160) { _scrollTarget = 0; _goPrev(); return; }
+  if (!_scrollRaf) _scrollRaf = requestAnimationFrame(_scrollTick);
+}, { passive: true });
+
+// ─── KEYBOARD ─────────────────────────────────────────────────────
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') { zoomHome(); return; }
+  if (CURRENT_PAGE === 'home') {
+    if ((e.key === 'Enter' || e.key === ' ') && _highlightIdx >= 0) {
+      e.preventDefault();
+      zoomTo(MODULES_ORDER[_highlightIdx]);
+    }
+    if (e.key === 'ArrowDown') { e.preventDefault(); _scrollTarget += 180; if (!_scrollRaf) _scrollRaf = requestAnimationFrame(_scrollTick); }
+    if (e.key === 'ArrowUp')   { e.preventDefault(); _scrollTarget -= 180; if (!_scrollRaf) _scrollRaf = requestAnimationFrame(_scrollTick); }
+  } else {
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); _goNext(); }
+    if (e.key === 'ArrowLeft'  || e.key === 'PageUp')   { e.preventDefault(); _goPrev(); }
   }
 });
 
@@ -1230,9 +1571,29 @@ function rxnGo(){
 
 /* ═══ QUIZ ═══ */
 function renderQuiz(){if(!QZ.mode)return renderQuizStart();if(QZ.done)return renderQuizResult();return renderQuizQ();}
-function renderQuizStart(){return `<div class="page-hdr"><h1>🧠 Chemie-Quiz</h1><p>Teste dein Wissen in drei Kategorien.</p></div><div class="quiz-mode-grid"><div class="quiz-mode" onclick="QZ={mode:'quiz',cat:'elements',q:0,score:0,answered:false,done:false};rerender()"><div class="qm-ico">⚗</div><h3>Elemente</h3><p>Symbole, Ordnungszahlen, Eigenschaften</p></div><div class="quiz-mode" onclick="QZ={mode:'quiz',cat:'reactions',q:0,score:0,answered:false,done:false};rerender()"><div class="qm-ico">⚡</div><h3>Reaktionen</h3><p>Verbrennung, Redox, Neutralisation</p></div><div class="quiz-mode" onclick="QZ={mode:'quiz',cat:'theory',q:0,score:0,answered:false,done:false};rerender()"><div class="qm-ico">📚</div><h3>Theorie</h3><p>PSE-Aufbau, Bindungsarten, Trends</p></div></div>`;}
+const QUIZ_CATS={
+  elements:  {ico:'⚗',  label:'Elemente',        desc:'Symbole, Ordnungszahlen, Eigenschaften'},
+  reactions: {ico:'⚡', label:'Reaktionen',       desc:'Verbrennung, Redox, Neutralisation'},
+  theory:    {ico:'📚', label:'Theorie & PSE',    desc:'Bindungsarten, Atombau, Trends'},
+  alkane:    {ico:'⛽', label:'Alkane',           desc:'Gesättigte Kohlenwasserstoffe'},
+  proteins:  {ico:'🧬', label:'Proteine',         desc:'Aminosäuren, Peptidbindung, Faltung'},
+  carbs:     {ico:'🍞', label:'Kohlenhydrate',    desc:'Zucker, Stärke, Cellulose'},
+  acids:     {ico:'🧪', label:'Säuren & Basen',   desc:'pH, Brønsted, Puffer, Titration'},
+  lipids:    {ico:'🫙', label:'Lipide & Fette',   desc:'Fettsäuren, Verseifung, Membranen'},
+  electrochem:{ico:'⚡',label:'Elektrochemie',    desc:'Redoxpotentiale, Galvanik, Korrosion'},
+  analytics: {ico:'🔬', label:'Analytik',         desc:'Chromatografie, Spektroskopie'},
+};
+function renderQuizStart(){
+  const cats=Object.entries(QUIZ_CATS).map(([k,v])=>
+    `<div class="quiz-mode" onclick="QZ={mode:'quiz',cat:'${k}',q:0,score:0,answered:false,done:false};rerender()">
+      <div class="qm-ico">${v.ico}</div><h3>${v.label}</h3><p>${v.desc} · ${QUIZ_Q[k]?.length||0} Fragen</p>
+    </div>`).join('');
+  return `<div class="page-hdr"><h1>🧠 Chemie-Quiz</h1><p>Wähle ein Themengebiet und teste dein Wissen.</p></div>
+    <div class="quiz-mode-grid" style="grid-template-columns:repeat(auto-fill,minmax(160px,1fr))">${cats}</div>`;
+}
 function renderQuizQ(){const qs=QUIZ_Q[QZ.cat];const q=qs[QZ.q];const total=qs.length;const prog=Math.round((QZ.q/total)*100);let elHint='';if(q.el){const el=EL_MAP[q.el];if(el)elHint=`<div class="quiz-element-hint" style="background:${catBg(el.c)};border:0.5px solid ${catBdr(el.c)};color:${catCol(el.c)}"><div class="quiz-el-z">${el.z}</div><div class="quiz-el-s">${el.s}</div><div class="quiz-el-m">${el.m?el.m+' u':'–'}</div></div>`;}
-return `<div class="quiz-wrap"><div class="quiz-progress"><div class="quiz-progress-bar" style="width:${prog}%"></div></div><div class="quiz-card"><div class="quiz-q-num">Frage ${QZ.q+1}/${total} · ${QZ.cat==='elements'?'Elemente':QZ.cat==='reactions'?'Reaktionen':'Theorie'}</div>${elHint}<div class="quiz-q">${q.q}</div><div class="quiz-answers">${q.answers.map((a,i)=>`<button class="qa" id="qa-${i}" onclick="quizAns(${i})">${a}</button>`).join('')}</div><div class="quiz-feedback" id="qfb"></div></div><div class="quiz-nav"><div class="quiz-score-label">Punkte: ${QZ.score}/${QZ.q}</div><button class="btn${QZ.answered?' pri':''}" id="qnext" onclick="quizNext()" ${QZ.answered?'':'disabled'} style="${QZ.answered?'':'opacity:.4'}">Nächste Frage →</button></div></div>`;}
+const catLabel=(QUIZ_CATS[QZ.cat]?.label)||QZ.cat;
+return `<div class="quiz-wrap"><div class="quiz-progress"><div class="quiz-progress-bar" style="width:${prog}%"></div></div><div class="quiz-card"><div class="quiz-q-num">Frage ${QZ.q+1}/${total} · ${catLabel}</div>${elHint}<div class="quiz-q">${q.q}</div><div class="quiz-answers">${q.answers.map((a,i)=>`<button class="qa" id="qa-${i}" onclick="quizAns(${i})">${a}</button>`).join('')}</div><div class="quiz-feedback" id="qfb"></div></div><div class="quiz-nav"><div class="quiz-score-label">Punkte: ${QZ.score}/${QZ.q}</div><button class="btn${QZ.answered?' pri':''}" id="qnext" onclick="quizNext()" ${QZ.answered?'':'disabled'} style="${QZ.answered?'':'opacity:.4'}">Nächste Frage →</button></div></div>`;}
 function quizAns(idx){if(QZ.answered)return;QZ.answered=true;const q=QUIZ_Q[QZ.cat][QZ.q];const isRight=idx===q.correct;if(isRight)QZ.score++;document.querySelectorAll('.qa').forEach((b,i)=>{b.disabled=true;if(i===q.correct)b.classList.add('correct');else if(i===idx&&!isRight)b.classList.add('wrong');});const fb=document.getElementById('qfb');if(fb){fb.textContent=(isRight?'✓ Richtig! ':'✗ Falsch. ')+q.exp;fb.className='quiz-feedback show '+(isRight?'correct':'wrong');}const nxt=document.getElementById('qnext');if(nxt){nxt.disabled=false;nxt.style.opacity='1';nxt.classList.add('pri');}}
 function quizNext(){const qs=QUIZ_Q[QZ.cat];if(QZ.q+1>=qs.length){QZ.done=true;rerender();return;}QZ.q++;QZ.answered=false;rerender();}
 function renderQuizResult(){const qs=QUIZ_Q[QZ.cat];const total=qs.length;const pct=Math.round(QZ.score/total*100);const stars=pct>=90?'⭐⭐⭐':pct>=70?'⭐⭐':pct>=50?'⭐':'';const msg=pct>=90?'Ausgezeichnet!':pct>=70?'Sehr gut!':pct>=50?'Gut – weiter üben!':'Weiter üben!';return `<div class="quiz-wrap"><div class="quiz-result"><div class="quiz-stars">${stars}</div><h2>${msg}</h2><div class="quiz-score-big">${QZ.score}/${total}</div><p>${pct}% korrekt</p><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><button class="btn pri" onclick="QZ={mode:'quiz',cat:'${QZ.cat}',q:0,score:0,answered:false,done:false};rerender()">Nochmal</button><button class="btn" onclick="QZ.mode=null;QZ.done=false;rerender()">Kategorie wählen</button></div></div></div>`;}
