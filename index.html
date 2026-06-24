@@ -278,128 +278,11 @@ html,body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:
 .page-hdr p{font-size:13.5px;color:var(--t2);line-height:1.6}
 
 
-/* ══════════════════════════════════════════
-   FLOATING BACKGROUND MOLECULES
-══════════════════════════════════════════ */
-#mol-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-.mol-float{position:absolute;opacity:0;font-size:22px;animation:molFloat linear infinite;will-change:transform,opacity}
-@keyframes molFloat{
-  0%  {transform:translateY(100vh) rotate(0deg);   opacity:0}
-  8%  {opacity:.13}
-  92% {opacity:.13}
-  100%{transform:translateY(-120px) rotate(360deg);opacity:0}
+@keyframes slideInRight {
+  from { transform: translateX(60px); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
 }
-
-/* ══════════════════════════════════════════
-   GAMIFICATION: XP / LEVEL WIDGET (HUD)
-══════════════════════════════════════════ */
-#xp-widget{display:flex;align-items:center;gap:9px;padding:5px 11px;background:var(--bg3);border:0.5px solid var(--bdr2);border-radius:10px;cursor:pointer;transition:var(--tr);position:relative;font-family:'DM Sans',sans-serif}
-#xp-widget:hover{background:var(--bg4);box-shadow:var(--shadow)}
-.xp-icon{font-size:15px;flex-shrink:0}
-.xp-info{display:flex;flex-direction:column;gap:2px}
-.xp-label{font-size:10.5px;font-weight:500;color:var(--t1);white-space:nowrap}
-.xp-bar-wrap{width:80px;height:4px;background:var(--bdr);border-radius:2px;overflow:hidden}
-.xp-bar{height:100%;background:linear-gradient(90deg,var(--acc),var(--acd));border-radius:2px;transition:width .6s cubic-bezier(.4,0,.2,1)}
-.xp-sub{font-size:9.5px;color:var(--t3);white-space:nowrap}
-
-/* XP Popup (Badges, Details) */
-#xp-popup{position:fixed;top:60px;right:16px;width:280px;background:var(--bg2);border:0.5px solid var(--bdr2);border-radius:var(--rlg);box-shadow:var(--shadow-lg);z-index:2000;padding:18px;display:none;animation:popIn .2s cubic-bezier(.4,0,.2,1)}
-#xp-popup.show{display:block}
-@keyframes popIn{from{opacity:0;transform:translateY(-8px) scale(.97)}to{opacity:1;transform:none}}
-.xp-pop-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.xp-pop-avatar{width:44px;height:44px;border-radius:11px;background:var(--acl);border:2px solid var(--acc);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
-.xp-pop-name{font-size:15px;font-weight:500;color:var(--t1)}
-.xp-pop-level{font-size:11.5px;color:var(--acc);font-weight:500}
-.xp-pop-bar-wrap{height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-bottom:4px}
-.xp-pop-bar{height:100%;background:linear-gradient(90deg,var(--acc),var(--acd));border-radius:4px;transition:width .8s cubic-bezier(.4,0,.2,1)}
-.xp-pop-xplabel{font-size:11px;color:var(--t3);margin-bottom:14px}
-.badges-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
-.badge{background:var(--bg3);border:0.5px solid var(--bdr);border-radius:8px;padding:8px 6px;text-align:center;transition:var(--tr)}
-.badge.earned{background:var(--acl);border-color:var(--acd)}
-.badge.earned:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
-.badge-ico{font-size:18px;margin-bottom:3px}
-.badge-lbl{font-size:9.5px;color:var(--t2);line-height:1.3}
-.badge.earned .badge-lbl{color:var(--acc);font-weight:500}
-.badge.locked{opacity:.38;filter:grayscale(1)}
-
-/* XP Toast */
-#xp-toast{position:fixed;bottom:80px;right:24px;background:var(--acc);color:#fff;border-radius:10px;padding:9px 15px;font-size:13px;font-weight:500;z-index:3000;display:none;align-items:center;gap:8px;animation:toastIn .3s cubic-bezier(.4,0,.2,1)}
-#xp-toast.show{display:flex}
-@keyframes toastIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-
-/* ══════════════════════════════════════════
-   CHEMIE-FAKT DER WOCHE
-══════════════════════════════════════════ */
-.fact-card{background:linear-gradient(135deg,var(--acl) 0%,var(--bg2) 100%);border:0.5px solid var(--acd);border-radius:var(--rlg);padding:18px 20px;margin-bottom:20px;position:relative;overflow:hidden}
-.fact-card::before{content:'';position:absolute;top:-20px;right:-20px;width:80px;height:80px;background:var(--acc);opacity:.06;border-radius:50%}
-.fact-badge{display:inline-flex;align-items:center;gap:5px;background:var(--acc);color:#fff;font-size:10px;font-weight:600;padding:3px 9px;border-radius:8px;margin-bottom:8px;letter-spacing:.04em;text-transform:uppercase}
-.fact-text{font-family:'Fraunces',serif;font-size:15px;color:var(--t1);line-height:1.65;font-style:italic}
-.fact-source{font-size:10.5px;color:var(--t3);margin-top:8px}
-.fact-nav{display:flex;gap:6px;margin-top:10px}
-.fact-dot{width:6px;height:6px;border-radius:50%;background:var(--bdr2);cursor:pointer;transition:background .2s}
-.fact-dot.on{background:var(--acc)}
-
-/* ══════════════════════════════════════════
-   ENHANCED CARD ANIMATIONS
-══════════════════════════════════════════ */
-.module-orbit{transition:all .3s cubic-bezier(.4,0,.2,1)!important}
-.module-orbit:hover{transform:translateY(-5px) scale(1.025)!important;box-shadow:0 16px 40px rgba(26,92,58,.14)!important;border-color:var(--acd)!important}
-
-/* Scroll-reveal */
-.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s cubic-bezier(.4,0,.2,1),transform .5s cubic-bezier(.4,0,.2,1)}
-.reveal.in{opacity:1;transform:none}
-
-/* Enhanced PSE element glow */
-.el:hover{transform:scale(1.28)!important;z-index:30;box-shadow:0 0 0 2px var(--acc),0 6px 20px rgba(26,92,58,.22)!important;filter:brightness(1.08)}
-
-/* Info/Warn/Success color system */
-.tag-info{background:var(--bll);color:var(--bl)}
-.tag-success{background:var(--acl);color:var(--acc)}
-.tag-warn{background:var(--aml);color:var(--am)}
-.tag-danger{background:var(--rdl);color:var(--rd)}
-.info-box{background:var(--bll);border:0.5px solid #b0c8f0;border-radius:8px;padding:9px 12px;font-size:12.5px;color:var(--bl);display:flex;gap:8px;align-items:flex-start}
-.info-box::before{content:'ℹ';font-weight:700;flex-shrink:0}
-
-/* ══════════════════════════════════════════
-   FOOTER
-══════════════════════════════════════════ */
-#site-footer{background:var(--bg2);border-top:0.5px solid var(--bdr);padding:28px 32px 24px;margin-top:32px}
-.footer-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;align-items:start}
-.footer-brand{font-family:'Fraunces',serif;font-size:18px;color:var(--t1);margin-bottom:6px;display:flex;align-items:center;gap:8px}
-.footer-brand-ico{width:26px;height:26px;background:var(--acc);border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-style:italic}
-.footer-sub{font-size:12px;color:var(--t3);line-height:1.6;max-width:240px}
-.footer-col h4{font-size:11px;font-weight:600;color:var(--t2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px}
-.footer-col a{display:block;font-size:12.5px;color:var(--t3);text-decoration:none;margin-bottom:6px;transition:color .15s;cursor:pointer}
-.footer-col a:hover{color:var(--acc)}
-.footer-bottom{max-width:1100px;margin:18px auto 0;padding-top:14px;border-top:0.5px solid var(--bdr);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
-.footer-copy{font-size:11.5px;color:var(--t4)}
-.footer-badges{display:flex;gap:6px}
-.footer-badge{font-size:10px;padding:3px 8px;border-radius:6px;background:var(--bg3);color:var(--t3);border:0.5px solid var(--bdr)}
-
-/* ══════════════════════════════════════════
-   MOBILE OPTIMIERUNG
-══════════════════════════════════════════ */
-@media(max-width:640px){
-  .home-modules{grid-template-columns:1fr 1fr!important;gap:10px!important;max-width:100%!important}
-  .content-panel{padding:64px 14px 80px!important}
-  .pse-detail-wrap{grid-template-columns:1fr!important}
-  .rxn-wrap{grid-template-columns:1fr!important}
-  .type-grid{grid-template-columns:1fr 1fr!important}
-  .quiz-answers{grid-template-columns:1fr!important}
-  .quiz-mode-grid{grid-template-columns:1fr 1fr!important}
-  .struc-wrap{grid-template-columns:1fr!important;display:flex!important;flex-direction:column!important}
-  .struc-left,.struc-right{display:none!important}
-  .ptable{min-width:480px}
-  #xp-widget .xp-bar-wrap{display:none}
-  .footer-inner{grid-template-columns:1fr!important;gap:18px}
-  .footer-bottom{flex-direction:column;align-items:flex-start}
-  #back-btn{bottom:16px;right:16px;padding:9px 14px;font-size:12px}
-  .badges-grid{grid-template-columns:repeat(4,1fr)}
-}
-@media(max-width:400px){
-  .home-modules{grid-template-columns:1fr!important}
-  .quiz-mode-grid{grid-template-columns:1fr!important}
-}
+#back-btn.show { animation: slideInRight 0.35s cubic-bezier(.4,0,.2,1) both; }
 
 #scroll-progress {
   position: fixed;
@@ -408,59 +291,116 @@ html,body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   z-index: 800;
-  transition: opacity .4s;
+  transition: opacity .3s;
 }
-/* Auf Startseite leicht ausgeblendet, in Modulen voll sichtbar */
-#scroll-progress.on-home { opacity: 0.35; }
-#scroll-progress.on-module { opacity: 1; }
-
+#scroll-progress.hidden { opacity: 0; pointer-events: none; }
 .sp-dot {
-  position: relative;
   width: 8px; height: 8px; border-radius: 50%;
   background: var(--bdr2);
   cursor: pointer;
-  transition: all .25s cubic-bezier(.4,0,.2,1);
+  transition: all .2s;
   border: 1.5px solid transparent;
-  flex-shrink: 0;
 }
 .sp-dot.active {
   background: var(--acc);
-  transform: scale(1.5);
+  transform: scale(1.4);
   border-color: var(--acd);
-  box-shadow: 0 0 0 3px var(--acl);
 }
-.sp-dot:hover { background: var(--acd); transform: scale(1.35); }
+.sp-dot:hover { background: var(--acd); transform: scale(1.3); }
 
-/* Tooltip-Label beim Hover */
-.sp-dot::after {
-  content: attr(title);
-  position: absolute;
-  left: 18px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: var(--t1);
-  color: var(--bg);
-  font-size: 10.5px;
-  font-family: 'DM Sans', sans-serif;
-  white-space: nowrap;
-  padding: 3px 8px;
-  border-radius: 5px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .15s, transform .15s;
-  transform: translateY(-50%) translateX(-4px);
+
+/* NAV DOTS */
+#scroll-progress{position:fixed;left:20px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:800;transition:opacity .4s}
+#scroll-progress.on-home{opacity:.35}
+#scroll-progress.on-module{opacity:1}
+.sp-dot{position:relative;width:8px;height:8px;border-radius:50%;background:var(--bdr2);cursor:pointer;transition:all .25s cubic-bezier(.4,0,.2,1);border:1.5px solid transparent;flex-shrink:0}
+.sp-dot.active{background:var(--acc);transform:scale(1.5);border-color:var(--acd);box-shadow:0 0 0 3px var(--acl)}
+.sp-dot:hover{background:var(--acd);transform:scale(1.35)}
+.sp-dot::after{content:attr(title);position:absolute;left:18px;top:50%;transform:translateY(-50%) translateX(-4px);background:var(--t1);color:var(--bg);font-size:10.5px;white-space:nowrap;padding:3px 8px;border-radius:5px;opacity:0;pointer-events:none;transition:opacity .15s,transform .15s}
+.sp-dot:hover::after{opacity:1;transform:translateY(-50%) translateX(0)}
+
+/* FLOATING MOLECULES */
+#mol-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.mol-float{position:absolute;opacity:0;animation:molFloat linear infinite;will-change:transform,opacity}
+@keyframes molFloat{0%{transform:translateY(100vh) rotate(0deg);opacity:0}8%{opacity:.1}92%{opacity:.1}100%{transform:translateY(-120px) rotate(360deg);opacity:0}}
+
+/* XP WIDGET */
+#xp-widget{display:flex;align-items:center;gap:8px;padding:4px 10px;background:var(--bg3);border:0.5px solid var(--bdr2);border-radius:10px;cursor:pointer;transition:var(--tr)}
+#xp-widget:hover{background:var(--bg4)}
+.xp-icon{font-size:14px}
+.xp-info{display:flex;flex-direction:column;gap:2px}
+.xp-label{font-size:10.5px;font-weight:500;color:var(--t1);white-space:nowrap}
+.xp-bar-wrap{width:70px;height:4px;background:var(--bdr);border-radius:2px;overflow:hidden}
+.xp-bar{height:100%;background:var(--acc);border-radius:2px;transition:width .6s}
+.xp-sub{font-size:9.5px;color:var(--t3);white-space:nowrap}
+#xp-popup{position:fixed;top:60px;right:16px;width:270px;background:var(--bg2);border:0.5px solid var(--bdr2);border-radius:var(--rlg);box-shadow:var(--shadow-lg);z-index:2000;padding:16px;display:none}
+#xp-popup.show{display:block}
+.xp-pop-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.xp-pop-avatar{width:40px;height:40px;border-radius:10px;background:var(--acl);border:2px solid var(--acc);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.xp-pop-name{font-size:14px;font-weight:500;color:var(--t1)}
+.xp-pop-level{font-size:11px;color:var(--acc);font-weight:500}
+.xp-pop-bar-wrap{height:7px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-bottom:4px}
+.xp-pop-bar{height:100%;background:var(--acc);border-radius:4px;transition:width .8s}
+.xp-pop-xplabel{font-size:11px;color:var(--t3);margin-bottom:12px}
+.badges-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.badge{background:var(--bg3);border:0.5px solid var(--bdr);border-radius:8px;padding:7px 5px;text-align:center}
+.badge.earned{background:var(--acl);border-color:var(--acd)}
+.badge-ico{font-size:16px;margin-bottom:2px}
+.badge-lbl{font-size:9px;color:var(--t2);line-height:1.3}
+.badge.earned .badge-lbl{color:var(--acc);font-weight:500}
+.badge.locked{opacity:.35;filter:grayscale(1)}
+#xp-toast{position:fixed;bottom:80px;right:24px;background:var(--acc);color:#fff;border-radius:10px;padding:9px 15px;font-size:13px;font-weight:500;z-index:3000;display:none;align-items:center;gap:8px}
+#xp-toast.show{display:flex}
+
+/* FACT CARD */
+.fact-card{background:var(--acl);border:0.5px solid var(--acd);border-radius:var(--rlg);padding:16px 18px;margin-bottom:18px}
+.fact-badge{display:inline-flex;align-items:center;gap:5px;background:var(--acc);color:#fff;font-size:10px;font-weight:600;padding:3px 9px;border-radius:8px;margin-bottom:8px;text-transform:uppercase;letter-spacing:.04em}
+.fact-text{font-family:'Fraunces',serif;font-size:14.5px;color:var(--t1);line-height:1.65;font-style:italic}
+.fact-source{font-size:10.5px;color:var(--t3);margin-top:7px}
+.fact-nav{display:flex;gap:5px;margin-top:10px}
+.fact-dot{width:6px;height:6px;border-radius:50%;background:var(--bdr2);cursor:pointer;transition:background .2s}
+.fact-dot.on{background:var(--acc)}
+
+/* FOOTER */
+.site-footer{background:var(--bg2);border-top:0.5px solid var(--bdr);padding:24px 28px 20px;margin-top:28px}
+.footer-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:20px;align-items:start}
+.footer-brand{font-family:'Fraunces',serif;font-size:17px;color:var(--t1);margin-bottom:5px;display:flex;align-items:center;gap:7px}
+.footer-brand-ico{width:24px;height:24px;background:var(--acc);border-radius:5px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-style:italic}
+.footer-sub{font-size:11.5px;color:var(--t3);line-height:1.6}
+.footer-col h4{font-size:10.5px;font-weight:600;color:var(--t2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:9px}
+.footer-link{display:block;font-size:12px;color:var(--t3);text-decoration:none;margin-bottom:5px;cursor:pointer;transition:color .15s;background:none;border:none;font-family:inherit;text-align:left;padding:0}
+.footer-link:hover{color:var(--acc)}
+.footer-bottom{max-width:1100px;margin:14px auto 0;padding-top:12px;border-top:0.5px solid var(--bdr);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.footer-copy{font-size:11px;color:var(--t4)}
+.footer-chips{display:flex;gap:5px}
+.footer-chip{font-size:10px;padding:2px 7px;border-radius:6px;background:var(--bg3);color:var(--t3);border:0.5px solid var(--bdr)}
+
+/* ENHANCED HOVER */
+.module-orbit:hover{transform:translateY(-5px) scale(1.025)!important;box-shadow:0 14px 36px rgba(26,92,58,.13)!important;border-color:var(--acd)!important}
+.el:hover{box-shadow:0 0 0 2px var(--acc),0 6px 16px rgba(26,92,58,.2)!important}
+@keyframes slideInRight{from{transform:translateX(60px);opacity:0}to{transform:translateX(0);opacity:1}}
+#back-btn.show{animation:slideInRight .35s cubic-bezier(.4,0,.2,1) both}
+
+/* MOBILE */
+@media(max-width:640px){
+  .home-modules{grid-template-columns:1fr 1fr!important}
+  .content-panel{padding:64px 14px 80px!important}
+  .pse-detail-wrap{grid-template-columns:1fr!important}
+  .rxn-wrap{grid-template-columns:1fr!important}
+  .quiz-answers{grid-template-columns:1fr!important}
+  .quiz-mode-grid{grid-template-columns:1fr 1fr!important}
+  .footer-inner{grid-template-columns:1fr!important}
+  .footer-bottom{flex-direction:column;align-items:flex-start}
+  #xp-widget .xp-bar-wrap{display:none}
 }
-.sp-dot:hover::after {
-  opacity: 1;
-  transform: translateY(-50%) translateX(0);
-}
+@media(max-width:400px){.home-modules{grid-template-columns:1fr!important}}
+
 </style>
 </head>
 <body>
 
-<div id="mol-bg"></div>
 
 <div id="universe">
   <div id="zoom-world">
@@ -545,9 +485,9 @@ html,body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:
   </div>
   <div class="hud-right">
     <div id="xp-widget" onclick="toggleXpPopup()" title="Dein Fortschritt">
-      <div class="xp-icon">🧪</div>
+      <div class="xp-icon">&#x1F9EA;</div>
       <div class="xp-info">
-        <div class="xp-label" id="xp-level-label">Level 1 · Novize</div>
+        <div class="xp-label" id="xp-level-label">Lv.1 Novize</div>
         <div class="xp-bar-wrap"><div class="xp-bar" id="xp-bar" style="width:0%"></div></div>
         <div class="xp-sub" id="xp-sub-label">0 / 100 XP</div>
       </div>
@@ -566,6 +506,21 @@ html,body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:
 
 
 <!-- SCROLL PROGRESS DOTS -->
+<div id="mol-bg"></div>
+<div id="xp-popup">
+  <div class="xp-pop-header">
+    <div class="xp-pop-avatar">&#x1F9EA;</div>
+    <div>
+      <div class="xp-pop-name">ChemLab</div>
+      <div class="xp-pop-level" id="xp-pop-level">Level 1 - Novize</div>
+    </div>
+  </div>
+  <div class="xp-pop-bar-wrap"><div class="xp-pop-bar" id="xp-pop-bar" style="width:0%"></div></div>
+  <div class="xp-pop-xplabel" id="xp-pop-label">0 / 100 XP</div>
+  <div class="sec-hd" style="margin-bottom:8px">Abzeichen</div>
+  <div class="badges-grid" id="badges-grid"></div>
+</div>
+<div id="xp-toast">&#11088; <span id="xp-toast-msg"></span></div>
 <div id="scroll-progress" class="on-home">
   <div class="sp-dot" onclick="zoomTo('pse')"    title="Periodensystem"></div>
   <div class="sp-dot" onclick="zoomTo('wiki')"   title="Chemie-Wiki"></div>
@@ -575,26 +530,13 @@ html,body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:
   <div class="sp-dot" onclick="zoomTo('quiz')"   title="Quiz"></div>
 </div>
 
-<!-- XP / LEVEL POPUP -->
-<div id="xp-popup">
-  <div class="xp-pop-header">
-    <div class="xp-pop-avatar">🧪</div>
-    <div>
-      <div class="xp-pop-name">ChemLab-Nutzer</div>
-      <div class="xp-pop-level" id="xp-pop-level">Level 1 – Chemie-Novize</div>
-    </div>
-  </div>
-  <div class="xp-pop-bar-wrap"><div class="xp-pop-bar" id="xp-pop-bar" style="width:0%"></div></div>
-  <div class="xp-pop-xplabel" id="xp-pop-label">0 / 100 XP bis nächstes Level</div>
-  <div class="sec-hd" style="margin-bottom:8px">Abzeichen</div>
-  <div class="badges-grid" id="badges-grid"></div>
-</div>
-
-<!-- XP TOAST -->
-<div id="xp-toast">⭐ <span id="xp-toast-msg"></span></div>
-
 <!-- TOOLTIP -->
-<div class="el-tooltip" id="tooltip"></div>alkali:{l:'Alkalimetalle',bg:'#EF5350'},alkaline:{l:'Erdalkalimetalle',bg:'#FFA726'},trans:{l:'Übergangsmetalle',bg:'#42A5F5'},post:{l:'Metalle',bg:'#66BB6A'},met:{l:'Halbmetalle',bg:'#AB47BC'},non:{l:'Nichtmetalle',bg:'#26C6DA'},hal:{l:'Halogene',bg:'#FFA726'},noble:{l:'Edelgase',bg:'#EC407A'},lan:{l:'Lanthanide',bg:'#7E57C2'},act:{l:'Actinide',bg:'#26A69A'}};
+<div class="el-tooltip" id="tooltip"></div>
+
+<script>
+
+
+const CATS={alkali:{l:'Alkalimetalle',bg:'#EF5350'},alkaline:{l:'Erdalkalimetalle',bg:'#FFA726'},trans:{l:'Übergangsmetalle',bg:'#42A5F5'},post:{l:'Metalle',bg:'#66BB6A'},met:{l:'Halbmetalle',bg:'#AB47BC'},non:{l:'Nichtmetalle',bg:'#26C6DA'},hal:{l:'Halogene',bg:'#FFA726'},noble:{l:'Edelgase',bg:'#EC407A'},lan:{l:'Lanthanide',bg:'#7E57C2'},act:{l:'Actinide',bg:'#26A69A'}};
 const catCol=c=>CATS[c]?.bg||'#888';
 const catBg=c=>catCol(c)+'2a';
 const catBdr=c=>catCol(c)+'55';
@@ -814,145 +756,35 @@ const ATOM_R={C:14,H:11,O:14,N:13,S:14,Cl:16};
 const MAX_VAL={C:4,N:3,O:2,S:2,Cl:1,F:1,H:1};
 
 const QUIZ_Q={
-
-/* ── ELEMENTE ──────────────────────────────────────────────────── */
 elements:[
 {q:'Welches Element hat das Symbol Fe?',el:26,answers:['Eisen','Fluor','Francium','Fermium'],correct:0,exp:'Fe kommt vom lateinischen "ferrum" (Eisen).'},
 {q:'Ordnungszahl von Gold?',el:79,answers:['78','79','80','81'],correct:1,exp:'Gold (Au) hat die Ordnungszahl 79.'},
-{q:'Leichtestes Element im PSE?',el:1,answers:['Helium','Lithium','Wasserstoff','Beryllium'],correct:2,exp:'Wasserstoff (H, Z=1) ist das leichteste Element.'},
-{q:'Welches Element hat die höchste Elektronegativität?',el:9,answers:['Sauerstoff','Stickstoff','Chlor','Fluor'],correct:3,exp:'Fluor hat EN=3,98 – die höchste aller Elemente.'},
-{q:'Welches Element ist bei Raumtemperatur flüssig (außer Hg)?',el:35,answers:['Iod','Brom','Chlor','Phosphor'],correct:1,exp:'Brom ist neben Quecksilber das einzige bei RT flüssige Element.'},
-{q:'Wie viele Elektronen hat Natrium (Na)?',el:11,answers:['10','11','12','13'],correct:1,exp:'Natrium (Z=11) hat 11 Elektronen.'},
-{q:'Häufigstes Edelgas in der Erdatmosphäre?',el:18,answers:['Helium','Neon','Argon','Krypton'],correct:2,exp:'Argon macht ca. 0,93% der Erdatmosphäre aus.'},
-{q:'Atommasse von Kohlenstoff (C)?',el:6,answers:['11 u','12 u','13 u','14 u'],correct:1,exp:'¹²C ist das häufigste Isotop; Atommasse ≈ 12,011 u.'},
-{q:'Welches Element ist das Zentralatom im Hämoglobin?',el:26,answers:['Kupfer','Zink','Eisen','Mangan'],correct:2,exp:'Fe²⁺ ist das Zentralion im Häm-Komplex des Hämoglobins.'},
-{q:'Symbol für Kalium?',el:19,answers:['Ka','K','Kal','Kt'],correct:1,exp:'K stammt vom lateinischen „kalium".'},
-{q:'Welches Element leuchtet in Leuchtstoffröhren orange-rot?',el:10,answers:['Argon','Neon','Xenon','Krypton'],correct:1,exp:'Neon (Ne) emittiert charakteristisches orange-rotes Licht.'},
-{q:'Was ist das häufigste Element im Universum?',el:1,answers:['Helium','Kohlenstoff','Sauerstoff','Wasserstoff'],correct:3,exp:'Wasserstoff macht ca. 75% der Baryonischen Masse des Universums aus.'},
-{q:'Welches Element hat das Symbol Pb?',el:82,answers:['Phosphor','Platin','Blei','Praseodym'],correct:2,exp:'Pb kommt von „plumbum" (lat. für Blei).'},
-{q:'Welches Metall ist bei Raumtemperatur flüssig?',el:80,answers:['Gallium','Caesium','Quecksilber','Francium'],correct:2,exp:'Quecksilber (Hg) ist das einzige Metall, das bei RT flüssig ist.'},
-{q:'Welches Element hat die Ordnungszahl 6?',el:6,answers:['Calcium','Kohlenstoff','Chrom','Cobalt'],correct:1,exp:'C = Kohlenstoff, Z=6. Grundbaustein organischer Verbindungen.'},
-{q:'Halbwertszeit von ¹⁴C (Radiokohlenstoff)?',el:6,answers:['~570 Jahre','~5730 Jahre','~57300 Jahre','~573 Jahre'],correct:1,exp:'¹⁴C zerfällt mit t½ ≈ 5730 Jahren – Basis der C14-Datierung.'},
-{q:'Welches Element ist in Rubinen für die rote Farbe verantwortlich?',el:24,answers:['Eisen','Mangan','Chrom','Cobalt'],correct:2,exp:'Cr³⁺-Ionen in Al₂O₃ (Korund) erzeugen die rote Farbe.'},
-{q:'Elektronenkonfiguration von Natrium (Kurzform)?',el:11,answers:['[He] 2s¹','[Ne] 3s¹','[Ar] 3s¹','[He] 3s¹'],correct:1,exp:'Na: [Ne] 3s¹ — ein Valenzelektron in der 3. Schale.'},
+{q:'Leichtestes Element?',el:1,answers:['Helium','Lithium','Wasserstoff','Beryllium'],correct:2,exp:'Wasserstoff (H, Z=1) ist das leichteste Element.'},
+{q:'Höchste Elektronegativität?',el:9,answers:['Sauerstoff','Stickstoff','Chlor','Fluor'],correct:3,exp:'Fluor hat EN=3,98 – die höchste aller Elemente.'},
+{q:'Welches Element ist bei RT flüssig (außer Hg)?',el:35,answers:['Iod','Brom','Chlor','Phosphor'],correct:1,exp:'Brom ist neben Hg das einzige bei RT flüssige Element.'},
+{q:'Elektronen von Natrium (Na)?',el:11,answers:['10','11','12','13'],correct:1,exp:'Natrium (Z=11) hat 11 Elektronen.'},
+{q:'Häufigstes Edelgas in der Atmosphäre?',el:18,answers:['Helium','Neon','Argon','Krypton'],correct:2,exp:'Argon macht 0,93% der Erdatmosphäre aus.'},
+{q:'Atommasse von Kohlenstoff?',el:6,answers:['11','12','13','14'],correct:1,exp:'Kohlenstoff hat die Atommasse 12,011 u.'},
+{q:'Welches Element ist im Hämoglobin?',el:26,answers:['Kupfer','Zink','Eisen','Mangan'],correct:2,exp:'Fe²⁺ ist das Zentralion im Hämoglobin.'},
+{q:'Symbol für Kalium?',el:19,answers:['Ka','K','Kal','Kt'],correct:1,exp:'Kalium hat das Symbol K (vom lat. "kalium").'},
 ],
-
-/* ── REAKTIONEN ────────────────────────────────────────────────── */
 reactions:[
-{q:'Produkte der vollständigen Verbrennung von Methan?',answers:['CO + H₂O','CO₂ + H₂O','CO₂ + H₂','CH₄O'],correct:1,exp:'CH₄ + 2O₂ → CO₂ + 2H₂O.'},
-{q:'Was entsteht bei der Reaktion von Na mit Wasser?',answers:['NaO + H₂','NaOH + H₂','Na₂O + H₂O','NaH + O₂'],correct:1,exp:'2Na + 2H₂O → 2NaOH + H₂↑'},
-{q:'Was ist Oxidation (Redox-Definition)?',answers:['Aufnahme von Elektronen','Abgabe von Elektronen','Aufnahme von Protonen','Abgabe von Neutronen'],correct:1,exp:'Oxidation = Elektronenabgabe (Merkregel: OIL RIG).'},
-{q:'Was entsteht an der Kathode bei der Wasserelektrolyse?',answers:['Sauerstoff','Ozon','Wasserstoff','Wasser'],correct:2,exp:'Kathode (–): 4H⁺ + 4e⁻ → 2H₂↑'},
-{q:'Was ist der Haber-Bosch-Prozess?',answers:['H₂SO₄-Synthese','NH₃-Synthese','HCl-Gewinnung','Al-Schmelzflusselektrolyse'],correct:1,exp:'N₂ + 3H₂ ⇌ 2NH₃  (Katalysator: Eisen, 400–500°C, 200 bar).'},
-{q:'Hauptursache des sauren Regens?',answers:['CO₂','NO','SO₂','NH₃'],correct:2,exp:'SO₂ + H₂O → H₂SO₃; in der Atmosphäre auch → H₂SO₄.'},
-{q:'Was ist ein Puffer?',answers:['Gemisch starker Säuren','pH-stabilisierendes System','konzentrierte Lauge','Salz starker Säure'],correct:1,exp:'Puffer = schwache Säure + Konjugatbase; stabilisiert den pH-Wert.'},
-{q:'Welche Reaktion ist exotherm?',answers:['CaCO₃ → CaO + CO₂','2H₂O → 2H₂ + O₂','2Na + 2H₂O → 2NaOH + H₂','Fotosynthese'],correct:2,exp:'Na + H₂O ist stark exotherm (ΔH < 0).'},
-{q:'Was ist eine Neutralisationsreaktion?',answers:['Metall + Säure','Säure + Base → Salz + Wasser','Oxidation eines Metalls','Säure + Metall → H₂'],correct:1,exp:'HCl + NaOH → NaCl + H₂O. Charakteristisch: Wasser + Salz.'},
-{q:'Welche Reaktion läuft beim Rosten von Eisen ab?',answers:['Reduktion','Komplexbildung','Oxidation','Verbrennung'],correct:2,exp:'4Fe + 3O₂ + 2H₂O → 2Fe₂O₃·H₂O (Rost). Eisen wird oxidiert.'},
-{q:'Was versteht man unter dem Prinzip von Le Chatelier?',answers:['Energieerhaltung','Gleichgewicht weicht Störungen aus','Reaktionsrate steigt mit Temp.','Katalysatoren senken Aktivierungsenergie'],correct:1,exp:'Bei Störung eines Gleichgewichts verschiebt es sich entgegen der Störung.'},
-{q:'Was ist eine Kondensationsreaktion?',answers:['Addition von H₂O','Abspaltung von H₂O','Anlagerung von H₂','Abspaltung von CO₂'],correct:1,exp:'Kondensation = Verknüpfung zweier Moleküle unter Wasserabspaltung.'},
+{q:'Produkte der vollst. Verbrennung von Methan?',answers:['CO+H₂O','CO₂+H₂O','CO₂+H₂','CH₄O'],correct:1,exp:'CH₄+2O₂→CO₂+2H₂O.'},
+{q:'Reaktion von Na mit H₂O?',answers:['NaO+H₂','NaOH+H₂','Na₂O+H₂O','NaH+O₂'],correct:1,exp:'2Na+2H₂O→2NaOH+H₂.'},
+{q:'Was ist Oxidation?',answers:['Aufnahme von Elektronen','Abgabe von Elektronen','Aufnahme von Protonen','Abgabe von Neutronen'],correct:1,exp:'Oxidation = Elektronenabgabe (OIL).'},
+{q:'Was entsteht an der Kathode bei Wasserelektrolyse?',answers:['Sauerstoff','Ozon','Wasserstoff','Wasser'],correct:2,exp:'Kathode: 4H⁺+4e⁻→2H₂.'},
+{q:'Was ist der Haber-Bosch-Prozess?',answers:['H₂SO₄-Synthese','NH₃-Synthese','Fe-Reduktion','Al-Gewinnung'],correct:1,exp:'N₂+3H₂⇌2NH₃.'},
+{q:'Hauptursache sauren Regens?',answers:['CO₂','NO','SO₂','NH₃'],correct:2,exp:'SO₂+H₂O→H₂SO₃.'},
+{q:'Was ist ein Puffer?',answers:['Gemisch starker Säuren','pH-stabilisierendes Gemisch','konzentrierte Lauge','Salz'],correct:1,exp:'Schwache Säure+Konjugatbase stabilisiert pH.'},
+{q:'Welche Reaktion ist EXOTHERM?',answers:['CaCO₃→CaO+CO₂','2H₂O→2H₂+O₂','2Na+2H₂O→2NaOH+H₂','Fotosynthese'],correct:2,exp:'Na+H₂O: stark exotherm (ΔH<0).'},
 ],
-
-/* ── THEORIE / PSE ─────────────────────────────────────────────── */
 theory:[
-{q:'Was gibt die Periode im PSE an?',answers:['Neutronenzahl','Gesamtelektronenzahl','Anzahl besetzter Schalen','Valenzelektronen'],correct:2,exp:'Periode = Anzahl der besetzten Elektronenschalen.'},
-{q:'Was haben alle Elemente einer Gruppe gemeinsam?',answers:['Gleiche Atommasse','Gleiche Protonenzahl','Gleiche Valenzelektronenzahl','Gleicher Aggregatzustand'],correct:2,exp:'Gleiche Valenzelektronenzahl → ähnliche chemische Eigenschaften.'},
-{q:'Was ist Elektronegativität?',answers:['Tendenz, Elektronen abzugeben','Tendenz, Elektronen anzuziehen','Anzahl der Elektronen','Verhältnis von Protonen zu Elektronen'],correct:1,exp:'EN = Fähigkeit eines Atoms, Bindungselektronen anzuziehen (Pauling-Skala).'},
-{q:'Welche Bindung entsteht zwischen zwei Nichtmetallen?',answers:['Ionenbindung','Metallische Bindung','Kovalente Bindung','Van-der-Waals-Bindung'],correct:2,exp:'Nichtmetall + Nichtmetall: Elektronenpaare werden geteilt (kovalent).'},
-{q:'Was besagt die Oktettregel?',answers:['Atome wollen 10 Valenzelektronen','Atome streben 8 Valenzelektronen an','Atome haben immer 8 Protonen','Jedes Atom bildet 8 Bindungen'],correct:1,exp:'Atome streben nach der Edelgaskonfiguration (8 Valenzelektronen).'},
-{q:'Was ist Ionisierungsenergie?',answers:['Energie, die bei Bindungsbruch frei wird','Energie, um ein Elektron zu entfernen','Energie des Kerns','Bindungsenergie im Kristall'],correct:1,exp:'IE = Energie, die nötig ist, ein Elektron aus dem gasförmigen Atom zu entfernen.'},
-{q:'Wie nimmt der Atomradius im PSE von links nach rechts zu?',answers:['Er nimmt zu','Er bleibt gleich','Er nimmt ab','Er schwankt unregelmäßig'],correct:2,exp:'Mehr Protonen ziehen die Elektronen stärker an → Radius nimmt ab.'},
-{q:'Was ist ein Isotop?',answers:['Atom mit gleicher Protonenzahl, anderer Neutronenzahl','Atom anderer Elemente','Ion mit zusätzlichen Elektronen','Radioaktives Atom'],correct:0,exp:'Isotope: gleiche Z (Protonen), unterschiedliche Neutronenzahl.'},
-{q:'Was ist ein Molekül-Ion?',answers:['Neutrales Molekül','Molekül mit Ladung (Ionisierung)','Metallkomplex','Radioaktives Teilchen'],correct:1,exp:'Molekül-Ionen entstehen durch Aufnahme oder Abgabe von Elektronen.'},
-],
-
-/* ── ORGANISCHE CHEMIE / ALKANE ────────────────────────────────── */
-alkane:[
-{q:'Wie lautet die allgemeine Summenformel der Alkane?',answers:['CₙH₂ₙ','CₙH₂ₙ₊₂','CₙH₂ₙ₋₂','CₙHₙ'],correct:1,exp:'Alkane sind gesättigte Kohlenwasserstoffe: CₙH₂ₙ₊₂.'},
-{q:'Wie heißt der einfachste Alkan mit einem C-Atom?',answers:['Ethan','Propan','Methan','Butan'],correct:2,exp:'CH₄ = Methan, n=1. Hauptbestandteil von Erdgas.'},
-{q:'Welche Bindungsart haben Alkane ausschließlich?',answers:['C=C-Doppelbindungen','C≡C-Dreifachbindungen','C-C-Einfachbindungen','Aromatische Ringe'],correct:2,exp:'Alkane sind gesättigt – nur Einfachbindungen (sp³-hybridisiertes C).'},
-{q:'Wie heißt Alkan mit 4 C-Atomen?',answers:['Propan','Butan','Pentan','Hexan'],correct:1,exp:'C₄H₁₀ = Butan. In Feuerzeuggas und Campingkocher.'},
-{q:'Was ist die typische Reaktion von Alkanen?',answers:['Elektrophile Addition','Nucleophile Substitution','Radikalische Substitution','Eliminierung'],correct:2,exp:'Alkane reagieren v.a. durch radikalische Substitution (z.B. Halogenierung).'},
-{q:'Wie heißt das Alkan mit 3 C-Atomen?',answers:['Methan','Ethan','Propan','Butan'],correct:2,exp:'C₃H₈ = Propan. Wird z.B. als Flüssiggas verwendet.'},
-{q:'Was sind Konstitutionsisomere?',answers:['Gleiche Summenformel, gleiche Struktur','Gleiche Summenformel, verschiedene Verknüpfung','Verschiedene Summenformel, gleiche Eigenschaften','Spiegelbilder voneinander'],correct:1,exp:'Konstitutionsisomere: C₄H₁₀ = n-Butan und iso-Butan, gleiches CₙH₂ₙ₊₂.'},
-{q:'Welches Alkan siedet am höchsten?',answers:['Methan (CH₄)','Ethan (C₂H₆)','Propan (C₃H₈)','Octan (C₈H₁₈)'],correct:3,exp:'Höheres Molekulargewicht → stärkere Van-der-Waals-Kräfte → höherer Siedepunkt.'},
-{q:'Was entsteht bei vollständiger Verbrennung eines Alkans?',answers:['CO + H₂','CO₂ + H₂O','C + H₂O','CH₄ + O₂'],correct:1,exp:'CₙH₂ₙ₊₂ + O₂ → n CO₂ + (n+1) H₂O (vollständige Verbrennung).'},
-{q:'Welche Hybridisierung hat Kohlenstoff in Alkanen?',answers:['sp','sp²','sp³','sp³d'],correct:2,exp:'sp³-Hybridisierung: 4 gleichwertige Bindungen, Tetraeder-Geometrie.'},
-],
-
-/* ── PROTEINE ──────────────────────────────────────────────────── */
-proteins:[
-{q:'Aus welchen Grundbausteinen bestehen Proteine?',answers:['Fettsäuren','Nucleotide','Aminosäuren','Monosaccharide'],correct:2,exp:'Proteine sind Polypeptide aus Aminosäuren, verknüpft durch Peptidbindungen.'},
-{q:'Was ist eine Peptidbindung?',answers:['Bindung zwischen zwei NH₂-Gruppen','CO-NH-Bindung zwischen Aminosäuren','Esterbindung zwischen Zuckern','Disulfidbrücke zwischen Cysteinen'],correct:1,exp:'Peptidbindung: –CO–NH– entsteht durch Kondensation (Wasserabspaltung).'},
-{q:'Wie viele proteinogene Aminosäuren gibt es?',answers:['10','20','30','64'],correct:1,exp:'Es gibt 20 standardmäßige proteinogene Aminosäuren im genetischen Code.'},
-{q:'Was beschreibt die Primärstruktur eines Proteins?',answers:['3D-Faltung','Helix-Strukturen','Abfolge der Aminosäuren','Quartärstruktur-Komplexe'],correct:2,exp:'Primärstruktur = lineare Aminosäuresequenz (vom N- zum C-Terminus).'},
-{q:'Was ist eine α-Helix?',answers:['Primärstruktur','Sekundärstruktur','Tertiärstruktur','Quartärstruktur'],correct:1,exp:'α-Helix ist eine Sekundärstruktur, stabilisiert durch Wasserstoffbrücken.'},
-{q:'Was ist Denaturierung eines Proteins?',answers:['Spaltung der Peptidbindungen','Verlust der räumlichen Struktur','Synthese neuer Aminosäuren','Reduktion von Disulfidbrücken'],correct:1,exp:'Denaturierung = Verlust der Raumstruktur durch Hitze, pH-Änderung etc.'},
-{q:'Welche Bindung stabilisiert die α-Helix hauptsächlich?',answers:['Ionenbindungen','Disulfidbrücken','Wasserstoffbrücken','Kovalente C–C-Bindungen'],correct:2,exp:'Intramolekulare H-Brücken zwischen C=O und N–H der Peptidbindungen.'},
-{q:'Was ist ein Enzym?',answers:['Strukturprotein','Biologischer Katalysator','Transportprotein','Hormon'],correct:1,exp:'Enzyme sind Proteine (selten RNA), die biochemische Reaktionen katalysieren.'},
-{q:'Welche Aminosäure enthält Schwefel und kann Disulfidbrücken bilden?',answers:['Glycin','Alanin','Cystein','Serin'],correct:2,exp:'Cystein (Cys) enthält –SH (Thiolgruppe), bildet –S–S– Disulfidbrücken.'},
-{q:'Was ist der isoelektrische Punkt (pI) einer Aminosäure?',answers:['pH, bei dem sie positiv geladen ist','pH der maximalen Löslichkeit','pH, bei dem die Nettoladung 0 ist','Optimaler pH für Enzymaktivität'],correct:2,exp:'Am pI hat die Aminosäure keine Nettoladung (Zwitterion-Gleichgewicht).'},
-],
-
-/* ── KOHLENHYDRATE ─────────────────────────────────────────────── */
-carbs:[
-{q:'Welche allgemeine Formel haben Monosaccharide?',answers:['(CH₂O)ₙ','CₙH₂ₙO₂','CₙHₙOₙ','C₆H₁₂O₆ immer'],correct:0,exp:'Monosaccharide: (CH₂O)ₙ, z.B. Glucose C₆H₁₂O₆ mit n=6.'},
-{q:'Was ist der Unterschied zwischen Glucose und Fructose?',answers:['Verschiedene Summenformeln','Verschiedene Anzahl C-Atome','Konstitutionsisomere','Verschiedene Ladungen'],correct:2,exp:'Glucose und Fructose haben beide C₆H₁₂O₆, unterscheiden sich in der Struktur (Konstitutionsisomere).'},
-{q:'Welches Disaccharid entsteht aus Glucose + Fructose?',answers:['Maltose','Lactose','Saccharose','Cellobiose'],correct:2,exp:'Glucose + Fructose → Saccharose (Rohrzucker) + H₂O (glykosidische Bindung).'},
-{q:'Was ist der Hauptspeicherstoff für Glucose im menschlichen Körper?',answers:['Cellulose','Stärke','Glykogen','Saccharose'],correct:2,exp:'Glykogen ist das tierische Speicherkohlenhydrat, gespeichert in Leber und Muskel.'},
-{q:'Wodurch unterscheidet sich Stärke von Cellulose?',answers:['Verschiedene Monosaccharide','α- vs. β-glykosidische Bindung','Verschiedene Kettenlänge','Stärke hat Verzweigungen, Cellulose nicht'],correct:1,exp:'Stärke: α-1,4-Bindung (verdaubar); Cellulose: β-1,4-Bindung (unverdaubar für Menschen).'},
-{q:'Was zeigt die Fehlingprobe an?',answers:['Proteine','Reduzierende Zucker','Fette','Stärke'],correct:1,exp:'Fehling: Cu²⁺ (blau) → Cu₂O (roter Niederschlag) bei reduzierenden Zuckern (z.B. Glucose).'},
-{q:'Welches Polysaccharid gibt Pflanzen ihre Strukturfestigkeit?',answers:['Glykogen','Stärke','Chitin','Cellulose'],correct:3,exp:'Cellulose ist das häufigste organische Polymer der Erde – bildet die Pflanzenzellwand.'},
-{q:'Wie viele C-Atome hat Ribose?',answers:['3','4','5','6'],correct:2,exp:'Ribose (C₅H₁₀O₅) ist eine Pentose (5 C-Atome) – Bestandteil von RNA.'},
-{q:'Was ist ein glykämischer Index?',answers:['Zuckergehalt in Lebensmitteln','Maß für Blutzuckeranstieg nach Konsum','Süßkraft relativ zu Saccharose','Löslichkeit von Zucker in Wasser'],correct:1,exp:'GI = wie stark ein Lebensmittel den Blutzucker im Vergleich zu reiner Glucose anhebt.'},
-{q:'Welche Bindung verknüpft Monosaccharide in Polysacchariden?',answers:['Peptidbindung','Esterbindung','Glykosidische Bindung','Wasserstoffbrücke'],correct:2,exp:'Glykosidische Bindung (C–O–C) verknüpft Zucker unter Wasserabspaltung.'},
-],
-
-/* ── SÄUREN & BASEN ────────────────────────────────────────────── */
-acids:[
-{q:'Was ist nach Brønsted eine Säure?',answers:['Elektronenpaardonor','Protonendonor','Elektronenpaarakzeptor','Protonenakzeptor'],correct:1,exp:'Brønsted-Säure = Protonendonor (gibt H⁺ ab).'},
-{q:'Was ist der pH-Wert einer 0,01 M HCl-Lösung?',answers:['1','2','7','12'],correct:1,exp:'pH = –log[H⁺] = –log(0,01) = 2.'},
-{q:'Welche Säure ist in Essig enthalten?',answers:['Salzsäure','Schwefelsäure','Essigsäure','Zitronensäure'],correct:2,exp:'Essig enthält 5–20% Essigsäure (CH₃COOH, Ethansäure).'},
-{q:'Was ist eine Amphotere Verbindung?',answers:['Nur Säure','Nur Base','Säure und Base gleichzeitig möglich','Weder Säure noch Base'],correct:2,exp:'Amphotere Stoffe können je nach Bedingung als Säure ODER Base reagieren (z.B. Wasser).'},
-{q:'Was ist der pKs-Wert?',answers:['Negativer dekadischer Log der Säurekonstante','pH des Äquivalenzpunkts','Konzentration der Säure','Summe aus pH + pOH'],correct:0,exp:'pKs = –log(Ks). Kleiner pKs → stärkere Säure.'},
-{q:'Welche Säure ist die stärkste?',answers:['Essigsäure','Salzsäure','Kohlensäure','Blausäure'],correct:1,exp:'HCl ist eine starke Säure (vollständig dissoziiert), die anderen sind schwach.'},
-{q:'Was ist pH + pOH bei 25°C?',answers:['7','14','1','0'],correct:1,exp:'Kw = [H⁺][OH⁻] = 10⁻¹⁴ → pH + pOH = 14 bei 25°C.'},
-{q:'Was ist Natronlauge (NaOH)?',answers:['Schwache Säure','Starke Säure','Schwache Base','Starke Base'],correct:3,exp:'NaOH ist eine starke Base – dissoziiert vollständig zu Na⁺ + OH⁻.'},
-{q:'Bei welchem pH ist eine Lösung neutral?',answers:['0','7','14','1'],correct:1,exp:'pH 7 = neutral bei 25°C ([H⁺] = [OH⁻] = 10⁻⁷ mol/L).'},
-{q:'Was ist Titration?',answers:['Destillation einer Säure','Quantitative Analyse durch Zugabe einer Maßlösung','Messung des pH-Werts','Neutralisation mit Indikatoren'],correct:1,exp:'Bei der Titration wird eine Maßlösung bekannter Konzentration zugetropft bis zum Äquivalenzpunkt.'},
-],
-
-/* ── LIPIDE & FETTE ────────────────────────────────────────────── */
-lipids:[
-{q:'Aus welchen Bausteinen bestehen Triglyceride?',answers:['Aminosäuren + Glycerin','Fettsäuren + Glycerin','Glucose + Fettsäuren','Fettsäuren + Phosphat'],correct:1,exp:'Triglyceride = 3 Fettsäuren + 1 Glycerin, verknüpft über Esterbindungen.'},
-{q:'Was ist der Unterschied zwischen gesättigten und ungesättigten Fettsäuren?',answers:['Anzahl der C-Atome','Vorhandensein von C=C-Doppelbindungen','Löslichkeit in Wasser','Anzahl der OH-Gruppen'],correct:1,exp:'Gesättigt: keine Doppelbindungen; ungesättigt: ≥1 C=C-Doppelbindung.'},
-{q:'Warum sind ungesättigte Fette bei RT oft flüssig?',answers:['Sie haben weniger C-Atome','Doppelbindungen erzeugen Knicke → weniger Packungsdichte','Sie haben mehr Sauerstoff','Sie sind ionisch'],correct:1,exp:'Cis-Doppelbindungen stören die Packung → niedrigerer Schmelzpunkt.'},
-{q:'Was ist Verseifung?',answers:['Oxidation von Fetten','Hydrolyse von Fetten mit Lauge','Addition von H₂ an Fette','Verbrennung von Fetten'],correct:1,exp:'Verseifung: Fett + NaOH → Glycerin + Fettsäure-Salze (Seifen).'},
-{q:'Was sind Phospholipide?',answers:['Fette mit Phosphatgruppe','Zucker-Fett-Verbindungen','Proteine mit Fettanteil','Cholesterin-Derivate'],correct:0,exp:'Phospholipide: Glycerin + 2 Fettsäuren + Phosphatgruppe; bilden die Zellmembran.'},
-{q:'Was ist der Schmelzpunkt von Palmitin­säure (C16:0) im Vergleich zur Ölsäure (C18:1)?',answers:['Beide gleich','Palmitinsäure höher','Ölsäure höher','Nicht vergleichbar'],correct:1,exp:'Gesättigte Palmitinsäure (Smp. 63°C) > ungesättigte Ölsäure (Smp. 16°C).'},
-{q:'Was sind essentielle Fettsäuren?',answers:['Vom Körper synthetisierbar','Müssen mit der Nahrung aufgenommen werden','Kommen nur in Tieren vor','Sind gesättigt'],correct:1,exp:'Essentiell = der Körper kann sie nicht selbst herstellen (z.B. Linolsäure, Linolensäure).'},
-{q:'Wo werden Fette im menschlichen Körper hauptsächlich gespeichert?',answers:['Leber','Muskeln','Fettgewebe (Adipozyten)','Knochen'],correct:2,exp:'Triglyceride werden in Fettzellen (Adipozyten) als Langzeitspeicher gespeichert.'},
-],
-
-/* ── ELEKTROCHEMIE ─────────────────────────────────────────────── */
-electrochem:[
-{q:'Was passiert an der Anode einer galvanischen Zelle?',answers:['Reduktion','Oxidation','Protonenabgabe','Nichts'],correct:1,exp:'Anode = Oxidation (Merksatz: AnOx). Elektronen werden abgegeben.'},
-{q:'Was ist die Nernstsche Gleichung?',answers:['Berechnet pH aus Konzentration','Berechnet Zellspannung in Abhängigkeit von Konz.','Beschreibt Gleichgewichtslagen','Bestimmt Aktivierungsenergie'],correct:1,exp:'Nernst: E = E° – (RT/nF)·ln(Q). Beschreibt konzentrationsabhängige Zellspannung.'},
-{q:'Was ist die Standardwasserstoffelektrode?',answers:['Elektrode aus reinem H₂O','Referenzelektrode mit E° = 0 V','Kathode in der Elektrolyse','Elektrode mit pH 7'],correct:1,exp:'SHE: Pt | H₂(1 bar) | H⁺(1 mol/L), per Definition E° = 0,00 V.'},
-{q:'Welches Metall hat das negativste Standardpotential?',answers:['Lithium','Natrium','Zink','Kupfer'],correct:0,exp:'Li: E° = –3,04 V. Stärkstes Reduktionsmittel in der Spannungsreihe.'},
-{q:'Was ist Korrosion?',answers:['Thermische Zersetzung','Elektrochemische Oxidation von Metallen','Mechanischer Verschleiß','Sublimation'],correct:1,exp:'Korrosion = unerwünschte elektrochemische Oxidation von Metallen (z.B. Rosten).'},
-],
-
-/* ── ANALYTIK & LABORMETHODEN ──────────────────────────────────── */
-analytics:[
-{q:'Was trennt die Gaschromatografie?',answers:['Feststoffe nach Dichte','Flüchtige Verbindungen nach Siedepunkt/Polarität','Ionen nach Ladung','Proteine nach Größe'],correct:1,exp:'GC trennt flüchtige Substanzen durch Wechselwirkung mit der stationären Phase.'},
-{q:'Was misst ein Massenspektrometer?',answers:['Lichtabsorption','Masse-Ladungs-Verhältnis (m/z)','pH-Wert','Elektrische Leitfähigkeit'],correct:1,exp:'MS ionisiert Moleküle und trennt sie nach m/z. Gibt Molmasse und Fragmentierungsmuster.'},
-{q:'Was ist die Funktion eines Indikators in der Titration?',answers:['Puffert den pH','Zeigt den Äquivalenzpunkt durch Farbwechsel an','Beschleunigt die Reaktion','Fällt Ionen aus'],correct:1,exp:'Indikatoren (z.B. Phenolphthalein) ändern ihre Farbe im Äquivalenzpunkt-Bereich.'},
-{q:'Was untersucht die IR-Spektroskopie?',answers:['Elektronenübergänge','Kernspins','Schwingungen von Bindungen','Röntgenbeugung'],correct:2,exp:'IR-Strahlung regt Bindungsschwingungen an. Charakteristische Absorptionen = funktionelle Gruppen.'},
-{q:'Wozu dient die DC (Dünnschichtchromatografie)?',answers:['Massen bestimmen','Substanzen schnell identifizieren/trennen','pH messen','Leitfähigkeit messen'],correct:1,exp:'DC: Substanzgemisch wandert per Kapillarkraft auf Kieselgelplatte – Trennung nach Polarität.'},
-]
-
-};
+{q:'Was gibt die Periode im PSE an?',answers:['Neutronen','Elektronen','besetzte Schalen','Valenzelektronen'],correct:2,exp:'Periode = Anzahl der besetzten Elektronenschalen.'},
+{q:'Gemeinsames Merkmal einer Gruppe?',answers:['Gleiche Atommasse','Gleiche Protonenzahl','Gleiche Valenzelektronen','Gleicher Aggregatzustand'],correct:2,exp:'Gleiche Valenzelektronenzahl → ähnliche Eigenschaften.'},
+{q:'Was ist Elektronegativität?',answers:['Elektronen abgeben','Elektronen anziehen','Anzahl der Elektronen','Verhältnis p/e'],correct:1,exp:'EN = Fähigkeit, Bindungselektronen anzuziehen.'},
+{q:'Bindung zwischen zwei Nichtmetallen?',answers:['Ionenbindung','Metallische Bindung','Kovalente Bindung','Van-der-Waals'],correct:2,exp:'Zwei Nichtmetalle: kovalente Bindungen.'},
+{q:'Was ist die Oktettregel?',answers:['Atome wollen 10e⁻','8 Valenzelektronen','Atome haben 8 Protonen','8 Bindungen'],correct:1,exp:'Atome streben nach 8 Valenzelektronen.'},
+]};
 
 /* ═══════════════════════════════════════════
    INFINITY ZOOM ENGINE
@@ -972,83 +804,43 @@ const PAGE_NAMES = {
 };
 
 function zoomTo(page) {
-  const prevPage = CURRENT_PAGE;
   CURRENT_PAGE = page;
-  _transitioning = true;
-
-  const world        = document.getElementById('zoom-world');
-  const homeLayer    = document.getElementById('layer-home');
+  const world = document.getElementById('zoom-world');
+  const homeLayer = document.getElementById('layer-home');
   const contentLayer = document.getElementById('layer-content');
-  const panel        = document.getElementById('content-panel');
 
-  const fromHome    = prevPage === 'home';
-  const fromModule  = !fromHome;
+  // Phase 1: zoom in animation on home
+  world.style.transform = 'scale(2.5) translateZ(200px)';
+  homeLayer.style.opacity = '0';
+  homeLayer.style.transition = 'opacity 0.5s';
 
-  if (fromModule) {
-    // ── Modul → Modul: kurzes Zoom-Out, dann Zoom-In auf neues Modul ──
-    contentLayer.style.transition = 'opacity 0.25s';
-    contentLayer.style.opacity    = '0';
-    world.style.transition        = 'transform 0.35s cubic-bezier(.77,0,.175,1)';
-    world.style.transform         = 'scale(0.85) translateZ(-80px)';
+  setTimeout(() => {
+    // Phase 2: switch layers
+    homeLayer.classList.remove('active');
+    contentLayer.classList.add('active');
+    world.style.transition = 'none';
+    world.style.transform = 'scale(0.6) translateZ(-200px)';
 
-    setTimeout(() => {
-      panel.innerHTML = renderPage(page);
-      if (page === 'struc') initCanvas();
-      panel.scrollTop = 0; // Immer oben beginnen
-      setTimeout(initReveal, 120);
+    // Render content
+    const panel = document.getElementById('content-panel');
+    panel.innerHTML = renderPage(page);
+    if (page === 'struc') initCanvas();
 
-      world.style.transition = 'none';
-      world.style.transform  = 'scale(0.85) translateZ(-80px)';
+    // Phase 3: zoom into content
+    requestAnimationFrame(() => {
+      world.style.transition = 'transform 0.9s cubic-bezier(.77,0,.175,1)';
+      world.style.transform = 'scale(1) translateZ(0)';
+    });
 
-      requestAnimationFrame(() => {
-        contentLayer.style.opacity    = '1';
-        world.style.transition        = 'transform 0.45s cubic-bezier(.77,0,.175,1)';
-        world.style.transform         = 'scale(1) translateZ(0)';
-        setTimeout(() => { _transitioning = false; }, 500);
-      });
-    }, 280);
-
-  } else {
-    // ── Home → Modul: klassischer Zoom-In ──
-    world.style.transform         = 'scale(2.5) translateZ(200px)';
-    homeLayer.style.opacity       = '0';
-    homeLayer.style.transition    = 'opacity 0.5s';
-
-    setTimeout(() => {
-      homeLayer.classList.remove('active');
-      contentLayer.classList.add('active');
-      contentLayer.style.opacity = '1';
-      world.style.transition     = 'none';
-      world.style.transform      = 'scale(0.6) translateZ(-200px)';
-
-      panel.innerHTML = renderPage(page);
-      if (page === 'struc') initCanvas();
-      panel.scrollTop = 0;
-      setTimeout(initReveal, 600);
-
-      requestAnimationFrame(() => {
-        world.style.transition = 'transform 0.9s cubic-bezier(.77,0,.175,1)';
-        world.style.transform  = 'scale(1) translateZ(0)';
-        setTimeout(() => { _transitioning = false; }, 950);
-      });
-    }, 500);
-  }
-
-  // HUD aktualisieren
-  document.getElementById('breadcrumb').style.display        = 'flex';
-  document.getElementById('crumb-current').textContent       = PAGE_NAMES[page] || page;
-  document.getElementById('back-btn').classList.add('show');
-  const hudBack = document.getElementById('hud-back'); if(hudBack) hudBack.style.display='flex';
-  document.getElementById('zoom-hint').classList.add('hidden');
-
-  // Nav-Dots: aktives Modul hervorheben
-  _updateNavDots(page);
-
-  // Navigations-Hint am unteren Rand anzeigen
-  _showNavHint(page);
-
-  // XP: Modul-Besuch tracken
-  _trackVisit(page);
+    // Update HUD
+    document.getElementById('breadcrumb').style.display = 'flex';
+    document.getElementById('crumb-current').textContent = PAGE_NAMES[page] || page;
+    document.getElementById('back-btn').classList.add('show');
+    const hudBack = document.getElementById('hud-back'); if(hudBack) hudBack.style.display='flex';
+    document.getElementById('zoom-hint').classList.add('hidden');
+    const spEl = document.getElementById('scroll-progress');
+    if (spEl) spEl.classList.add('hidden');
+  }, 500);
 }
 
 function zoomHome() {
@@ -1080,568 +872,27 @@ function zoomHome() {
     CURRENT_PAGE = 'home';
     PSE_SEL = null;
     WIKI_KEY = null;
-    _edgeAccum = 0;
-    _transitioning = false;
     document.getElementById('breadcrumb').style.display = 'none';
     document.getElementById('back-btn').classList.remove('show');
     const hudBackEl = document.getElementById('hud-back'); if(hudBackEl) hudBackEl.style.display='none';
     document.getElementById('zoom-hint').classList.remove('hidden');
-    // Reset scroll state vollständig
-    _resetHomeScroll();
-    _updateNavDots('home');
+    // Reset scroll state
+    _scrollY = 0; _scrollTarget = 0; _highlightIdx = -1; _zoomActive = false;
+    document.querySelectorAll('.module-orbit').forEach(m => {
+      m.style.transform = ''; m.style.boxShadow = ''; m.style.borderColor = '';
+    });
     const w = document.getElementById('zoom-world');
     if(w) w.style.transform = 'scale(1) translateZ(0)';
     const hint = document.getElementById('zoom-hint');
     if(hint) hint.textContent = '↓ Scrollen zum Einzoomen · Klick auf Kachel zum Öffnen';
+    const spRestore = document.getElementById('scroll-progress');
+    if(spRestore) spRestore.classList.add('hidden');
+    document.querySelectorAll('.sp-dot').forEach(d => d.classList.remove('active'));
   }, 400);
 }
 
-// ─── Nav-Dots immer aktuell halten ────────────────────────────────
-function _updateNavDots(page) {
-  const sp   = document.getElementById('scroll-progress');
-  const dots = document.querySelectorAll('.sp-dot');
-  if (!sp) return;
-  if (page === 'home' || !page) {
-    sp.className = 'on-home';
-    dots.forEach(d => d.classList.remove('active'));
-  } else {
-    sp.className = 'on-module';
-    const idx = MODULES_ORDER.indexOf(page);
-    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
-  }
-}
-
-// ─── Navigations-Hint im Modul anzeigen ───────────────────────────
-// (MODULES_ORDER und MODULE_NAMES werden im Scroll-Engine-Block deklariert,
-//  der direkt darunter folgt — wegen var-Hoisting via const/let kein Problem
-//  solange _showNavHint erst zur Laufzeit aufgerufen wird.)
-function _showNavHint(page) {
-  const idx   = MODULES_ORDER.indexOf(page);
-  const prev  = idx === 0              ? 'Startseite'                    : MODULE_NAMES[idx - 1];
-  const next  = idx === MODULES_ORDER.length - 1 ? 'Startseite'         : MODULE_NAMES[idx + 1];
-  const hint  = document.getElementById('zoom-hint');
-  if (!hint) return;
-  hint.textContent = `↑ ${prev}  ·  Scrollen zum Weiterblättern  ·  ${next} ↓`;
-  hint.classList.remove('hidden');
-  // Nach 4s ausblenden
-  clearTimeout(hint._t);
-  hint._t = setTimeout(() => hint.classList.add('hidden'), 4000);
-}
-
-// ══════════════════════════════════════════════════════════════════
-// INFINITY SCROLL ENGINE — echter Endlos-Loop durch alle Module
-// Funktioniert sowohl auf dem Homescreen als auch innerhalb eines
-// Moduls. Scrollen im Modul → nächstes Modul. Letztes Modul →
-// Startseite. Startseite nach oben → letztes Modul (echter Loop).
-// ══════════════════════════════════════════════════════════════════
-
-const MODULES_ORDER = ['pse','wiki','learn','struc','rxn','quiz'];
-const MODULE_NAMES  = ['Periodensystem','Chemie-Wiki','Lernbereich',
-                       'Strukturzeichner','Reaktionsrechner','Quiz'];
-
-// Virtueller Scroll-Zustand (nur für Homescreen-Zoom-Animation)
-let _scrollY      = 0;
-let _scrollTarget = 0;
-let _scrollRaf    = null;
-
-// Verhindert doppeltes Feuern während einer Übergangs-Animation
-let _transitioning = false;
-
-// Index des aktuell gehighlighteten Moduls auf dem Homescreen (-1 = keins)
-let _highlightIdx = -1;
-
-// ─── Hilfsfunktion: aktuellen Modul-Index ermitteln ───────────────
-function _currentModuleIdx() {
-  return MODULES_ORDER.indexOf(CURRENT_PAGE); // -1 wenn 'home'
-}
-
-// ─── Zum nächsten Modul springen (vorwärts im Loop) ───────────────
-function _goNext() {
-  if (_transitioning) return;
-  _transitioning = true;
-  setTimeout(() => { _transitioning = false; }, 900);
-
-  const idx = _currentModuleIdx();
-  if (idx === -1) {
-    // Auf Homescreen: erstes Modul öffnen
-    _resetHomeScroll();
-    zoomTo(MODULES_ORDER[0]);
-  } else if (idx < MODULES_ORDER.length - 1) {
-    // Nächstes Modul
-    zoomTo(MODULES_ORDER[idx + 1]);
-  } else {
-    // Nach letztem Modul → zurück zur Startseite
-    zoomHome();
-  }
-}
-
-// ─── Zum vorherigen Modul springen (rückwärts im Loop) ────────────
-function _goPrev() {
-  if (_transitioning) return;
-  _transitioning = true;
-  setTimeout(() => { _transitioning = false; }, 900);
-
-  const idx = _currentModuleIdx();
-  if (idx === -1) {
-    // Auf Homescreen nach oben → letztes Modul (echter Loop!)
-    _resetHomeScroll();
-    zoomTo(MODULES_ORDER[MODULES_ORDER.length - 1]);
-  } else if (idx === 0) {
-    // Vom ersten Modul nach oben → Startseite
-    zoomHome();
-  } else {
-    // Vorheriges Modul
-    zoomTo(MODULES_ORDER[idx - 1]);
-  }
-}
-
-// ─── Homescreen-Scroll-Zustand zurücksetzen ────────────────────────
-function _resetHomeScroll() {
-  _scrollY = 0; _scrollTarget = 0; _highlightIdx = -1;
-  if (_scrollRaf) { cancelAnimationFrame(_scrollRaf); _scrollRaf = null; }
-  document.querySelectorAll('.module-orbit').forEach(m => {
-    m.style.transform=''; m.style.boxShadow=''; m.style.borderColor='';
-  });
-  document.querySelectorAll('.sp-dot').forEach(d => d.classList.remove('active'));
-  const sp = document.getElementById('scroll-progress');
-  if (sp) sp.classList.add('hidden');
-}
-
-// ─── Prüfen ob der interne Content-Scroller am Ende/Anfang ist ────
-// Gibt 'bottom', 'top' oder 'middle' zurück.
-function _panelEdge(direction) {
-  const panel = document.getElementById('content-panel');
-  if (!panel) return direction > 0 ? 'bottom' : 'top';
-  const tolerance = 4; // px Toleranz gegen Subpixel-Fehler
-  if (direction > 0) {
-    // Scrollen nach unten: sind wir am Ende?
-    return (panel.scrollTop + panel.clientHeight >= panel.scrollHeight - tolerance)
-      ? 'bottom' : 'middle';
-  } else {
-    // Scrollen nach oben: sind wir am Anfang?
-    return panel.scrollTop <= tolerance ? 'top' : 'middle';
-  }
-}
-
-// ─── Akkumulator für Edge-Scroll (verhindert versehentliches Wechseln) ──
-let _edgeAccum = 0;
-const EDGE_THRESHOLD = 180; // px akkumulierter Delta nötig zum Wechsel
-
-// ─── WHEEL EVENT — greift überall, capture:true für sicheres preventDefault ──
-document.addEventListener('wheel', (e) => {
-  const delta = e.deltaMode === 1 ? e.deltaY * 30 : e.deltaY;
-
-  // ── HOMESCREEN ────────────────────────────────────────────────────
-  if (CURRENT_PAGE === 'home') {
-    e.preventDefault();
-    _scrollTarget += delta * 0.8;
-    _scrollTarget = Math.max(-200, Math.min(_scrollTarget, MODULES_ORDER.length * 180 + 60));
-
-    // Nach oben über den Anfang hinaus → letztes Modul (Loop rückwärts)
-    if (_scrollTarget < -160 && !_transitioning) {
-      _scrollTarget = 0; _scrollY = 0;
-      _goPrev();
-      return;
-    }
-
-    if (!_scrollRaf) _scrollRaf = requestAnimationFrame(_scrollTick);
-    return;
-  }
-
-  // ── MODUL-ANSICHT ─────────────────────────────────────────────────
-  const edge = _panelEdge(delta);
-
-  if (edge === 'middle') {
-    // Noch nicht am Rand: normales internes Scrollen, nicht blockieren
-    _edgeAccum = 0;
-    return;
-  }
-
-  // Am Rand angekommen: Event blockieren und Akkumulator befüllen
-  e.preventDefault();
-  _edgeAccum += Math.abs(delta);
-
-  if (_edgeAccum >= EDGE_THRESHOLD) {
-    _edgeAccum = 0;
-    if (delta > 0) _goNext(); else _goPrev();
-  }
-
-}, { passive: false, capture: true });
-
-// ─── ANIMATION LOOP für Homescreen-Zoom (Lerp) ────────────────────
-function _scrollTick() {
-  _scrollY += (_scrollTarget - _scrollY) * 0.12;
-  if (Math.abs(_scrollTarget - _scrollY) < 0.4) _scrollY = _scrollTarget;
-
-  const world   = document.getElementById('zoom-world');
-  const modules = document.querySelectorAll('.module-orbit');
-  const hint    = document.getElementById('zoom-hint');
-  const dots    = document.querySelectorAll('.sp-dot');
-  const sp      = document.getElementById('scroll-progress');
-
-  if (_scrollY <= 0) {
-    _scrollY = 0;
-    world.style.transform = 'scale(1) translateZ(0)';
-    _highlightIdx = -1;
-    modules.forEach(m => { m.style.transform=''; m.style.boxShadow=''; m.style.borderColor=''; });
-    if (hint) { hint.textContent = '↓ Scrollen zum Einzoomen · Klick auf Kachel zum Öffnen'; hint.classList.remove('hidden'); }
-    _updateNavDots('home');
-    _scrollRaf = null;
-    return;
-  }
-
-  // Zoom-Tiefe
-  const zoomLevel = 1 + Math.min(_scrollY / 3000, 0.4);
-  const tz        = Math.min(_scrollY / 8, 60);
-  world.style.transform = `scale(${zoomLevel}) translateZ(${tz}px)`;
-
-  // Modul-Index & Slot-Fortschritt
-  const idx        = Math.floor(_scrollY / 180);
-  const frac       = (_scrollY % 180) / 180;
-  const clampedIdx = Math.min(idx, MODULES_ORDER.length - 1);
-
-  // Kachel-Highlighting
-  if (clampedIdx !== _highlightIdx) {
-    modules.forEach(m => { m.style.transform=''; m.style.boxShadow=''; m.style.borderColor=''; });
-    if (modules[clampedIdx]) {
-      modules[clampedIdx].style.transform   = 'translateY(-8px) scale(1.06)';
-      modules[clampedIdx].style.boxShadow   = '0 12px 40px rgba(26,92,58,.25)';
-      modules[clampedIdx].style.borderColor = 'var(--acd)';
-    }
-    _highlightIdx = clampedIdx;
-    if (hint) { hint.textContent = `↵ Enter oder Klick → ${MODULE_NAMES[clampedIdx]}`; hint.classList.remove('hidden'); }
-    // Dots auf Homescreen: on-home bleibt, nur aktiver Dot wechselt
-    dots.forEach((d, i) => d.classList.toggle('active', i === clampedIdx));
-  }
-
-  // Auto-Zoom wenn Slot fast durchgescrollt
-  if (frac > 0.88 && !_transitioning && idx < MODULES_ORDER.length) {
-    _resetHomeScroll();
-    zoomTo(MODULES_ORDER[idx]);
-    return;
-  }
-
-  if (Math.abs(_scrollTarget - _scrollY) > 0.1) {
-    _scrollRaf = requestAnimationFrame(_scrollTick);
-  } else {
-    _scrollRaf = null;
-  }
-}
-
-// ─── TOUCH / SWIPE (Mobile) ───────────────────────────────────────
-let _touchStartY = 0;
-let _touchLastY  = 0;
-let _touchEdgeAccum = 0;
-
-document.addEventListener('touchstart', (e) => {
-  _touchStartY = e.touches[0].clientY;
-  _touchLastY  = _touchStartY;
-  _touchEdgeAccum = 0;
-}, { passive: true });
-
-document.addEventListener('touchmove', (e) => {
-  const dy    = _touchLastY - e.touches[0].clientY; // positiv = runter
-  _touchLastY = e.touches[0].clientY;
-
-  if (CURRENT_PAGE === 'home') {
-    _scrollTarget += dy * 1.5;
-    _scrollTarget = Math.max(-200, Math.min(_scrollTarget, MODULES_ORDER.length * 180 + 60));
-    if (!_scrollRaf) _scrollRaf = requestAnimationFrame(_scrollTick);
-    return;
-  }
-
-  // Im Modul: Edge-Erkennung
-  const edge = _panelEdge(dy);
-  if (edge === 'middle') { _touchEdgeAccum = 0; return; }
-  _touchEdgeAccum += Math.abs(dy);
-  if (_touchEdgeAccum >= 80) {
-    _touchEdgeAccum = 0;
-    if (dy > 0) _goNext(); else _goPrev();
-  }
-}, { passive: true });
-
-document.addEventListener('touchend', () => {
-  if (CURRENT_PAGE !== 'home') return;
-  // Zum nächsten Modul-Slot einrasten
-  const nearestSlot = Math.round(_scrollTarget / 180);
-  _scrollTarget = Math.max(0, nearestSlot) * 180;
-  if (_scrollTarget < -160) { _scrollTarget = 0; _goPrev(); return; }
-  if (!_scrollRaf) _scrollRaf = requestAnimationFrame(_scrollTick);
-}, { passive: true });
-
-// ─── KEYBOARD ─────────────────────────────────────────────────────
-window.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') { zoomHome(); return; }
-  if (CURRENT_PAGE === 'home') {
-    if ((e.key === 'Enter' || e.key === ' ') && _highlightIdx >= 0) {
-      e.preventDefault();
-      zoomTo(MODULES_ORDER[_highlightIdx]);
-    }
-    if (e.key === 'ArrowDown') { e.preventDefault(); _scrollTarget += 180; if (!_scrollRaf) _scrollRaf = requestAnimationFrame(_scrollTick); }
-    if (e.key === 'ArrowUp')   { e.preventDefault(); _scrollTarget -= 180; if (!_scrollRaf) _scrollRaf = requestAnimationFrame(_scrollTick); }
-  } else {
-    if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); _goNext(); }
-    if (e.key === 'ArrowLeft'  || e.key === 'PageUp')   { e.preventDefault(); _goPrev(); }
-  }
-});
-
-// ══════════════════════════════════════════════════════════════════
-// GAMIFICATION SYSTEM — XP, LEVEL, BADGES
-// ══════════════════════════════════════════════════════════════════
-const XP_LEVELS = [
-  {min:0,    max:100,  label:'Level 1 - Chemie-Novize',   short:'Lv.1 Novize'},
-  {min:100,  max:250,  label:'Level 2 - Assistent',        short:'Lv.2 Assistent'},
-  {min:250,  max:500,  label:'Level 3 - Laborant',         short:'Lv.3 Laborant'},
-  {min:500,  max:850,  label:'Level 4 - Forscher',         short:'Lv.4 Forscher'},
-  {min:850,  max:1300, label:'Level 5 - Wissenschaftler',  short:'Lv.5 Wissenschaftler'},
-  {min:1300, max:99999,label:'Level 6 - Professor',        short:'Lv.6 Professor'},
-];
-
-const BADGE_DEFS = [
-  {id:'quiz5',      ico:'🏆', lbl:'Quiz-Starter',    desc:'5 Quizfragen beantwortet'},
-  {id:'quiz25',     ico:'🥇', lbl:'Quiz-Profi',       desc:'25 Fragen beantwortet'},
-  {id:'pse_visit',  ico:'⚗️', lbl:'PSE-Erkunder',    desc:'Periodensystem besucht'},
-  {id:'wiki_read',  ico:'📚', lbl:'Lernprofi',        desc:'Wiki-Artikel gelesen'},
-  {id:'struc_use',  ico:'✏️', lbl:'Molekülzeichner',  desc:'Strukturzeichner genutzt'},
-  {id:'rxn_use',    ico:'⚡', lbl:'Reaktionsforscher',desc:'Reaktionsrechner genutzt'},
-  {id:'all_modules',ico:'🌟', lbl:'Allrounder',       desc:'Alle Module besucht'},
-  {id:'darkmode',   ico:'🌙', lbl:'Nachtforscher',    desc:'Dunkelmodus aktiviert'},
-  {id:'xp500',      ico:'🔬', lbl:'Wissenschaftler',  desc:'500 XP erreicht'},
-];
-
-let _XP = {
-  total: parseInt(localStorage.getItem('cl_xp') || '0'),
-  badges: JSON.parse(localStorage.getItem('cl_badges') || '[]'),
-  visits: JSON.parse(localStorage.getItem('cl_visits') || '[]'),
-  quizAnswered: parseInt(localStorage.getItem('cl_qa') || '0'),
-};
-
-function _saveXP() {
-  localStorage.setItem('cl_xp', _XP.total);
-  localStorage.setItem('cl_badges', JSON.stringify(_XP.badges));
-  localStorage.setItem('cl_visits', JSON.stringify(_XP.visits));
-  localStorage.setItem('cl_qa', _XP.quizAnswered);
-}
-
-function _getLevelInfo(xp) {
-  for (let i = XP_LEVELS.length - 1; i >= 0; i--) {
-    if (xp >= XP_LEVELS[i].min) return { ...XP_LEVELS[i], idx: i };
-  }
-  return { ...XP_LEVELS[0], idx: 0 };
-}
-
-function _xpPct(xp) {
-  const lv = _getLevelInfo(xp);
-  if (lv.idx >= XP_LEVELS.length - 1) return 100;
-  const range = lv.max - lv.min;
-  return Math.min(100, Math.round(((xp - lv.min) / range) * 100));
-}
-
-function _updateXpUI() {
-  const lv = _getLevelInfo(_XP.total);
-  const pct = _xpPct(_XP.total);
-  const xpToNext = lv.idx < XP_LEVELS.length - 1 ? lv.max - _XP.total : 0;
-
-  // HUD widget
-  const lvLabel = document.getElementById('xp-level-label');
-  const bar     = document.getElementById('xp-bar');
-  const sub     = document.getElementById('xp-sub-label');
-  if (lvLabel) lvLabel.textContent = lv.short;
-  if (bar)     bar.style.width = pct + '%';
-  if (sub)     sub.textContent = _XP.total + ' XP' + (xpToNext > 0 ? ' · noch ' + xpToNext : '');
-
-  // Popup
-  const popLv  = document.getElementById('xp-pop-level');
-  const popBar = document.getElementById('xp-pop-bar');
-  const popLbl = document.getElementById('xp-pop-label');
-  if (popLv)  popLv.textContent  = lv.label;
-  if (popBar) popBar.style.width = pct + '%';
-  if (popLbl) popLbl.textContent = xpToNext > 0
-    ? _XP.total + ' / ' + lv.max + ' XP bis nächstes Level'
-    : '🎓 Maximales Level erreicht!';
-
-  // Badges
-  const grid = document.getElementById('badges-grid');
-  if (grid) {
-    grid.innerHTML = BADGE_DEFS.map(b => {
-      const earned = _XP.badges.includes(b.id);
-      return `<div class="badge ${earned ? 'earned' : 'locked'}" title="${b.desc}">
-        <div class="badge-ico">${b.ico}</div>
-        <div class="badge-lbl">${b.lbl}</div>
-      </div>`;
-    }).join('');
-  }
-}
-
-function addXP(amount, reason) {
-  const prevLevel = _getLevelInfo(_XP.total).idx;
-  _XP.total += amount;
-  const newLevel = _getLevelInfo(_XP.total).idx;
-  _saveXP();
-  _updateXpUI();
-
-  // Toast
-  const toast = document.getElementById('xp-toast');
-  const msg   = document.getElementById('xp-toast-msg');
-  if (toast && msg) {
-    msg.textContent = '+' + amount + ' XP · ' + reason;
-    toast.classList.add('show');
-    clearTimeout(toast._t);
-    toast._t = setTimeout(() => toast.classList.remove('show'), 2800);
-  }
-
-  // Level-up
-  if (newLevel > prevLevel) {
-    setTimeout(() => {
-      const lv = _getLevelInfo(_XP.total);
-      if (toast && msg) {
-        msg.textContent = '🎉 Level Up! ' + lv.label;
-        toast.classList.add('show');
-        clearTimeout(toast._t);
-        toast._t = setTimeout(() => toast.classList.remove('show'), 3500);
-      }
-    }, 1200);
-  }
-
-  // Badge checks
-  _checkBadges();
-}
-
-function _earnBadge(id) {
-  if (_XP.badges.includes(id)) return;
-  const def = BADGE_DEFS.find(b => b.id === id);
-  if (!def) return;
-  _XP.badges.push(id);
-  _saveXP();
-  _updateXpUI();
-  const toast = document.getElementById('xp-toast');
-  const msg   = document.getElementById('xp-toast-msg');
-  if (toast && msg) {
-    msg.textContent = def.ico + ' Abzeichen: ' + def.lbl;
-    toast.classList.add('show');
-    clearTimeout(toast._t);
-    toast._t = setTimeout(() => toast.classList.remove('show'), 3000);
-  }
-}
-
-function _checkBadges() {
-  if (_XP.quizAnswered >= 5)  _earnBadge('quiz5');
-  if (_XP.quizAnswered >= 25) _earnBadge('quiz25');
-  if (_XP.total >= 500)       _earnBadge('xp500');
-  if (_XP.visits.includes('pse'))  _earnBadge('pse_visit');
-  if (_XP.visits.includes('wiki')) _earnBadge('wiki_read');
-  if (_XP.visits.includes('struc'))_earnBadge('struc_use');
-  if (_XP.visits.includes('rxn'))  _earnBadge('rxn_use');
-  const all = ['pse','wiki','learn','struc','rxn','quiz'];
-  if (all.every(m => _XP.visits.includes(m))) _earnBadge('all_modules');
-}
-
-function toggleXpPopup() {
-  const p = document.getElementById('xp-popup');
-  if (!p) return;
-  p.classList.toggle('show');
-  _updateXpUI();
-}
-
-// Close popup on outside click
-document.addEventListener('click', e => {
-  const popup  = document.getElementById('xp-popup');
-  const widget = document.getElementById('xp-widget');
-  if (popup && popup.classList.contains('show') && !popup.contains(e.target) && !widget.contains(e.target)) {
-    popup.classList.remove('show');
-  }
-});
-
-// Track module visits & award XP
-function _trackVisit(page) {
-  if (!_XP.visits.includes(page)) {
-    _XP.visits.push(page);
-    _saveXP();
-    addXP(15, page.toUpperCase() + ' erkundet');
-  }
-}
-
-// Initialize XP UI on load — defer until DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-  _updateXpUI();
-  // Floating molecules (deferred so mol-bg exists)
-  (function() {
-    const icons = ['⚗️','🔬','⚛️','🧬','💊','🧪','🔭','💡','⚡','🌡️','🧲','💎'];
-    const container = document.getElementById('mol-bg');
-    if (!container) return;
-    for (let i = 0; i < 14; i++) {
-      const el = document.createElement('div');
-      el.className = 'mol-float';
-      el.textContent = icons[Math.floor(Math.random() * icons.length)];
-      const size  = 16 + Math.random() * 14;
-      const left  = Math.random() * 96;
-      const dur   = 22 + Math.random() * 30;
-      const delay = -(Math.random() * dur);
-      el.style.cssText = `left:${left}%;font-size:${size}px;animation-duration:${dur}s;animation-delay:${delay}s`;
-      container.appendChild(el);
-    }
-  })();
-});
-
-// ══════════════════════════════════════════════════════════════════
-// CHEMIE-FAKT DER WOCHE
-// ══════════════════════════════════════════════════════════════════
-const CHEM_FACTS = [
-  {text:'Gallium schmilzt bereits bei 29,8 °C und kann buchstäblich in der Hand flüssig werden.', src:'Periodensystem · Ga, Z=31'},
-  {text:'Ein einziges Gramm Palladium kann bis zu 900 Liter Wasserstoffgas absorbieren – das 900-fache seines eigenen Volumens.', src:'Übergangsmetalle · Pd, Z=46'},
-  {text:'Wasserstoff ist das häufigste Element im Universum und macht ca. 75 % der gesamten Baryonenmasse aus.', src:'Wasserstoff · H, Z=1'},
-  {text:'Das menschliche Gehirn enthält etwa 100 Milliarden Neuronen – deren Signalübertragung basiert auf Na⁺/K⁺-Ionenströmen.', src:'Biochemie · Elektrochemie'},
-  {text:'Ein einziges Teelöffel Neutronenstern-Material würde auf der Erde rund eine Milliarde Tonnen wiegen – ähnliche Dichten zeigt weißes Zwerg-Material.', src:'Kernphysik · Astrophysik'},
-  {text:'Graphen – eine einzelne Graphitschicht – ist 200× stärker als Stahl und gleichzeitig fast transparent.', src:'Kohlenstoff · C, Z=6'},
-  {text:'Fluorwasserstoffsäure (HF) ist so korrosiv, dass sie Glas auflöst – sie wird daher in Kunststoffbehältern gelagert.', src:'Halogene · F, Z=9'},
-  {text:'Die Haber-Bosch-Synthese von Ammoniak ernährt schätzungsweise 50 % der Weltbevölkerung – ohne sie gäbe es nicht genug Düngemittel.', src:'Industriechemie · N₂ + 3H₂ ⇌ 2NH₃'},
-  {text:'Ein Diamant und Graphit bestehen aus identischen Kohlenstoffatomen – allein die Anordnung macht den Unterschied zwischen dem härtesten Stoff und weichem Schmiermittel.', src:'Allotrope · C, Z=6'},
-  {text:'Osmium ist das dichteste Element mit 22,59 g/cm³ – ein Würfel mit 10 cm Kantenlänge würde 22,6 kg wiegen.', src:'Übergangsmetalle · Os, Z=76'},
-];
-
-let _factIdx = Math.floor((Date.now() / (1000 * 60 * 60 * 24 * 7)) % CHEM_FACTS.length);
-
-function renderFactCard() {
-  const f = CHEM_FACTS[_factIdx];
-  const dots = CHEM_FACTS.map((_, i) =>
-    `<div class="fact-dot${i === _factIdx ? ' on' : ''}" onclick="setFact(${i})"></div>`).join('');
-  return `<div class="fact-card">
-    <div class="fact-badge">🧠 Chemie-Fakt der Woche</div>
-    <div class="fact-text">${f.text}</div>
-    <div class="fact-source">${f.src}</div>
-    <div class="fact-nav">${dots}</div>
-  </div>`;
-}
-
-function setFact(i) {
-  _factIdx = i;
-  const panel = document.getElementById('content-panel');
-  if (panel) {
-    const fc = panel.querySelector('.fact-card');
-    if (fc) fc.outerHTML = renderFactCard();
-    else panel.insertAdjacentHTML('afterbegin', renderFactCard());
-  }
-  // Re-render dots in place
-  const cards = document.querySelectorAll('.fact-card');
-  cards.forEach(c => {
-    c.querySelector('.fact-text') && (c.querySelector('.fact-text').textContent = CHEM_FACTS[i].text);
-    c.querySelector('.fact-source') && (c.querySelector('.fact-source').textContent = CHEM_FACTS[i].src);
-    c.querySelector('.fact-nav') && (c.querySelector('.fact-nav').innerHTML = CHEM_FACTS.map((_,j)=>`<div class="fact-dot${j===i?' on':''}" onclick="setFact(${j})"></div>`).join(''));
-  });
-}
-
-// ══════════════════════════════════════════════════════════════════
-// SCROLL-REVEAL OBSERVER
-// ══════════════════════════════════════════════════════════════════
-function initReveal() {
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.learn-card,.wiki-card,.quiz-mode,.rxn-result,.fact-card').forEach(el => {
-    el.classList.add('reveal');
-    io.observe(el);
-  });
-}
+// ── SCROLL-TO-ZOOM ENGINE ──
+// Maps scroll position to zoom depth on home screen
 
 function toggleDark() {
   DARK = !DARK;
@@ -1678,53 +929,13 @@ function hideDd() { document.getElementById('srch-dd').style.display='none'; }
 
 /* ═══ PAGE ROUTER ═══ */
 function renderPage(p) {
-  let content = '';
-  if (p==='pse')   content = renderPSE();
-  else if (p==='wiki')  content = WIKI_KEY ? renderArt() : renderWikiList();
-  else if (p==='learn') content = renderLearn();
-  else if (p==='struc') content = renderStruc();
-  else if (p==='rxn')   content = renderRxn();
-  else if (p==='quiz')  content = renderQuiz();
-
-  // Inject Chemie-Fakt auf Lernseiten (nicht PSE/Struc)
-  const withFact = ['wiki','learn','rxn','quiz'];
-  const factHtml = withFact.includes(p) ? renderFactCard() : '';
-
-  const footer = `<footer id="site-footer">
-    <div class="footer-inner">
-      <div>
-        <div class="footer-brand"><div class="footer-brand-ico">C</div>Chem<span style="color:var(--acc)">Lab</span></div>
-        <div class="footer-sub">Deine interaktive Chemie-Lernplattform — Periodensystem, Wiki, Tools und mehr.</div>
-      </div>
-      <div class="footer-col">
-        <h4>Module</h4>
-        <a onclick="zoomTo('pse')">Periodensystem</a>
-        <a onclick="zoomTo('wiki')">Chemie-Wiki</a>
-        <a onclick="zoomTo('learn')">Lernbereich</a>
-        <a onclick="zoomTo('struc')">Strukturzeichner</a>
-        <a onclick="zoomTo('rxn')">Reaktionsrechner</a>
-        <a onclick="zoomTo('quiz')">Quiz</a>
-      </div>
-      <div class="footer-col">
-        <h4>Info</h4>
-        <a onclick="alert('ChemLab · Schulprojekt · Alle Rechte vorbehalten.')">Impressum</a>
-        <a onclick="alert('Kontakt: chemlab@schule.de')">Kontakt</a>
-        <a onclick="toggleDark()">Dunkelmodus umschalten</a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <div class="footer-copy">© ${new Date().getFullYear()} ChemLab · Interaktive Chemie-Lernplattform</div>
-      <div class="footer-badges">
-        <div class="footer-badge">⚗ 118 Elemente</div>
-        <div class="footer-badge">🧠 97 Quizfragen</div>
-        <div class="footer-badge">📚 10 Kategorien</div>
-      </div>
-    </div>
-  </footer>`;
-
-  // Reveal animation init (deferred nach dem innerHTML-Assignment)
-  // wird von zoomTo und rerender() aufgerufen, nicht hier
-  return factHtml + content + footer;
+  if (p==='pse')   return renderPSE();
+  if (p==='wiki')  return WIKI_KEY ? renderArt() : renderWikiList();
+  if (p==='learn') return renderLearn();
+  if (p==='struc') return renderStruc();
+  if (p==='rxn')   return renderRxn();
+  if (p==='quiz')  return renderQuiz();
+  return '';
 }
 
 /* ═══ SHARED RE-RENDER (for in-page nav) ═══ */
@@ -1733,7 +944,6 @@ function rerender() {
   if (!panel) return;
   panel.innerHTML = renderPage(CURRENT_PAGE);
   if (CURRENT_PAGE === 'struc') initCanvas();
-  setTimeout(initReveal, 80);
 }
 
 /* ═══ PSE ═══ */
@@ -2016,35 +1226,355 @@ function rxnGo(){
 
 /* ═══ QUIZ ═══ */
 function renderQuiz(){if(!QZ.mode)return renderQuizStart();if(QZ.done)return renderQuizResult();return renderQuizQ();}
-const QUIZ_CATS={
-  elements:  {ico:'⚗',  label:'Elemente',        desc:'Symbole, Ordnungszahlen, Eigenschaften'},
-  reactions: {ico:'⚡', label:'Reaktionen',       desc:'Verbrennung, Redox, Neutralisation'},
-  theory:    {ico:'📚', label:'Theorie & PSE',    desc:'Bindungsarten, Atombau, Trends'},
-  alkane:    {ico:'⛽', label:'Alkane',           desc:'Gesättigte Kohlenwasserstoffe'},
-  proteins:  {ico:'🧬', label:'Proteine',         desc:'Aminosäuren, Peptidbindung, Faltung'},
-  carbs:     {ico:'🍞', label:'Kohlenhydrate',    desc:'Zucker, Stärke, Cellulose'},
-  acids:     {ico:'🧪', label:'Säuren & Basen',   desc:'pH, Brønsted, Puffer, Titration'},
-  lipids:    {ico:'🫙', label:'Lipide & Fette',   desc:'Fettsäuren, Verseifung, Membranen'},
-  electrochem:{ico:'⚡',label:'Elektrochemie',    desc:'Redoxpotentiale, Galvanik, Korrosion'},
-  analytics: {ico:'🔬', label:'Analytik',         desc:'Chromatografie, Spektroskopie'},
-};
-function renderQuizStart(){
-  const cats=Object.entries(QUIZ_CATS).map(([k,v])=>
-    `<div class="quiz-mode" onclick="QZ={mode:'quiz',cat:'${k}',q:0,score:0,answered:false,done:false};rerender()">
-      <div class="qm-ico">${v.ico}</div><h3>${v.label}</h3><p>${v.desc} · ${QUIZ_Q[k]?.length||0} Fragen</p>
-    </div>`).join('');
-  return `<div class="page-hdr"><h1>🧠 Chemie-Quiz</h1><p>Wähle ein Themengebiet und teste dein Wissen.</p></div>
-    <div class="quiz-mode-grid" style="grid-template-columns:repeat(auto-fill,minmax(160px,1fr))">${cats}</div>`;
-}
+function renderQuizStart(){return `<div class="page-hdr"><h1>🧠 Chemie-Quiz</h1><p>Teste dein Wissen in drei Kategorien.</p></div><div class="quiz-mode-grid"><div class="quiz-mode" onclick="QZ={mode:'quiz',cat:'elements',q:0,score:0,answered:false,done:false};rerender()"><div class="qm-ico">⚗</div><h3>Elemente</h3><p>Symbole, Ordnungszahlen, Eigenschaften</p></div><div class="quiz-mode" onclick="QZ={mode:'quiz',cat:'reactions',q:0,score:0,answered:false,done:false};rerender()"><div class="qm-ico">⚡</div><h3>Reaktionen</h3><p>Verbrennung, Redox, Neutralisation</p></div><div class="quiz-mode" onclick="QZ={mode:'quiz',cat:'theory',q:0,score:0,answered:false,done:false};rerender()"><div class="qm-ico">📚</div><h3>Theorie</h3><p>PSE-Aufbau, Bindungsarten, Trends</p></div></div>`;}
 function renderQuizQ(){const qs=QUIZ_Q[QZ.cat];const q=qs[QZ.q];const total=qs.length;const prog=Math.round((QZ.q/total)*100);let elHint='';if(q.el){const el=EL_MAP[q.el];if(el)elHint=`<div class="quiz-element-hint" style="background:${catBg(el.c)};border:0.5px solid ${catBdr(el.c)};color:${catCol(el.c)}"><div class="quiz-el-z">${el.z}</div><div class="quiz-el-s">${el.s}</div><div class="quiz-el-m">${el.m?el.m+' u':'–'}</div></div>`;}
-const catLabel=(QUIZ_CATS[QZ.cat]?.label)||QZ.cat;
-return `<div class="quiz-wrap"><div class="quiz-progress"><div class="quiz-progress-bar" style="width:${prog}%"></div></div><div class="quiz-card"><div class="quiz-q-num">Frage ${QZ.q+1}/${total} · ${catLabel}</div>${elHint}<div class="quiz-q">${q.q}</div><div class="quiz-answers">${q.answers.map((a,i)=>`<button class="qa" id="qa-${i}" onclick="quizAns(${i})">${a}</button>`).join('')}</div><div class="quiz-feedback" id="qfb"></div></div><div class="quiz-nav"><div class="quiz-score-label">Punkte: ${QZ.score}/${QZ.q}</div><button class="btn${QZ.answered?' pri':''}" id="qnext" onclick="quizNext()" ${QZ.answered?'':'disabled'} style="${QZ.answered?'':'opacity:.4'}">Nächste Frage →</button></div></div>`;}
-function quizAns(idx){if(QZ.answered)return;QZ.answered=true;const q=QUIZ_Q[QZ.cat][QZ.q];const isRight=idx===q.correct;if(isRight){QZ.score++;addXP(10,'Richtige Antwort');}else{addXP(2,'Frage versucht');}QZ.quizAnswered=(QZ.quizAnswered||0)+1;_XP.quizAnswered++;_saveXP();_checkBadges();document.querySelectorAll('.qa').forEach((b,i)=>{b.disabled=true;if(i===q.correct)b.classList.add('correct');else if(i===idx&&!isRight)b.classList.add('wrong');});const fb=document.getElementById('qfb');if(fb){fb.textContent=(isRight?'✓ Richtig! ':'✗ Falsch. ')+q.exp;fb.className='quiz-feedback show '+(isRight?'correct':'wrong');}const nxt=document.getElementById('qnext');if(nxt){nxt.disabled=false;nxt.style.opacity='1';nxt.classList.add('pri');}}
+return `<div class="quiz-wrap"><div class="quiz-progress"><div class="quiz-progress-bar" style="width:${prog}%"></div></div><div class="quiz-card"><div class="quiz-q-num">Frage ${QZ.q+1}/${total} · ${QZ.cat==='elements'?'Elemente':QZ.cat==='reactions'?'Reaktionen':'Theorie'}</div>${elHint}<div class="quiz-q">${q.q}</div><div class="quiz-answers">${q.answers.map((a,i)=>`<button class="qa" id="qa-${i}" onclick="quizAns(${i})">${a}</button>`).join('')}</div><div class="quiz-feedback" id="qfb"></div></div><div class="quiz-nav"><div class="quiz-score-label">Punkte: ${QZ.score}/${QZ.q}</div><button class="btn${QZ.answered?' pri':''}" id="qnext" onclick="quizNext()" ${QZ.answered?'':'disabled'} style="${QZ.answered?'':'opacity:.4'}">Nächste Frage →</button></div></div>`;}
+function quizAns(idx){if(QZ.answered)return;QZ.answered=true;const q=QUIZ_Q[QZ.cat][QZ.q];const isRight=idx===q.correct;if(isRight)QZ.score++;document.querySelectorAll('.qa').forEach((b,i)=>{b.disabled=true;if(i===q.correct)b.classList.add('correct');else if(i===idx&&!isRight)b.classList.add('wrong');});const fb=document.getElementById('qfb');if(fb){fb.textContent=(isRight?'✓ Richtig! ':'✗ Falsch. ')+q.exp;fb.className='quiz-feedback show '+(isRight?'correct':'wrong');}const nxt=document.getElementById('qnext');if(nxt){nxt.disabled=false;nxt.style.opacity='1';nxt.classList.add('pri');}}
 function quizNext(){const qs=QUIZ_Q[QZ.cat];if(QZ.q+1>=qs.length){QZ.done=true;rerender();return;}QZ.q++;QZ.answered=false;rerender();}
 function renderQuizResult(){const qs=QUIZ_Q[QZ.cat];const total=qs.length;const pct=Math.round(QZ.score/total*100);const stars=pct>=90?'⭐⭐⭐':pct>=70?'⭐⭐':pct>=50?'⭐':'';const msg=pct>=90?'Ausgezeichnet!':pct>=70?'Sehr gut!':pct>=50?'Gut – weiter üben!':'Weiter üben!';return `<div class="quiz-wrap"><div class="quiz-result"><div class="quiz-stars">${stars}</div><h2>${msg}</h2><div class="quiz-score-big">${QZ.score}/${total}</div><p>${pct}% korrekt</p><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><button class="btn pri" onclick="QZ={mode:'quiz',cat:'${QZ.cat}',q:0,score:0,answered:false,done:false};rerender()">Nochmal</button><button class="btn" onclick="QZ.mode=null;QZ.done=false;rerender()">Kategorie wählen</button></div></div></div>`;}
 
 /* ═══ HINT AUTO-HIDE ═══ */
 setTimeout(()=>{const h=document.getElementById('zoom-hint');if(h)h.classList.add('hidden');},10000);
+
+
+
+// ════════════════════════════════════════════════════════════════
+// INFINITY SCROLL ENGINE
+// ════════════════════════════════════════════════════════════════
+let _scrollY = 0, _scrollTarget = 0, _scrollRaf = null;
+let _transitioning = false, _highlightIdx = -1, _edgeAccum = 0;
+const MODULES_ORDER = ['pse','wiki','learn','struc','rxn','quiz'];
+const MODULE_NAMES = ['Periodensystem','Chemie-Wiki','Lernbereich','Strukturzeichner','Reaktionsrechner','Quiz'];
+
+function _goNext() {
+  if (_transitioning) return;
+  _transitioning = true; setTimeout(function(){ _transitioning = false; }, 900);
+  var idx = MODULES_ORDER.indexOf(CURRENT_PAGE);
+  if (idx === -1) { _resetHS(); zoomTo(MODULES_ORDER[0]); }
+  else if (idx < MODULES_ORDER.length - 1) { zoomTo(MODULES_ORDER[idx + 1]); }
+  else { zoomHome(); }
+}
+function _goPrev() {
+  if (_transitioning) return;
+  _transitioning = true; setTimeout(function(){ _transitioning = false; }, 900);
+  var idx = MODULES_ORDER.indexOf(CURRENT_PAGE);
+  if (idx === -1) { _resetHS(); zoomTo(MODULES_ORDER[MODULES_ORDER.length - 1]); }
+  else if (idx === 0) { zoomHome(); }
+  else { zoomTo(MODULES_ORDER[idx - 1]); }
+}
+function _resetHS() {
+  _scrollY = 0; _scrollTarget = 0; _highlightIdx = -1;
+  if (_scrollRaf) { cancelAnimationFrame(_scrollRaf); _scrollRaf = null; }
+  document.querySelectorAll('.module-orbit').forEach(function(m){ m.style.transform=''; m.style.boxShadow=''; m.style.borderColor=''; });
+  document.querySelectorAll('.sp-dot').forEach(function(d){ d.classList.remove('active'); });
+}
+function _navDots(page) {
+  var sp = document.getElementById('scroll-progress');
+  var dots = document.querySelectorAll('.sp-dot');
+  if (!sp) return;
+  if (!page || page === 'home') { sp.className = 'on-home'; dots.forEach(function(d){ d.classList.remove('active'); }); }
+  else { sp.className = 'on-module'; var idx = MODULES_ORDER.indexOf(page); dots.forEach(function(d,i){ d.classList.toggle('active', i === idx); }); }
+}
+function _panelEdge(dir) {
+  var p = document.getElementById('content-panel');
+  if (!p) return dir > 0 ? 'bottom' : 'top';
+  if (dir > 0) return (p.scrollTop + p.clientHeight >= p.scrollHeight - 4) ? 'bottom' : 'middle';
+  return p.scrollTop <= 4 ? 'top' : 'middle';
+}
+document.addEventListener('wheel', function(e) {
+  var delta = e.deltaMode === 1 ? e.deltaY * 30 : e.deltaY;
+  if (CURRENT_PAGE === 'home') {
+    e.preventDefault();
+    _scrollTarget += delta * 0.8;
+    _scrollTarget = Math.max(-200, Math.min(_scrollTarget, MODULES_ORDER.length * 180 + 60));
+    if (_scrollTarget < -160 && !_transitioning) { _scrollTarget = 0; _scrollY = 0; _goPrev(); return; }
+    if (!_scrollRaf) _scrollRaf = requestAnimationFrame(_scrollTick);
+    return;
+  }
+  var edge = _panelEdge(delta);
+  if (edge === 'middle') { _edgeAccum = 0; return; }
+  e.preventDefault();
+  _edgeAccum += Math.abs(delta);
+  if (_edgeAccum >= 180) { _edgeAccum = 0; if (delta > 0) _goNext(); else _goPrev(); }
+}, { passive: false, capture: true });
+
+function _scrollTick() {
+  _scrollY += (_scrollTarget - _scrollY) * 0.12;
+  if (Math.abs(_scrollTarget - _scrollY) < 0.4) _scrollY = _scrollTarget;
+  var world = document.getElementById('zoom-world');
+  var modules = document.querySelectorAll('.module-orbit');
+  var hint = document.getElementById('zoom-hint');
+  var dots = document.querySelectorAll('.sp-dot');
+  if (_scrollY <= 0) {
+    _scrollY = 0;
+    world.style.transform = 'scale(1) translateZ(0)';
+    _highlightIdx = -1;
+    modules.forEach(function(m){ m.style.transform=''; m.style.boxShadow=''; m.style.borderColor=''; });
+    if (hint) { hint.textContent = '\u2193 Scrollen zum Einzoomen \u00b7 Klick auf Kachel zum \u00d6ffnen'; hint.classList.remove('hidden'); }
+    _navDots('home'); _scrollRaf = null; return;
+  }
+  var zl = 1 + Math.min(_scrollY / 3000, 0.4);
+  var tz = Math.min(_scrollY / 8, 60);
+  world.style.transform = 'scale(' + zl + ') translateZ(' + tz + 'px)';
+  var idx = Math.floor(_scrollY / 180);
+  var frac = (_scrollY % 180) / 180;
+  var ci = Math.min(idx, MODULES_ORDER.length - 1);
+  if (ci !== _highlightIdx) {
+    modules.forEach(function(m){ m.style.transform=''; m.style.boxShadow=''; m.style.borderColor=''; });
+    if (modules[ci]) { modules[ci].style.transform='translateY(-8px) scale(1.06)'; modules[ci].style.boxShadow='0 12px 40px rgba(26,92,58,.25)'; modules[ci].style.borderColor='var(--acd)'; }
+    _highlightIdx = ci;
+    if (hint) { hint.textContent = '\u21b5 Enter oder Klick \u2192 ' + MODULE_NAMES[ci]; hint.classList.remove('hidden'); }
+    dots.forEach(function(d,i){ d.classList.toggle('active', i === ci); });
+  }
+  if (frac > 0.88 && !_transitioning && idx < MODULES_ORDER.length) { _resetHS(); zoomTo(MODULES_ORDER[idx]); return; }
+  if (Math.abs(_scrollTarget - _scrollY) > 0.1) _scrollRaf = requestAnimationFrame(_scrollTick);
+  else _scrollRaf = null;
+}
+
+// Touch
+var _ty=0,_tly=0,_tea=0;
+document.addEventListener('touchstart', function(e){ _ty=e.touches[0].clientY; _tly=_ty; _tea=0; },{passive:true});
+document.addEventListener('touchmove', function(e){
+  var dy=_tly-e.touches[0].clientY; _tly=e.touches[0].clientY;
+  if(CURRENT_PAGE==='home'){ _scrollTarget+=dy*1.5; _scrollTarget=Math.max(-200,Math.min(_scrollTarget,MODULES_ORDER.length*180+60)); if(!_scrollRaf) _scrollRaf=requestAnimationFrame(_scrollTick); return; }
+  var edge=_panelEdge(dy); if(edge==='middle'){_tea=0;return;} _tea+=Math.abs(dy); if(_tea>=80){_tea=0;if(dy>0)_goNext();else _goPrev();}
+},{passive:true});
+document.addEventListener('touchend', function(){
+  if(CURRENT_PAGE!=='home') return;
+  _scrollTarget=Math.max(0,Math.round(_scrollTarget/180))*180;
+  if(!_scrollRaf) _scrollRaf=requestAnimationFrame(_scrollTick);
+},{passive:true});
+window.addEventListener('keydown', function(e){
+  if(e.key==='Escape'){zoomHome();return;}
+  if(CURRENT_PAGE==='home'){
+    if((e.key==='Enter'||e.key===' ')&&_highlightIdx>=0){e.preventDefault();zoomTo(MODULES_ORDER[_highlightIdx]);}
+    if(e.key==='ArrowDown'){e.preventDefault();_scrollTarget+=180;if(!_scrollRaf)_scrollRaf=requestAnimationFrame(_scrollTick);}
+    if(e.key==='ArrowUp'){e.preventDefault();_scrollTarget-=180;if(!_scrollRaf)_scrollRaf=requestAnimationFrame(_scrollTick);}
+  } else {
+    if(e.key==='ArrowRight'||e.key==='PageDown'){e.preventDefault();_goNext();}
+    if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();_goPrev();}
+  }
+});
+
+// ════════════════════════════════════════════════════════════════
+// GAMIFICATION — XP / LEVEL / BADGES
+// ════════════════════════════════════════════════════════════════
+var XP_LEVELS=[
+  {min:0,   max:100,  label:'Level 1 - Chemie-Novize',  short:'Lv.1 Novize'},
+  {min:100, max:250,  label:'Level 2 - Assistent',       short:'Lv.2 Assistent'},
+  {min:250, max:500,  label:'Level 3 - Laborant',        short:'Lv.3 Laborant'},
+  {min:500, max:850,  label:'Level 4 - Forscher',        short:'Lv.4 Forscher'},
+  {min:850, max:1300, label:'Level 5 - Wissenschaftler', short:'Lv.5 Wissenschaftler'},
+  {min:1300,max:99999,label:'Level 6 - Professor',       short:'Lv.6 Professor'},
+];
+var BADGE_DEFS=[
+  {id:'quiz5',      ico:'🏆',lbl:'Quiz-Starter',    desc:'5 Fragen beantwortet'},
+  {id:'quiz25',     ico:'🥇',lbl:'Quiz-Profi',       desc:'25 Fragen beantwortet'},
+  {id:'pse_visit',  ico:'⚗️',lbl:'PSE-Erkunder',    desc:'Periodensystem besucht'},
+  {id:'wiki_read',  ico:'📚',lbl:'Lernprofi',        desc:'Wiki gelesen'},
+  {id:'struc_use',  ico:'✏️',lbl:'Molekülzeichner',  desc:'Strukturzeichner genutzt'},
+  {id:'rxn_use',    ico:'⚡',lbl:'Reaktionsforscher',desc:'Reaktionsrechner genutzt'},
+  {id:'all_modules',ico:'🌟',lbl:'Allrounder',       desc:'Alle Module besucht'},
+  {id:'darkmode',   ico:'🌙',lbl:'Nachtforscher',    desc:'Dunkelmodus aktiviert'},
+  {id:'xp500',      ico:'🔬',lbl:'Wissenschaftler',  desc:'500 XP erreicht'},
+];
+var _XP={
+  total: parseInt(localStorage.getItem('cl_xp')||'0'),
+  badges: JSON.parse(localStorage.getItem('cl_badges')||'[]'),
+  visits: JSON.parse(localStorage.getItem('cl_visits')||'[]'),
+  qa: parseInt(localStorage.getItem('cl_qa')||'0'),
+};
+function _saveXP(){ localStorage.setItem('cl_xp',_XP.total); localStorage.setItem('cl_badges',JSON.stringify(_XP.badges)); localStorage.setItem('cl_visits',JSON.stringify(_XP.visits)); localStorage.setItem('cl_qa',_XP.qa); }
+function _getLv(xp){ for(var i=XP_LEVELS.length-1;i>=0;i--) if(xp>=XP_LEVELS[i].min) return Object.assign({idx:i},XP_LEVELS[i]); return Object.assign({idx:0},XP_LEVELS[0]); }
+function _xpPct(xp){ var lv=_getLv(xp); if(lv.idx>=XP_LEVELS.length-1) return 100; return Math.min(100,Math.round(((xp-lv.min)/(lv.max-lv.min))*100)); }
+function _updateXpUI(){
+  var lv=_getLv(_XP.total), pct=_xpPct(_XP.total), tn=lv.idx<XP_LEVELS.length-1?lv.max-_XP.total:0;
+  var ll=document.getElementById('xp-level-label'); if(ll) ll.textContent=lv.short;
+  var bar=document.getElementById('xp-bar'); if(bar) bar.style.width=pct+'%';
+  var sub=document.getElementById('xp-sub-label'); if(sub) sub.textContent=_XP.total+' XP'+(tn>0?' \u00b7 noch '+tn:'');
+  var pl=document.getElementById('xp-pop-level'); if(pl) pl.textContent=lv.label;
+  var pb=document.getElementById('xp-pop-bar'); if(pb) pb.style.width=pct+'%';
+  var pll=document.getElementById('xp-pop-label'); if(pll) pll.textContent=tn>0?_XP.total+' / '+lv.max+' XP':'Max. Level erreicht!';
+  var grid=document.getElementById('badges-grid');
+  if(grid) grid.innerHTML=BADGE_DEFS.map(function(b){ var e=_XP.badges.includes(b.id); return '<div class="badge '+(e?'earned':'locked')+'" title="'+b.desc+'"><div class="badge-ico">'+b.ico+'</div><div class="badge-lbl">'+b.lbl+'</div></div>'; }).join('');
+}
+function _toast(msg){ var t=document.getElementById('xp-toast'),m=document.getElementById('xp-toast-msg'); if(!t||!m) return; m.textContent=msg; t.classList.add('show'); clearTimeout(t._t); t._t=setTimeout(function(){ t.classList.remove('show'); },2800); }
+function addXP(amt,reason){
+  var prevLv=_getLv(_XP.total).idx; _XP.total+=amt; var newLv=_getLv(_XP.total).idx;
+  _saveXP(); _updateXpUI(); _toast('+'+amt+' XP \u00b7 '+reason);
+  if(newLv>prevLv) setTimeout(function(){ _toast('\uD83C\uDF89 Level Up! '+_getLv(_XP.total).label); },1400);
+  _checkBadges();
+}
+function _earnBadge(id){ if(_XP.badges.includes(id)) return; var b=BADGE_DEFS.find(function(x){ return x.id===id; }); if(!b) return; _XP.badges.push(id); _saveXP(); _updateXpUI(); _toast(b.ico+' Abzeichen: '+b.lbl); }
+function _checkBadges(){ if(_XP.qa>=5)_earnBadge('quiz5'); if(_XP.qa>=25)_earnBadge('quiz25'); if(_XP.total>=500)_earnBadge('xp500'); if(_XP.visits.includes('pse'))_earnBadge('pse_visit'); if(_XP.visits.includes('wiki'))_earnBadge('wiki_read'); if(_XP.visits.includes('struc'))_earnBadge('struc_use'); if(_XP.visits.includes('rxn'))_earnBadge('rxn_use'); if(['pse','wiki','learn','struc','rxn','quiz'].every(function(m){ return _XP.visits.includes(m); }))_earnBadge('all_modules'); }
+function toggleXpPopup(){ var p=document.getElementById('xp-popup'); if(p) p.classList.toggle('show'); _updateXpUI(); }
+function _trackVisit(p){ if(!_XP.visits.includes(p)){ _XP.visits.push(p); _saveXP(); addXP(15,p.toUpperCase()+' erkundet'); } }
+document.addEventListener('click',function(e){ var p=document.getElementById('xp-popup'),w=document.getElementById('xp-widget'); if(p&&p.classList.contains('show')&&!p.contains(e.target)&&w&&!w.contains(e.target)) p.classList.remove('show'); });
+
+// ════════════════════════════════════════════════════════════════
+// WRAPPERS: zoomTo / zoomHome / renderPage / quizAns
+// ════════════════════════════════════════════════════════════════
+var _oz=zoomTo, _oh=zoomHome, _op=renderPage, _oqa=quizAns;
+
+zoomTo=function(page){
+  _oz(page);
+  _navDots(page);
+  _trackVisit(page);
+  var idx=MODULES_ORDER.indexOf(page);
+  var prev=idx===0?'Startseite':MODULE_NAMES[idx-1];
+  var next=idx===MODULES_ORDER.length-1?'Startseite':MODULE_NAMES[idx+1];
+  var hint=document.getElementById('zoom-hint');
+  if(hint){ hint.textContent='\u2191 '+prev+' \u00b7 Scrollen \u00b7 '+next+' \u2193'; hint.classList.remove('hidden'); clearTimeout(hint._ht); hint._ht=setTimeout(function(){ hint.classList.add('hidden'); },4000); }
+};
+
+zoomHome=function(){
+  _oh(); _resetHS(); _navDots('home'); _transitioning=false; _edgeAccum=0;
+};
+
+renderPage=function(p){
+  var withFact=['wiki','learn','rxn','quiz'];
+  var fact=withFact.includes(p)?_renderFact():'';
+  var yr=new Date().getFullYear();
+  var footer='<footer class="site-footer"><div class="footer-inner"><div><div class="footer-brand"><div class="footer-brand-ico">C</div>Chem<span style="color:var(--acc)">Lab</span></div><div class="footer-sub">Deine interaktive Chemie-Lernplattform</div></div><div class="footer-col"><h4>Module</h4><button class="footer-link" onclick="zoomTo(\'pse\')">Periodensystem</button><button class="footer-link" onclick="zoomTo(\'wiki\')">Chemie-Wiki</button><button class="footer-link" onclick="zoomTo(\'learn\')">Lernbereich</button><button class="footer-link" onclick="zoomTo(\'struc\')">Strukturzeichner</button><button class="footer-link" onclick="zoomTo(\'rxn\')">Reaktionsrechner</button><button class="footer-link" onclick="zoomTo(\'quiz\')">Quiz</button></div><div class="footer-col"><h4>Info</h4><button class="footer-link" onclick="alert(\'ChemLab \u00b7 Schulprojekt\')">Impressum</button><button class="footer-link" onclick="alert(\'Kontakt: chemlab@schule.de\')">Kontakt</button><button class="footer-link" onclick="toggleDark()">Dunkelmodus</button></div></div><div class="footer-bottom"><div class="footer-copy">\u00a9 '+yr+' ChemLab</div><div class="footer-chips"><div class="footer-chip">118 Elemente</div><div class="footer-chip">97 Quizfragen</div></div></div></footer>';
+  return fact+_op(p)+footer;
+};
+
+quizAns=function(idx){
+  var q=QUIZ_Q[QZ.cat][QZ.q];
+  if(q.correct===idx) addXP(10,'Richtige Antwort');
+  else addXP(2,'Frage versucht');
+  _XP.qa++; _saveXP(); _checkBadges();
+  _oqa(idx);
+};
+
+// ════════════════════════════════════════════════════════════════
+// CHEMIE-FAKT
+// ════════════════════════════════════════════════════════════════
+var FACTS=[
+  {t:'Gallium schmilzt bei 29,8\u00b0C und wird in der Hand fl\u00fcssig.',s:'Ga, Z=31'},
+  {t:'Graphen ist 200x st\u00e4rker als Stahl und fast transparent.',s:'C, Z=6'},
+  {t:'HF l\u00f6st Glas auf und wird in Kunststoffbeh\u00e4ltern gelagert.',s:'F, Z=9'},
+  {t:'Haber-Bosch ern\u00e4hrt ca. 50\u202f% der Weltbev\u00f6lkerung durch K\u00fcnstd\u00fcnger.',s:'N\u2082 + 3H\u2082 \u21cc 2NH\u2083'},
+  {t:'Wasserstoff macht ca. 75\u202f% der Baryonenmasse des Universums aus.',s:'H, Z=1'},
+  {t:'Osmium ist das dichteste Element: 22,59\u202fg/cm\u00b3.',s:'Os, Z=76'},
+  {t:'Diamant und Graphit bestehen aus denselben C-Atomen.',s:'C, Z=6 \u00b7 Allotrope'},
+  {t:'Ein Teelöffel Neutronensternmaterial w\u00fcrde ~1 Mrd. Tonnen wiegen.',s:'Kernphysik'},
+];
+var _fi=Math.floor((Date.now()/(1000*60*60*24*7))%FACTS.length);
+function _renderFact(){
+  var f=FACTS[_fi];
+  var dots=FACTS.map(function(_,i){ return '<div class="fact-dot'+(i===_fi?' on':'')+'" onclick="_fi='+i+';_rerenderFact()"></div>'; }).join('');
+  return '<div class="fact-card"><div class="fact-badge">&#x1F9E0; Chemie-Fakt</div><div class="fact-text">'+f.t+'</div><div class="fact-source">'+f.s+'</div><div class="fact-nav">'+dots+'</div></div>';
+}
+function _rerenderFact(){
+  document.querySelectorAll('.fact-card').forEach(function(c){
+    c.querySelector('.fact-text').textContent=FACTS[_fi].t;
+    c.querySelector('.fact-source').textContent=FACTS[_fi].s;
+    c.querySelector('.fact-nav').innerHTML=FACTS.map(function(_,i){ return '<div class="fact-dot'+(i===_fi?' on':'')+'" onclick="_fi='+i+';_rerenderFact()"></div>'; }).join('');
+  });
+}
+
+// ════════════════════════════════════════════════════════════════
+// EXTENDED QUIZ (8 Kategorien)
+// ════════════════════════════════════════════════════════════════
+Object.assign(QUIZ_Q,{
+alkane:[
+{q:'Allgemeine Summenformel der Alkane?',answers:['CnH2n','CnH2n+2','CnH2n-2','CnHn'],correct:1,exp:'Alkane: CnH2n+2 (gesaettigt).'},
+{q:'Alkan mit 1 C-Atom?',answers:['Ethan','Propan','Methan','Butan'],correct:2,exp:'CH4 = Methan.'},
+{q:'Bindungen in Alkanen?',answers:['C=C','C-C Einfachbindungen','C≡C','Aromatisch'],correct:1,exp:'Nur sp3-C, Einfachbindungen.'},
+{q:'Alkan mit 4 C-Atomen?',answers:['Propan','Butan','Pentan','Hexan'],correct:1,exp:'C4H10 = Butan.'},
+{q:'Typische Reaktion von Alkanen?',answers:['Elektrophile Addition','Radikalische Substitution','Nucleophile Substitution','Eliminierung'],correct:1,exp:'Radikalische Substitution.'},
+{q:'Produkte vollstaendiger Verbrennung?',answers:['CO+H2','CO2+H2O','C+H2O','H2+O2'],correct:1,exp:'CnH2n+2 + O2 → CO2 + H2O'},
+{q:'Hybridisierung von C in Alkanen?',answers:['sp','sp2','sp3','sp3d'],correct:2,exp:'sp3: Tetraeder.'},
+{q:'Alkan mit 3 C-Atomen?',answers:['Methan','Ethan','Propan','Butan'],correct:2,exp:'C3H8 = Propan.'},
+],
+proteins:[
+{q:'Grundbausteine von Proteinen?',answers:['Fettsaeuren','Nucleotide','Aminosaeuren','Monosaccharide'],correct:2,exp:'Proteinen sind Polypeptide aus Aminosaeuren.'},
+{q:'Was ist eine Peptidbindung?',answers:['NH2-Bindung','CO-NH-Bindung','Esterbindung','Disulfid'],correct:1,exp:'CO-NH entsteht durch Kondensation.'},
+{q:'Wie viele proteinogene AS?',answers:['10','20','30','64'],correct:1,exp:'20 Standard-Aminosaeuren.'},
+{q:'Was ist Primaerstruktur?',answers:['3D-Faltung','Helix','Aminosaeure-Sequenz','Quartaer'],correct:2,exp:'Lineare AS-Sequenz.'},
+{q:'Was ist eine Alpha-Helix?',answers:['Primaer','Sekundaer','Tertiaer','Quartaer'],correct:1,exp:'Sekundaerstruktur, stabilisiert durch H-Bruecken.'},
+{q:'Was ist Denaturierung?',answers:['Peptidbindungsspaltung','Verlust der Raumstruktur','Synthese','Reduktion'],correct:1,exp:'Verlust der raeumlichen Struktur.'},
+{q:'Welche AS bildet Disulfidbruecken?',answers:['Glycin','Alanin','Cystein','Serin'],correct:2,exp:'Cystein: -SH Gruppen → -S-S-.'},
+{q:'Was ist ein Enzym?',answers:['Strukturprotein','Biologischer Katalysator','Transportprotein','Hormon'],correct:1,exp:'Proteine, die Reaktionen katalysieren.'},
+],
+carbs:[
+{q:'Formel der Monosaccharide?',answers:['(CH2O)n','CnH2nO2','CnHnOn','C6H12O6'],correct:0,exp:'(CH2O)n, z.B. Glucose n=6.'},
+{q:'Glucose und Fructose sind?',answers:['Verschiedene Formeln','Verschiedene C-Zahl','Konstitutionsisomere','Gleiche Struktur'],correct:2,exp:'Beide C6H12O6, verschiedene Struktur.'},
+{q:'Glucose + Fructose ergibt?',answers:['Maltose','Lactose','Saccharose','Cellobiose'],correct:2,exp:'Saccharose = Rohrzucker.'},
+{q:'Speicherform von Glucose im Koerper?',answers:['Cellulose','Staerke','Glykogen','Saccharose'],correct:2,exp:'Glykogen in Leber und Muskel.'},
+{q:'Unterschied Staerke/Cellulose?',answers:['Verschiedene Zucker','Alpha- vs. Beta-Bindung','Kettenlaenge','Verzweigung'],correct:1,exp:'Staerke alpha-1,4; Cellulose beta-1,4.'},
+{q:'Was zeigt die Fehlingprobe?',answers:['Proteine','Reduzierende Zucker','Fette','Staerke'],correct:1,exp:'Cu2+ → Cu2O (rot) bei red. Zuckern.'},
+{q:'Strukturfestigkeit der Zellwand?',answers:['Glykogen','Staerke','Chitin','Cellulose'],correct:3,exp:'Cellulose = häufigstes Biopolymer.'},
+{q:'C-Atome in Ribose?',answers:['3','4','5','6'],correct:2,exp:'Ribose C5H10O5, Pentose, RNA-Baustein.'},
+],
+acids:[
+{q:'Broensted-Saeure ist?',answers:['Elektronenpaardonor','Protonendonor','Elektronenpaarakzeptor','Protonenakzeptor'],correct:1,exp:'Saeure gibt H+ ab.'},
+{q:'pH von 0,01 M HCl?',answers:['1','2','7','12'],correct:1,exp:'pH = -log(0.01) = 2.'},
+{q:'Saeure in Essig?',answers:['Salzsaeure','Schwefelsaeure','Essigsaeure','Zitronensaeure'],correct:2,exp:'Essigsaeure CH3COOH.'},
+{q:'Was ist amphoter?',answers:['Nur Saeure','Nur Base','Beides moeglich','Weder noch'],correct:2,exp:'Kann als Saeure oder Base reagieren.'},
+{q:'Was bedeutet kleiner pKs?',answers:['Schwaechere Saeure','Staerkere Saeure','Neutral','Starke Base'],correct:1,exp:'pKs = -log(Ks). Kleiner = staerker.'},
+{q:'pH + pOH bei 25 Grad?',answers:['7','14','1','0'],correct:1,exp:'Kw = 10^-14, also pH + pOH = 14.'},
+{q:'Was ist NaOH?',answers:['Schwache Saeure','Starke Saeure','Schwache Base','Starke Base'],correct:3,exp:'Vollstaendige Dissoziation zu Na+ + OH-.'},
+{q:'Neutraler pH-Wert?',answers:['0','7','14','1'],correct:1,exp:'pH 7: [H+] = [OH-].'},
+],
+lipids:[
+{q:'Bausteine von Triglyceriden?',answers:['Aminosaeuren+Glycerin','Fettsaeuren+Glycerin','Glucose+Fettsaeuren','Fettsaeuren+Phosphat'],correct:1,exp:'3 Fettsaeuren + Glycerin via Esterbindung.'},
+{q:'Unterschied gesaettigt/ungesaettigt?',answers:['Anzahl C','C=C-Doppelbindungen','Loeslichkeit','OH-Gruppen'],correct:1,exp:'Ungesaettigt: mind. eine C=C.'},
+{q:'Warum sind ungesaettigte Fette fluessig?',answers:['Weniger C','Cis-Knicke = weniger Packung','Mehr O','Ionisch'],correct:1,exp:'Cis-Doppelbindungen stoeren Packung.'},
+{q:'Was ist Verseifung?',answers:['Oxidation','Hydrolyse mit Lauge','H2-Addition','Verbrennung'],correct:1,exp:'Fett + NaOH → Glycerin + Seife.'},
+{q:'Was sind Phospholipide?',answers:['Fette mit Phosphat','Zucker-Fett','Protein-Fett','Cholesterin'],correct:0,exp:'Glycerin + 2 Fettsaeuren + Phosphat.'},
+{q:'Essentielle Fettsaeuren?',answers:['Vom Koerper herstellbar','Muessen zugefuehrt werden','Nur in Tieren','Gesaettigt'],correct:1,exp:'Koerper kann sie nicht selbst synthetisieren.'},
+{q:'Fettgewebe besteht aus?',answers:['Hepatozyten','Myozyten','Adipozyten','Chondrozyten'],correct:2,exp:'Adipozyten speichern Triglyceride.'},
+],
+});
+
+var QUIZ_CATS={
+  elements:  {ico:'⚗',  label:'Elemente',       desc:'Symbole, Ordnungszahlen'},
+  reactions: {ico:'⚡', label:'Reaktionen',      desc:'Verbrennung, Redox'},
+  theory:    {ico:'📚', label:'Theorie & PSE',   desc:'Bindungsarten, Atombau'},
+  alkane:    {ico:'⛽', label:'Alkane',          desc:'Gesaettigte KW'},
+  proteins:  {ico:'🧬', label:'Proteine',        desc:'Aminosaeuren, Faltung'},
+  carbs:     {ico:'🍞', label:'Kohlenhydrate',   desc:'Zucker, Staerke, Cellulose'},
+  acids:     {ico:'🧪', label:'Saeuren & Basen', desc:'pH, Puffer, Titration'},
+  lipids:    {ico:'🫙', label:'Lipide & Fette',  desc:'Fettsaeuren, Verseifung'},
+};
+
+var _oRQS=renderQuizStart;
+renderQuizStart=function(){
+  var cats=Object.entries(QUIZ_CATS).map(function(e){
+    var k=e[0],v=e[1];
+    return '<div class="quiz-mode" onclick="QZ={mode:\'quiz\',cat:\''+k+'\',q:0,score:0,answered:false,done:false};rerender()"><div class="qm-ico">'+v.ico+'</div><h3>'+v.label+'</h3><p>'+v.desc+' &middot; '+((QUIZ_Q[k]||[]).length)+' Fragen</p></div>';
+  }).join('');
+  return '<div class="page-hdr"><h1>&#x1F9E0; Chemie-Quiz</h1><p>W&#xe4;hle ein Themengebiet.</p></div><div class="quiz-mode-grid" style="grid-template-columns:repeat(auto-fill,minmax(155px,1fr))">'+cats+'</div>';
+};
+
+var _oRQQ=renderQuizQ;
+renderQuizQ=function(){
+  var cl=(QUIZ_CATS[QZ.cat]||{}).label||QZ.cat;
+  var qs=QUIZ_Q[QZ.cat],q=qs[QZ.q],total=qs.length,prog=Math.round((QZ.q/total)*100);
+  var elHint='';
+  if(q.el){var el=EL_MAP[q.el];if(el)elHint='<div class="quiz-element-hint" style="background:'+catBg(el.c)+';border:0.5px solid '+catBdr(el.c)+';color:'+catCol(el.c)+'"><div class="quiz-el-z">'+el.z+'</div><div class="quiz-el-s">'+el.s+'</div><div class="quiz-el-m">'+(el.m?el.m+' u':'–')+'</div></div>';}
+  var ans=q.answers.map(function(a,i){ return '<button class="qa" id="qa-'+i+'" onclick="quizAns('+i+')">'+a+'</button>'; }).join('');
+  return '<div class="quiz-wrap"><div class="quiz-progress"><div class="quiz-progress-bar" style="width:'+prog+'%"></div></div><div class="quiz-card"><div class="quiz-q-num">Frage '+(QZ.q+1)+'/'+total+' \u00b7 '+cl+'</div>'+elHint+'<div class="quiz-q">'+q.q+'</div><div class="quiz-answers">'+ans+'</div><div class="quiz-feedback" id="qfb"></div></div><div class="quiz-nav"><div class="quiz-score-label">Punkte: '+QZ.score+'/'+QZ.q+'</div><button class="btn'+(QZ.answered?' pri':'')+'" id="qnext" onclick="quizNext()" '+(QZ.answered?'':'disabled')+' style="'+(QZ.answered?'':'opacity:.4')+'">N\u00e4chste Frage \u2192</button></div></div>';
+};
+
+// ════════════════════════════════════════════════════════════════
+// INIT (nach DOM)
+// ════════════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', function(){
+  _updateXpUI();
+  _navDots('home');
+  var icons=['⚗️','🔬','⚛️','🧬','💊','🧪','🔭','💡','⚡','🌡️'];
+  var mb=document.getElementById('mol-bg');
+  if(mb){ for(var i=0;i<12;i++){
+    var el=document.createElement('div'); el.className='mol-float';
+    el.textContent=icons[Math.floor(Math.random()*icons.length)];
+    var sz=14+Math.random()*12, lft=Math.random()*96, dur=24+Math.random()*28, dly=-(Math.random()*dur);
+    el.style.cssText='left:'+lft+'%;font-size:'+sz+'px;animation-duration:'+dur+'s;animation-delay:'+dly+'s';
+    mb.appendChild(el);
+  }}
+});
 
 </script>
 </body>
