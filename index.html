@@ -278,11 +278,128 @@ html,body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:
 .page-hdr p{font-size:13.5px;color:var(--t2);line-height:1.6}
 
 
-@keyframes slideInRight {
-  from { transform: translateX(60px); opacity: 0; }
-  to   { transform: translateX(0);    opacity: 1; }
+/* ══════════════════════════════════════════
+   FLOATING BACKGROUND MOLECULES
+══════════════════════════════════════════ */
+#mol-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.mol-float{position:absolute;opacity:0;font-size:22px;animation:molFloat linear infinite;will-change:transform,opacity}
+@keyframes molFloat{
+  0%  {transform:translateY(100vh) rotate(0deg);   opacity:0}
+  8%  {opacity:.13}
+  92% {opacity:.13}
+  100%{transform:translateY(-120px) rotate(360deg);opacity:0}
 }
-#back-btn.show { animation: slideInRight 0.35s cubic-bezier(.4,0,.2,1) both; }
+
+/* ══════════════════════════════════════════
+   GAMIFICATION: XP / LEVEL WIDGET (HUD)
+══════════════════════════════════════════ */
+#xp-widget{display:flex;align-items:center;gap:9px;padding:5px 11px;background:var(--bg3);border:0.5px solid var(--bdr2);border-radius:10px;cursor:pointer;transition:var(--tr);position:relative;font-family:'DM Sans',sans-serif}
+#xp-widget:hover{background:var(--bg4);box-shadow:var(--shadow)}
+.xp-icon{font-size:15px;flex-shrink:0}
+.xp-info{display:flex;flex-direction:column;gap:2px}
+.xp-label{font-size:10.5px;font-weight:500;color:var(--t1);white-space:nowrap}
+.xp-bar-wrap{width:80px;height:4px;background:var(--bdr);border-radius:2px;overflow:hidden}
+.xp-bar{height:100%;background:linear-gradient(90deg,var(--acc),var(--acd));border-radius:2px;transition:width .6s cubic-bezier(.4,0,.2,1)}
+.xp-sub{font-size:9.5px;color:var(--t3);white-space:nowrap}
+
+/* XP Popup (Badges, Details) */
+#xp-popup{position:fixed;top:60px;right:16px;width:280px;background:var(--bg2);border:0.5px solid var(--bdr2);border-radius:var(--rlg);box-shadow:var(--shadow-lg);z-index:2000;padding:18px;display:none;animation:popIn .2s cubic-bezier(.4,0,.2,1)}
+#xp-popup.show{display:block}
+@keyframes popIn{from{opacity:0;transform:translateY(-8px) scale(.97)}to{opacity:1;transform:none}}
+.xp-pop-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.xp-pop-avatar{width:44px;height:44px;border-radius:11px;background:var(--acl);border:2px solid var(--acc);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.xp-pop-name{font-size:15px;font-weight:500;color:var(--t1)}
+.xp-pop-level{font-size:11.5px;color:var(--acc);font-weight:500}
+.xp-pop-bar-wrap{height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-bottom:4px}
+.xp-pop-bar{height:100%;background:linear-gradient(90deg,var(--acc),var(--acd));border-radius:4px;transition:width .8s cubic-bezier(.4,0,.2,1)}
+.xp-pop-xplabel{font-size:11px;color:var(--t3);margin-bottom:14px}
+.badges-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.badge{background:var(--bg3);border:0.5px solid var(--bdr);border-radius:8px;padding:8px 6px;text-align:center;transition:var(--tr)}
+.badge.earned{background:var(--acl);border-color:var(--acd)}
+.badge.earned:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.badge-ico{font-size:18px;margin-bottom:3px}
+.badge-lbl{font-size:9.5px;color:var(--t2);line-height:1.3}
+.badge.earned .badge-lbl{color:var(--acc);font-weight:500}
+.badge.locked{opacity:.38;filter:grayscale(1)}
+
+/* XP Toast */
+#xp-toast{position:fixed;bottom:80px;right:24px;background:var(--acc);color:#fff;border-radius:10px;padding:9px 15px;font-size:13px;font-weight:500;z-index:3000;display:none;align-items:center;gap:8px;animation:toastIn .3s cubic-bezier(.4,0,.2,1)}
+#xp-toast.show{display:flex}
+@keyframes toastIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+/* ══════════════════════════════════════════
+   CHEMIE-FAKT DER WOCHE
+══════════════════════════════════════════ */
+.fact-card{background:linear-gradient(135deg,var(--acl) 0%,var(--bg2) 100%);border:0.5px solid var(--acd);border-radius:var(--rlg);padding:18px 20px;margin-bottom:20px;position:relative;overflow:hidden}
+.fact-card::before{content:'';position:absolute;top:-20px;right:-20px;width:80px;height:80px;background:var(--acc);opacity:.06;border-radius:50%}
+.fact-badge{display:inline-flex;align-items:center;gap:5px;background:var(--acc);color:#fff;font-size:10px;font-weight:600;padding:3px 9px;border-radius:8px;margin-bottom:8px;letter-spacing:.04em;text-transform:uppercase}
+.fact-text{font-family:'Fraunces',serif;font-size:15px;color:var(--t1);line-height:1.65;font-style:italic}
+.fact-source{font-size:10.5px;color:var(--t3);margin-top:8px}
+.fact-nav{display:flex;gap:6px;margin-top:10px}
+.fact-dot{width:6px;height:6px;border-radius:50%;background:var(--bdr2);cursor:pointer;transition:background .2s}
+.fact-dot.on{background:var(--acc)}
+
+/* ══════════════════════════════════════════
+   ENHANCED CARD ANIMATIONS
+══════════════════════════════════════════ */
+.module-orbit{transition:all .3s cubic-bezier(.4,0,.2,1)!important}
+.module-orbit:hover{transform:translateY(-5px) scale(1.025)!important;box-shadow:0 16px 40px rgba(26,92,58,.14)!important;border-color:var(--acd)!important}
+
+/* Scroll-reveal */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s cubic-bezier(.4,0,.2,1),transform .5s cubic-bezier(.4,0,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* Enhanced PSE element glow */
+.el:hover{transform:scale(1.28)!important;z-index:30;box-shadow:0 0 0 2px var(--acc),0 6px 20px rgba(26,92,58,.22)!important;filter:brightness(1.08)}
+
+/* Info/Warn/Success color system */
+.tag-info{background:var(--bll);color:var(--bl)}
+.tag-success{background:var(--acl);color:var(--acc)}
+.tag-warn{background:var(--aml);color:var(--am)}
+.tag-danger{background:var(--rdl);color:var(--rd)}
+.info-box{background:var(--bll);border:0.5px solid #b0c8f0;border-radius:8px;padding:9px 12px;font-size:12.5px;color:var(--bl);display:flex;gap:8px;align-items:flex-start}
+.info-box::before{content:'ℹ';font-weight:700;flex-shrink:0}
+
+/* ══════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════ */
+#site-footer{background:var(--bg2);border-top:0.5px solid var(--bdr);padding:28px 32px 24px;margin-top:32px}
+.footer-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;align-items:start}
+.footer-brand{font-family:'Fraunces',serif;font-size:18px;color:var(--t1);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.footer-brand-ico{width:26px;height:26px;background:var(--acc);border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-style:italic}
+.footer-sub{font-size:12px;color:var(--t3);line-height:1.6;max-width:240px}
+.footer-col h4{font-size:11px;font-weight:600;color:var(--t2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px}
+.footer-col a{display:block;font-size:12.5px;color:var(--t3);text-decoration:none;margin-bottom:6px;transition:color .15s;cursor:pointer}
+.footer-col a:hover{color:var(--acc)}
+.footer-bottom{max-width:1100px;margin:18px auto 0;padding-top:14px;border-top:0.5px solid var(--bdr);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.footer-copy{font-size:11.5px;color:var(--t4)}
+.footer-badges{display:flex;gap:6px}
+.footer-badge{font-size:10px;padding:3px 8px;border-radius:6px;background:var(--bg3);color:var(--t3);border:0.5px solid var(--bdr)}
+
+/* ══════════════════════════════════════════
+   MOBILE OPTIMIERUNG
+══════════════════════════════════════════ */
+@media(max-width:640px){
+  .home-modules{grid-template-columns:1fr 1fr!important;gap:10px!important;max-width:100%!important}
+  .content-panel{padding:64px 14px 80px!important}
+  .pse-detail-wrap{grid-template-columns:1fr!important}
+  .rxn-wrap{grid-template-columns:1fr!important}
+  .type-grid{grid-template-columns:1fr 1fr!important}
+  .quiz-answers{grid-template-columns:1fr!important}
+  .quiz-mode-grid{grid-template-columns:1fr 1fr!important}
+  .struc-wrap{grid-template-columns:1fr!important;display:flex!important;flex-direction:column!important}
+  .struc-left,.struc-right{display:none!important}
+  .ptable{min-width:480px}
+  #xp-widget .xp-bar-wrap{display:none}
+  .footer-inner{grid-template-columns:1fr!important;gap:18px}
+  .footer-bottom{flex-direction:column;align-items:flex-start}
+  #back-btn{bottom:16px;right:16px;padding:9px 14px;font-size:12px}
+  .badges-grid{grid-template-columns:repeat(4,1fr)}
+}
+@media(max-width:400px){
+  .home-modules{grid-template-columns:1fr!important}
+  .quiz-mode-grid{grid-template-columns:1fr!important}
+}
 
 #scroll-progress {
   position: fixed;
@@ -342,6 +459,8 @@ html,body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:
 </style>
 </head>
 <body>
+
+<div id="mol-bg"></div>
 
 <div id="universe">
   <div id="zoom-world">
@@ -425,6 +544,14 @@ html,body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:
     <div class="srch-dd" id="srch-dd"></div>
   </div>
   <div class="hud-right">
+    <div id="xp-widget" onclick="toggleXpPopup()" title="Dein Fortschritt">
+      <div class="xp-icon">🧪</div>
+      <div class="xp-info">
+        <div class="xp-label" id="xp-level-label">Level 1 · Novize</div>
+        <div class="xp-bar-wrap"><div class="xp-bar" id="xp-bar" style="width:0%"></div></div>
+        <div class="xp-sub" id="xp-sub-label">0 / 100 XP</div>
+      </div>
+    </div>
     <div class="hud-btn" onclick="toggleDark()" title="Dunkelmodus"><i class="ti ti-moon" id="dk-ic"></i></div>
   </div>
 </div>
@@ -448,12 +575,26 @@ html,body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:
   <div class="sp-dot" onclick="zoomTo('quiz')"   title="Quiz"></div>
 </div>
 
+<!-- XP / LEVEL POPUP -->
+<div id="xp-popup">
+  <div class="xp-pop-header">
+    <div class="xp-pop-avatar">🧪</div>
+    <div>
+      <div class="xp-pop-name">ChemLab-Nutzer</div>
+      <div class="xp-pop-level" id="xp-pop-level">Level 1 – Chemie-Novize</div>
+    </div>
+  </div>
+  <div class="xp-pop-bar-wrap"><div class="xp-pop-bar" id="xp-pop-bar" style="width:0%"></div></div>
+  <div class="xp-pop-xplabel" id="xp-pop-label">0 / 100 XP bis nächstes Level</div>
+  <div class="sec-hd" style="margin-bottom:8px">Abzeichen</div>
+  <div class="badges-grid" id="badges-grid"></div>
+</div>
+
+<!-- XP TOAST -->
+<div id="xp-toast">⭐ <span id="xp-toast-msg"></span></div>
+
 <!-- TOOLTIP -->
-<div class="el-tooltip" id="tooltip"></div>
-
-<script>
-
-const CATS={alkali:{l:'Alkalimetalle',bg:'#EF5350'},alkaline:{l:'Erdalkalimetalle',bg:'#FFA726'},trans:{l:'Übergangsmetalle',bg:'#42A5F5'},post:{l:'Metalle',bg:'#66BB6A'},met:{l:'Halbmetalle',bg:'#AB47BC'},non:{l:'Nichtmetalle',bg:'#26C6DA'},hal:{l:'Halogene',bg:'#FFA726'},noble:{l:'Edelgase',bg:'#EC407A'},lan:{l:'Lanthanide',bg:'#7E57C2'},act:{l:'Actinide',bg:'#26A69A'}};
+<div class="el-tooltip" id="tooltip"></div>alkali:{l:'Alkalimetalle',bg:'#EF5350'},alkaline:{l:'Erdalkalimetalle',bg:'#FFA726'},trans:{l:'Übergangsmetalle',bg:'#42A5F5'},post:{l:'Metalle',bg:'#66BB6A'},met:{l:'Halbmetalle',bg:'#AB47BC'},non:{l:'Nichtmetalle',bg:'#26C6DA'},hal:{l:'Halogene',bg:'#FFA726'},noble:{l:'Edelgase',bg:'#EC407A'},lan:{l:'Lanthanide',bg:'#7E57C2'},act:{l:'Actinide',bg:'#26A69A'}};
 const catCol=c=>CATS[c]?.bg||'#888';
 const catBg=c=>catCol(c)+'2a';
 const catBdr=c=>catCol(c)+'55';
@@ -854,6 +995,7 @@ function zoomTo(page) {
       panel.innerHTML = renderPage(page);
       if (page === 'struc') initCanvas();
       panel.scrollTop = 0; // Immer oben beginnen
+      setTimeout(initReveal, 120);
 
       world.style.transition = 'none';
       world.style.transform  = 'scale(0.85) translateZ(-80px)';
@@ -882,6 +1024,7 @@ function zoomTo(page) {
       panel.innerHTML = renderPage(page);
       if (page === 'struc') initCanvas();
       panel.scrollTop = 0;
+      setTimeout(initReveal, 600);
 
       requestAnimationFrame(() => {
         world.style.transition = 'transform 0.9s cubic-bezier(.77,0,.175,1)';
@@ -903,6 +1046,9 @@ function zoomTo(page) {
 
   // Navigations-Hint am unteren Rand anzeigen
   _showNavHint(page);
+
+  // XP: Modul-Besuch tracken
+  _trackVisit(page);
 }
 
 function zoomHome() {
@@ -1239,6 +1385,264 @@ window.addEventListener('keydown', (e) => {
   }
 });
 
+// ══════════════════════════════════════════════════════════════════
+// GAMIFICATION SYSTEM — XP, LEVEL, BADGES
+// ══════════════════════════════════════════════════════════════════
+const XP_LEVELS = [
+  {min:0,    max:100,  label:'Level 1 - Chemie-Novize',   short:'Lv.1 Novize'},
+  {min:100,  max:250,  label:'Level 2 - Assistent',        short:'Lv.2 Assistent'},
+  {min:250,  max:500,  label:'Level 3 - Laborant',         short:'Lv.3 Laborant'},
+  {min:500,  max:850,  label:'Level 4 - Forscher',         short:'Lv.4 Forscher'},
+  {min:850,  max:1300, label:'Level 5 - Wissenschaftler',  short:'Lv.5 Wissenschaftler'},
+  {min:1300, max:99999,label:'Level 6 - Professor',        short:'Lv.6 Professor'},
+];
+
+const BADGE_DEFS = [
+  {id:'quiz5',      ico:'🏆', lbl:'Quiz-Starter',    desc:'5 Quizfragen beantwortet'},
+  {id:'quiz25',     ico:'🥇', lbl:'Quiz-Profi',       desc:'25 Fragen beantwortet'},
+  {id:'pse_visit',  ico:'⚗️', lbl:'PSE-Erkunder',    desc:'Periodensystem besucht'},
+  {id:'wiki_read',  ico:'📚', lbl:'Lernprofi',        desc:'Wiki-Artikel gelesen'},
+  {id:'struc_use',  ico:'✏️', lbl:'Molekülzeichner',  desc:'Strukturzeichner genutzt'},
+  {id:'rxn_use',    ico:'⚡', lbl:'Reaktionsforscher',desc:'Reaktionsrechner genutzt'},
+  {id:'all_modules',ico:'🌟', lbl:'Allrounder',       desc:'Alle Module besucht'},
+  {id:'darkmode',   ico:'🌙', lbl:'Nachtforscher',    desc:'Dunkelmodus aktiviert'},
+  {id:'xp500',      ico:'🔬', lbl:'Wissenschaftler',  desc:'500 XP erreicht'},
+];
+
+let _XP = {
+  total: parseInt(localStorage.getItem('cl_xp') || '0'),
+  badges: JSON.parse(localStorage.getItem('cl_badges') || '[]'),
+  visits: JSON.parse(localStorage.getItem('cl_visits') || '[]'),
+  quizAnswered: parseInt(localStorage.getItem('cl_qa') || '0'),
+};
+
+function _saveXP() {
+  localStorage.setItem('cl_xp', _XP.total);
+  localStorage.setItem('cl_badges', JSON.stringify(_XP.badges));
+  localStorage.setItem('cl_visits', JSON.stringify(_XP.visits));
+  localStorage.setItem('cl_qa', _XP.quizAnswered);
+}
+
+function _getLevelInfo(xp) {
+  for (let i = XP_LEVELS.length - 1; i >= 0; i--) {
+    if (xp >= XP_LEVELS[i].min) return { ...XP_LEVELS[i], idx: i };
+  }
+  return { ...XP_LEVELS[0], idx: 0 };
+}
+
+function _xpPct(xp) {
+  const lv = _getLevelInfo(xp);
+  if (lv.idx >= XP_LEVELS.length - 1) return 100;
+  const range = lv.max - lv.min;
+  return Math.min(100, Math.round(((xp - lv.min) / range) * 100));
+}
+
+function _updateXpUI() {
+  const lv = _getLevelInfo(_XP.total);
+  const pct = _xpPct(_XP.total);
+  const xpToNext = lv.idx < XP_LEVELS.length - 1 ? lv.max - _XP.total : 0;
+
+  // HUD widget
+  const lvLabel = document.getElementById('xp-level-label');
+  const bar     = document.getElementById('xp-bar');
+  const sub     = document.getElementById('xp-sub-label');
+  if (lvLabel) lvLabel.textContent = lv.short;
+  if (bar)     bar.style.width = pct + '%';
+  if (sub)     sub.textContent = _XP.total + ' XP' + (xpToNext > 0 ? ' · noch ' + xpToNext : '');
+
+  // Popup
+  const popLv  = document.getElementById('xp-pop-level');
+  const popBar = document.getElementById('xp-pop-bar');
+  const popLbl = document.getElementById('xp-pop-label');
+  if (popLv)  popLv.textContent  = lv.label;
+  if (popBar) popBar.style.width = pct + '%';
+  if (popLbl) popLbl.textContent = xpToNext > 0
+    ? _XP.total + ' / ' + lv.max + ' XP bis nächstes Level'
+    : '🎓 Maximales Level erreicht!';
+
+  // Badges
+  const grid = document.getElementById('badges-grid');
+  if (grid) {
+    grid.innerHTML = BADGE_DEFS.map(b => {
+      const earned = _XP.badges.includes(b.id);
+      return `<div class="badge ${earned ? 'earned' : 'locked'}" title="${b.desc}">
+        <div class="badge-ico">${b.ico}</div>
+        <div class="badge-lbl">${b.lbl}</div>
+      </div>`;
+    }).join('');
+  }
+}
+
+function addXP(amount, reason) {
+  const prevLevel = _getLevelInfo(_XP.total).idx;
+  _XP.total += amount;
+  const newLevel = _getLevelInfo(_XP.total).idx;
+  _saveXP();
+  _updateXpUI();
+
+  // Toast
+  const toast = document.getElementById('xp-toast');
+  const msg   = document.getElementById('xp-toast-msg');
+  if (toast && msg) {
+    msg.textContent = '+' + amount + ' XP · ' + reason;
+    toast.classList.add('show');
+    clearTimeout(toast._t);
+    toast._t = setTimeout(() => toast.classList.remove('show'), 2800);
+  }
+
+  // Level-up
+  if (newLevel > prevLevel) {
+    setTimeout(() => {
+      const lv = _getLevelInfo(_XP.total);
+      if (toast && msg) {
+        msg.textContent = '🎉 Level Up! ' + lv.label;
+        toast.classList.add('show');
+        clearTimeout(toast._t);
+        toast._t = setTimeout(() => toast.classList.remove('show'), 3500);
+      }
+    }, 1200);
+  }
+
+  // Badge checks
+  _checkBadges();
+}
+
+function _earnBadge(id) {
+  if (_XP.badges.includes(id)) return;
+  const def = BADGE_DEFS.find(b => b.id === id);
+  if (!def) return;
+  _XP.badges.push(id);
+  _saveXP();
+  _updateXpUI();
+  const toast = document.getElementById('xp-toast');
+  const msg   = document.getElementById('xp-toast-msg');
+  if (toast && msg) {
+    msg.textContent = def.ico + ' Abzeichen: ' + def.lbl;
+    toast.classList.add('show');
+    clearTimeout(toast._t);
+    toast._t = setTimeout(() => toast.classList.remove('show'), 3000);
+  }
+}
+
+function _checkBadges() {
+  if (_XP.quizAnswered >= 5)  _earnBadge('quiz5');
+  if (_XP.quizAnswered >= 25) _earnBadge('quiz25');
+  if (_XP.total >= 500)       _earnBadge('xp500');
+  if (_XP.visits.includes('pse'))  _earnBadge('pse_visit');
+  if (_XP.visits.includes('wiki')) _earnBadge('wiki_read');
+  if (_XP.visits.includes('struc'))_earnBadge('struc_use');
+  if (_XP.visits.includes('rxn'))  _earnBadge('rxn_use');
+  const all = ['pse','wiki','learn','struc','rxn','quiz'];
+  if (all.every(m => _XP.visits.includes(m))) _earnBadge('all_modules');
+}
+
+function toggleXpPopup() {
+  const p = document.getElementById('xp-popup');
+  if (!p) return;
+  p.classList.toggle('show');
+  _updateXpUI();
+}
+
+// Close popup on outside click
+document.addEventListener('click', e => {
+  const popup  = document.getElementById('xp-popup');
+  const widget = document.getElementById('xp-widget');
+  if (popup && popup.classList.contains('show') && !popup.contains(e.target) && !widget.contains(e.target)) {
+    popup.classList.remove('show');
+  }
+});
+
+// Track module visits & award XP
+function _trackVisit(page) {
+  if (!_XP.visits.includes(page)) {
+    _XP.visits.push(page);
+    _saveXP();
+    addXP(15, page.toUpperCase() + ' erkundet');
+  }
+}
+
+// Initialize XP UI on load — defer until DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  _updateXpUI();
+  // Floating molecules (deferred so mol-bg exists)
+  (function() {
+    const icons = ['⚗️','🔬','⚛️','🧬','💊','🧪','🔭','💡','⚡','🌡️','🧲','💎'];
+    const container = document.getElementById('mol-bg');
+    if (!container) return;
+    for (let i = 0; i < 14; i++) {
+      const el = document.createElement('div');
+      el.className = 'mol-float';
+      el.textContent = icons[Math.floor(Math.random() * icons.length)];
+      const size  = 16 + Math.random() * 14;
+      const left  = Math.random() * 96;
+      const dur   = 22 + Math.random() * 30;
+      const delay = -(Math.random() * dur);
+      el.style.cssText = `left:${left}%;font-size:${size}px;animation-duration:${dur}s;animation-delay:${delay}s`;
+      container.appendChild(el);
+    }
+  })();
+});
+
+// ══════════════════════════════════════════════════════════════════
+// CHEMIE-FAKT DER WOCHE
+// ══════════════════════════════════════════════════════════════════
+const CHEM_FACTS = [
+  {text:'Gallium schmilzt bereits bei 29,8 °C und kann buchstäblich in der Hand flüssig werden.', src:'Periodensystem · Ga, Z=31'},
+  {text:'Ein einziges Gramm Palladium kann bis zu 900 Liter Wasserstoffgas absorbieren – das 900-fache seines eigenen Volumens.', src:'Übergangsmetalle · Pd, Z=46'},
+  {text:'Wasserstoff ist das häufigste Element im Universum und macht ca. 75 % der gesamten Baryonenmasse aus.', src:'Wasserstoff · H, Z=1'},
+  {text:'Das menschliche Gehirn enthält etwa 100 Milliarden Neuronen – deren Signalübertragung basiert auf Na⁺/K⁺-Ionenströmen.', src:'Biochemie · Elektrochemie'},
+  {text:'Ein einziges Teelöffel Neutronenstern-Material würde auf der Erde rund eine Milliarde Tonnen wiegen – ähnliche Dichten zeigt weißes Zwerg-Material.', src:'Kernphysik · Astrophysik'},
+  {text:'Graphen – eine einzelne Graphitschicht – ist 200× stärker als Stahl und gleichzeitig fast transparent.', src:'Kohlenstoff · C, Z=6'},
+  {text:'Fluorwasserstoffsäure (HF) ist so korrosiv, dass sie Glas auflöst – sie wird daher in Kunststoffbehältern gelagert.', src:'Halogene · F, Z=9'},
+  {text:'Die Haber-Bosch-Synthese von Ammoniak ernährt schätzungsweise 50 % der Weltbevölkerung – ohne sie gäbe es nicht genug Düngemittel.', src:'Industriechemie · N₂ + 3H₂ ⇌ 2NH₃'},
+  {text:'Ein Diamant und Graphit bestehen aus identischen Kohlenstoffatomen – allein die Anordnung macht den Unterschied zwischen dem härtesten Stoff und weichem Schmiermittel.', src:'Allotrope · C, Z=6'},
+  {text:'Osmium ist das dichteste Element mit 22,59 g/cm³ – ein Würfel mit 10 cm Kantenlänge würde 22,6 kg wiegen.', src:'Übergangsmetalle · Os, Z=76'},
+];
+
+let _factIdx = Math.floor((Date.now() / (1000 * 60 * 60 * 24 * 7)) % CHEM_FACTS.length);
+
+function renderFactCard() {
+  const f = CHEM_FACTS[_factIdx];
+  const dots = CHEM_FACTS.map((_, i) =>
+    `<div class="fact-dot${i === _factIdx ? ' on' : ''}" onclick="setFact(${i})"></div>`).join('');
+  return `<div class="fact-card">
+    <div class="fact-badge">🧠 Chemie-Fakt der Woche</div>
+    <div class="fact-text">${f.text}</div>
+    <div class="fact-source">${f.src}</div>
+    <div class="fact-nav">${dots}</div>
+  </div>`;
+}
+
+function setFact(i) {
+  _factIdx = i;
+  const panel = document.getElementById('content-panel');
+  if (panel) {
+    const fc = panel.querySelector('.fact-card');
+    if (fc) fc.outerHTML = renderFactCard();
+    else panel.insertAdjacentHTML('afterbegin', renderFactCard());
+  }
+  // Re-render dots in place
+  const cards = document.querySelectorAll('.fact-card');
+  cards.forEach(c => {
+    c.querySelector('.fact-text') && (c.querySelector('.fact-text').textContent = CHEM_FACTS[i].text);
+    c.querySelector('.fact-source') && (c.querySelector('.fact-source').textContent = CHEM_FACTS[i].src);
+    c.querySelector('.fact-nav') && (c.querySelector('.fact-nav').innerHTML = CHEM_FACTS.map((_,j)=>`<div class="fact-dot${j===i?' on':''}" onclick="setFact(${j})"></div>`).join(''));
+  });
+}
+
+// ══════════════════════════════════════════════════════════════════
+// SCROLL-REVEAL OBSERVER
+// ══════════════════════════════════════════════════════════════════
+function initReveal() {
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.learn-card,.wiki-card,.quiz-mode,.rxn-result,.fact-card').forEach(el => {
+    el.classList.add('reveal');
+    io.observe(el);
+  });
+}
+
 function toggleDark() {
   DARK = !DARK;
   document.getElementById('app') && document.getElementById('app').classList.toggle('dk', DARK);
@@ -1274,13 +1678,53 @@ function hideDd() { document.getElementById('srch-dd').style.display='none'; }
 
 /* ═══ PAGE ROUTER ═══ */
 function renderPage(p) {
-  if (p==='pse')   return renderPSE();
-  if (p==='wiki')  return WIKI_KEY ? renderArt() : renderWikiList();
-  if (p==='learn') return renderLearn();
-  if (p==='struc') return renderStruc();
-  if (p==='rxn')   return renderRxn();
-  if (p==='quiz')  return renderQuiz();
-  return '';
+  let content = '';
+  if (p==='pse')   content = renderPSE();
+  else if (p==='wiki')  content = WIKI_KEY ? renderArt() : renderWikiList();
+  else if (p==='learn') content = renderLearn();
+  else if (p==='struc') content = renderStruc();
+  else if (p==='rxn')   content = renderRxn();
+  else if (p==='quiz')  content = renderQuiz();
+
+  // Inject Chemie-Fakt auf Lernseiten (nicht PSE/Struc)
+  const withFact = ['wiki','learn','rxn','quiz'];
+  const factHtml = withFact.includes(p) ? renderFactCard() : '';
+
+  const footer = `<footer id="site-footer">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand"><div class="footer-brand-ico">C</div>Chem<span style="color:var(--acc)">Lab</span></div>
+        <div class="footer-sub">Deine interaktive Chemie-Lernplattform — Periodensystem, Wiki, Tools und mehr.</div>
+      </div>
+      <div class="footer-col">
+        <h4>Module</h4>
+        <a onclick="zoomTo('pse')">Periodensystem</a>
+        <a onclick="zoomTo('wiki')">Chemie-Wiki</a>
+        <a onclick="zoomTo('learn')">Lernbereich</a>
+        <a onclick="zoomTo('struc')">Strukturzeichner</a>
+        <a onclick="zoomTo('rxn')">Reaktionsrechner</a>
+        <a onclick="zoomTo('quiz')">Quiz</a>
+      </div>
+      <div class="footer-col">
+        <h4>Info</h4>
+        <a onclick="alert('ChemLab · Schulprojekt · Alle Rechte vorbehalten.')">Impressum</a>
+        <a onclick="alert('Kontakt: chemlab@schule.de')">Kontakt</a>
+        <a onclick="toggleDark()">Dunkelmodus umschalten</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© ${new Date().getFullYear()} ChemLab · Interaktive Chemie-Lernplattform</div>
+      <div class="footer-badges">
+        <div class="footer-badge">⚗ 118 Elemente</div>
+        <div class="footer-badge">🧠 97 Quizfragen</div>
+        <div class="footer-badge">📚 10 Kategorien</div>
+      </div>
+    </div>
+  </footer>`;
+
+  // Reveal animation init (deferred nach dem innerHTML-Assignment)
+  // wird von zoomTo und rerender() aufgerufen, nicht hier
+  return factHtml + content + footer;
 }
 
 /* ═══ SHARED RE-RENDER (for in-page nav) ═══ */
@@ -1289,6 +1733,7 @@ function rerender() {
   if (!panel) return;
   panel.innerHTML = renderPage(CURRENT_PAGE);
   if (CURRENT_PAGE === 'struc') initCanvas();
+  setTimeout(initReveal, 80);
 }
 
 /* ═══ PSE ═══ */
@@ -1594,7 +2039,7 @@ function renderQuizStart(){
 function renderQuizQ(){const qs=QUIZ_Q[QZ.cat];const q=qs[QZ.q];const total=qs.length;const prog=Math.round((QZ.q/total)*100);let elHint='';if(q.el){const el=EL_MAP[q.el];if(el)elHint=`<div class="quiz-element-hint" style="background:${catBg(el.c)};border:0.5px solid ${catBdr(el.c)};color:${catCol(el.c)}"><div class="quiz-el-z">${el.z}</div><div class="quiz-el-s">${el.s}</div><div class="quiz-el-m">${el.m?el.m+' u':'–'}</div></div>`;}
 const catLabel=(QUIZ_CATS[QZ.cat]?.label)||QZ.cat;
 return `<div class="quiz-wrap"><div class="quiz-progress"><div class="quiz-progress-bar" style="width:${prog}%"></div></div><div class="quiz-card"><div class="quiz-q-num">Frage ${QZ.q+1}/${total} · ${catLabel}</div>${elHint}<div class="quiz-q">${q.q}</div><div class="quiz-answers">${q.answers.map((a,i)=>`<button class="qa" id="qa-${i}" onclick="quizAns(${i})">${a}</button>`).join('')}</div><div class="quiz-feedback" id="qfb"></div></div><div class="quiz-nav"><div class="quiz-score-label">Punkte: ${QZ.score}/${QZ.q}</div><button class="btn${QZ.answered?' pri':''}" id="qnext" onclick="quizNext()" ${QZ.answered?'':'disabled'} style="${QZ.answered?'':'opacity:.4'}">Nächste Frage →</button></div></div>`;}
-function quizAns(idx){if(QZ.answered)return;QZ.answered=true;const q=QUIZ_Q[QZ.cat][QZ.q];const isRight=idx===q.correct;if(isRight)QZ.score++;document.querySelectorAll('.qa').forEach((b,i)=>{b.disabled=true;if(i===q.correct)b.classList.add('correct');else if(i===idx&&!isRight)b.classList.add('wrong');});const fb=document.getElementById('qfb');if(fb){fb.textContent=(isRight?'✓ Richtig! ':'✗ Falsch. ')+q.exp;fb.className='quiz-feedback show '+(isRight?'correct':'wrong');}const nxt=document.getElementById('qnext');if(nxt){nxt.disabled=false;nxt.style.opacity='1';nxt.classList.add('pri');}}
+function quizAns(idx){if(QZ.answered)return;QZ.answered=true;const q=QUIZ_Q[QZ.cat][QZ.q];const isRight=idx===q.correct;if(isRight){QZ.score++;addXP(10,'Richtige Antwort');}else{addXP(2,'Frage versucht');}QZ.quizAnswered=(QZ.quizAnswered||0)+1;_XP.quizAnswered++;_saveXP();_checkBadges();document.querySelectorAll('.qa').forEach((b,i)=>{b.disabled=true;if(i===q.correct)b.classList.add('correct');else if(i===idx&&!isRight)b.classList.add('wrong');});const fb=document.getElementById('qfb');if(fb){fb.textContent=(isRight?'✓ Richtig! ':'✗ Falsch. ')+q.exp;fb.className='quiz-feedback show '+(isRight?'correct':'wrong');}const nxt=document.getElementById('qnext');if(nxt){nxt.disabled=false;nxt.style.opacity='1';nxt.classList.add('pri');}}
 function quizNext(){const qs=QUIZ_Q[QZ.cat];if(QZ.q+1>=qs.length){QZ.done=true;rerender();return;}QZ.q++;QZ.answered=false;rerender();}
 function renderQuizResult(){const qs=QUIZ_Q[QZ.cat];const total=qs.length;const pct=Math.round(QZ.score/total*100);const stars=pct>=90?'⭐⭐⭐':pct>=70?'⭐⭐':pct>=50?'⭐':'';const msg=pct>=90?'Ausgezeichnet!':pct>=70?'Sehr gut!':pct>=50?'Gut – weiter üben!':'Weiter üben!';return `<div class="quiz-wrap"><div class="quiz-result"><div class="quiz-stars">${stars}</div><h2>${msg}</h2><div class="quiz-score-big">${QZ.score}/${total}</div><p>${pct}% korrekt</p><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><button class="btn pri" onclick="QZ={mode:'quiz',cat:'${QZ.cat}',q:0,score:0,answered:false,done:false};rerender()">Nochmal</button><button class="btn" onclick="QZ.mode=null;QZ.done=false;rerender()">Kategorie wählen</button></div></div></div>`;}
 
