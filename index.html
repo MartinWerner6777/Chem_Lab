@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -175,6 +176,52 @@ html,body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:
 .tbtn{display:flex;align-items:center;gap:5px;padding:5px 7px;border-radius:5px;cursor:pointer;font-size:11px;color:var(--t2);transition:var(--tr);border:none;background:none;width:100%;text-align:left;font-family:inherit}
 .tbtn:hover{background:var(--bg4);color:var(--t1)}.tbtn.on{background:var(--acl);color:var(--acc)}
 .atom-pip{width:11px;height:11px;border-radius:50%;flex-shrink:0}
+/* NEW STRUKTURZEICHNER */
+.snew-wrap{display:grid;grid-template-columns:190px 1fr 195px;gap:0;border:0.5px solid var(--bdr);border-radius:14px;overflow:hidden;background:var(--bg2);min-height:520px}
+.snew-left{background:var(--bg3);border-right:0.5px solid var(--bdr);display:flex;flex-direction:column;overflow:hidden}
+.snew-center{display:flex;flex-direction:column;background:var(--bg2)}
+.snew-right{background:var(--bg3);border-left:0.5px solid var(--bdr);display:flex;flex-direction:column;overflow:hidden}
+.snew-sec-hd{font-size:9.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--t3);padding:10px 12px 5px;border-bottom:0.5px solid var(--bdr)}
+.snew-atoms{display:flex;flex-direction:column;gap:2px;padding:6px}
+.snew-atom{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;border:0.5px solid transparent;background:var(--bg2);cursor:pointer;transition:all .15s;text-align:left;width:100%}
+.snew-atom:hover{background:var(--bg4);border-color:var(--bdr2)}
+.snew-atom.on{background:var(--acl);border-color:var(--acd)}
+.sa-pip{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.sa-sym{font-size:13px;font-weight:600;color:var(--t1);line-height:1}
+.sa-name{font-size:9.5px;color:var(--t3);line-height:1;margin-top:1px}
+.snew-bonds{display:flex;flex-direction:column;gap:2px;padding:0 6px 6px}
+.snew-bond{padding:5px 10px;border-radius:7px;border:0.5px solid var(--bdr);background:var(--bg2);color:var(--t2);font-size:11.5px;cursor:pointer;text-align:left;transition:all .15s;font-family:monospace;width:100%}
+.snew-bond:hover{background:var(--bg4)}.snew-bond.on{background:var(--acl);border-color:var(--acd);color:var(--acc)}
+.snew-bond.danger{color:#e53935}.snew-bond.danger:hover{background:#ffeaea}
+.snew-lib{flex:1;overflow-y:auto;padding:4px 6px}
+.snew-lib::-webkit-scrollbar{width:3px}.snew-lib::-webkit-scrollbar-thumb{background:var(--bdr2);border-radius:2px}
+.sl-cat{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--t4);padding:8px 4px 3px}
+.sl-mol{display:flex;align-items:center;gap:7px;width:100%;padding:5px 6px;border-radius:7px;border:none;background:none;cursor:pointer;color:var(--t2);font-family:inherit;font-size:11.5px;text-align:left;transition:all .12s}
+.sl-mol:hover{background:var(--bg4)}.sl-mol-ico{font-size:14px;flex-shrink:0}.sl-mol-name{line-height:1.3}.sl-mol-f{font-size:9.5px;color:var(--t3);font-family:monospace}
+.snew-libadd{margin:6px;padding:7px;border-radius:8px;border:0.5px dashed var(--bdr2);background:none;color:var(--t3);font-size:11.5px;cursor:pointer;transition:all .15s;font-family:inherit;width:calc(100% - 12px)}
+.snew-libadd:hover{background:var(--bg4);color:var(--t2)}
+.snew-toolbar{display:flex;align-items:center;gap:4px;padding:7px 10px;border-bottom:0.5px solid var(--bdr);flex-wrap:wrap}
+.snew-tbtn{width:30px;height:28px;border-radius:7px;border:0.5px solid var(--bdr);background:var(--bg3);color:var(--t2);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .12s;font-family:monospace}
+.snew-tbtn:hover{background:var(--bg4)}.snew-tbtn.on{background:var(--acl);border-color:var(--acd);color:var(--acc)}.snew-tbtn.danger{color:#e53935}
+.snew-mode-badge{margin-left:auto;font-size:10.5px;color:var(--t3);background:var(--bg3);border:0.5px solid var(--bdr);padding:3px 10px;border-radius:20px}
+.snew-canvas-wrap{flex:1;position:relative;min-height:300px}
+.mol-canvas{display:block;cursor:crosshair;width:100%;height:100%;min-height:280px}
+.snew-tip{padding:6px 12px;font-size:11.5px;color:var(--t3);background:var(--bg3);border-top:0.5px solid var(--bdr);display:flex;align-items:center;gap:6px}
+.snew-loadbar{display:flex;gap:6px;padding:8px 10px;border-top:0.5px solid var(--bdr)}
+.snew-loadbar input{flex:1;height:32px;border:0.5px solid var(--bdr);border-radius:8px;padding:0 10px;font-size:12px;background:var(--bg3);color:var(--t1);font-family:monospace;outline:none}
+.snew-loadbar input:focus{border-color:var(--acc)}
+.snew-loadbar button{height:32px;padding:0 16px;border-radius:8px;font-size:12px;cursor:pointer;background:var(--acc);color:#fff;border:none;font-family:inherit;font-weight:500}
+.snew-footer-chips{display:flex;gap:6px;padding:7px 10px;border-top:0.5px solid var(--bdr);flex-wrap:wrap}
+.snew-chip{font-size:10px;color:var(--t3);padding:3px 8px;border-radius:6px;background:var(--bg3);border:0.5px solid var(--bdr)}
+.snew-suggestions{padding:6px;display:flex;flex-direction:column;gap:4px;max-height:220px;overflow-y:auto}
+.suggest-card{background:var(--bg2);border:0.5px solid var(--bdr);border-radius:7px;padding:9px 10px;cursor:pointer;transition:var(--tr)}
+.suggest-card:hover{border-color:var(--bdr2)}.suggest-card.hl{border-color:#c0ddd0;background:var(--acl)}
+.sc-hd{display:flex;align-items:center;gap:6px;margin-bottom:3px}
+.snew-molinfo{padding:8px 10px;font-size:12px;color:var(--t2);flex:1;overflow-y:auto}
+.snew-info-row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:0.5px solid var(--bdr);font-size:11.5px}
+.snew-info-row:last-child{border-bottom:none}
+.snew-info-lbl{color:var(--t3)}.snew-info-val{font-weight:500;font-family:monospace}
+@media(max-width:640px){.snew-wrap{grid-template-columns:1fr!important;min-height:auto}.snew-right{display:none}.snew-left{max-height:200px}}
 .mol-group-lbl{font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;padding:7px 8px 2px}
 .mol-btn{padding:5px 8px;border-radius:5px;cursor:pointer;font-size:11px;color:var(--t2);transition:var(--tr);border:none;background:none;text-align:left;width:100%;font-family:inherit;display:flex;flex-direction:column;gap:1px}
 .mol-btn:hover{background:var(--bg4);color:var(--t1)}.mol-btn span{font-size:9.5px;color:var(--t3)}
@@ -451,6 +498,12 @@ html,body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:
             <div class="mo-desc">Wissen testen in 3 Kategorien</div>
             <div class="mo-arrow">→</div>
           </div>
+          <div class="module-orbit" onclick="zoomTo('info')">
+            <div class="mo-ico">ℹ️</div>
+            <div class="mo-name">Info & Impressum</div>
+            <div class="mo-desc">Kontakt, Impressum, Über ChemLab</div>
+            <div class="mo-arrow">→</div>
+          </div>
         </div>
         <div class="scroll-hint">
           <div class="scroll-hint-arrow">↓</div>
@@ -472,15 +525,15 @@ html,body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:
     <span>Chem<span>Lab</span></span>
   </div>
   <div id="hud-back" style="display:none;align-items:center;gap:6px;padding:5px 12px;background:var(--bg3);border:0.5px solid var(--bdr2);border-radius:8px;cursor:pointer;font-size:12.5px;color:var(--t2);margin-left:4px;transition:all .15s" onclick="zoomHome()" onmouseover="this.style.background='var(--bg4)'" onmouseout="this.style.background='var(--bg3)'">
-    <i class="ti ti-arrow-left" style="font-size:14px"></i> Startseite
+    🏠 Startseite
   </div>
   <div class="hud-breadcrumb" id="breadcrumb" style="display:none">
     <span class="sep">›</span>
     <span class="crumb active" id="crumb-current"></span>
   </div>
   <div class="srch-wrap" style="margin-left:16px">
-    <i class="ti ti-search srch-ic"></i>
-    <input class="srch-in" id="srch" placeholder="Suchen…" oninput="doSearch(this.value)" onblur="setTimeout(hideDd,180)" autocomplete="off">
+    <span class="srch-ic">🔍</span>
+    <input class="srch-in" id="srch" placeholder="Suchen… (Elemente, Module, Stoffe)" oninput="doSearch(this.value)" onblur="setTimeout(hideDd,180)" onfocus="doSearch(this.value)" autocomplete="off">
     <div class="srch-dd" id="srch-dd"></div>
   </div>
   <div class="hud-right">
@@ -492,13 +545,13 @@ html,body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:
         <div class="xp-sub" id="xp-sub-label">0 / 100 XP</div>
       </div>
     </div>
-    <div class="hud-btn" onclick="toggleDark()" title="Dunkelmodus"><i class="ti ti-moon" id="dk-ic"></i></div>
+    <div class="hud-btn" onclick="toggleDark()" title="Dunkelmodus" id="dk-btn" style="font-size:16px">🌙</div>
   </div>
 </div>
 
 <!-- BACK BUTTON -->
 <button id="back-btn" onclick="zoomHome()" aria-label="Zurück zur Startseite">
-  <i class="ti ti-arrow-left" style="font-size:16px"></i> Zurück
+  🏠 Zurück
 </button>
 
 <!-- ZOOM HINT -->
@@ -528,6 +581,7 @@ html,body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:
   <div class="sp-dot" onclick="zoomTo('struc')"  title="Strukturzeichner"></div>
   <div class="sp-dot" onclick="zoomTo('rxn')"    title="Reaktionsrechner"></div>
   <div class="sp-dot" onclick="zoomTo('quiz')"   title="Quiz"></div>
+  <div class="sp-dot" onclick="zoomTo('info')"   title="Info & Impressum"></div>
 </div>
 
 <!-- TOOLTIP -->
@@ -800,47 +854,89 @@ let _S = {tool:'C',atoms:[],bonds:[],undoStack:[],sel:null,hover:null,drag:null,
 
 const PAGE_NAMES = {
   home:'Startseite', pse:'Periodensystem', wiki:'Chemie-Wiki',
-  learn:'Lernbereich', struc:'Strukturzeichner', rxn:'Reaktionsrechner', quiz:'Quiz'
+  learn:'Lernbereich', struc:'Strukturzeichner', rxn:'Reaktionsrechner', quiz:'Quiz', info:'Info & Impressum'
 };
 
 function zoomTo(page) {
-  CURRENT_PAGE = page;
-  const world = document.getElementById('zoom-world');
-  const homeLayer = document.getElementById('layer-home');
+  const world        = document.getElementById('zoom-world');
+  const homeLayer    = document.getElementById('layer-home');
   const contentLayer = document.getElementById('layer-content');
+  const panel        = document.getElementById('content-panel');
+  const fromHome     = CURRENT_PAGE === 'home';
 
-  // Phase 1: zoom in animation on home
-  world.style.transform = 'scale(2.5) translateZ(200px)';
-  homeLayer.style.opacity = '0';
-  homeLayer.style.transition = 'opacity 0.5s';
+  CURRENT_PAGE = page;
 
-  setTimeout(() => {
-    // Phase 2: switch layers
-    homeLayer.classList.remove('active');
-    contentLayer.classList.add('active');
-    world.style.transition = 'none';
-    world.style.transform = 'scale(0.6) translateZ(-200px)';
+  if (fromHome) {
+    // ── Home → Modul ──
+    world.style.transform = 'scale(2.5) translateZ(200px)';
+    homeLayer.style.opacity = '0';
+    homeLayer.style.transition = 'opacity 0.5s';
 
-    // Render content
-    const panel = document.getElementById('content-panel');
-    panel.innerHTML = renderPage(page);
-    if (page === 'struc') initCanvas();
+    setTimeout(() => {
+      homeLayer.classList.remove('active');
+      homeLayer.style.opacity = '';
+      homeLayer.style.transition = '';
 
-    // Phase 3: zoom into content
-    requestAnimationFrame(() => {
-      world.style.transition = 'transform 0.9s cubic-bezier(.77,0,.175,1)';
-      world.style.transform = 'scale(1) translateZ(0)';
-    });
+      // Clear panel BEFORE making layer visible
+      panel.innerHTML = '';
+      contentLayer.classList.add('active');
+      contentLayer.style.opacity = '0';
 
-    // Update HUD
-    document.getElementById('breadcrumb').style.display = 'flex';
-    document.getElementById('crumb-current').textContent = PAGE_NAMES[page] || page;
-    document.getElementById('back-btn').classList.add('show');
-    const hudBack = document.getElementById('hud-back'); if(hudBack) hudBack.style.display='flex';
-    document.getElementById('zoom-hint').classList.add('hidden');
-    const spEl = document.getElementById('scroll-progress');
-    if (spEl) spEl.classList.add('hidden');
-  }, 500);
+      panel.innerHTML = renderPage(page);
+      if (page === 'struc') initCanvas();
+      panel.scrollTop = 0;
+
+      world.style.transition = 'none';
+      world.style.transform = 'scale(0.6) translateZ(-200px)';
+
+      requestAnimationFrame(() => {
+        contentLayer.style.transition = 'opacity 0.35s';
+        contentLayer.style.opacity = '1';
+        world.style.transition = 'transform 0.9s cubic-bezier(.77,0,.175,1)';
+        world.style.transform = 'scale(1) translateZ(0)';
+        setTimeout(() => {
+          contentLayer.style.opacity = '';
+          contentLayer.style.transition = '';
+        }, 400);
+      });
+    }, 500);
+
+  } else {
+    // ── Modul → Modul ── (fix: fade out, swap content, fade in)
+    contentLayer.style.transition = 'opacity 0.2s';
+    contentLayer.style.opacity = '0';
+
+    setTimeout(() => {
+      // Clear old content completely before writing new
+      panel.innerHTML = '';
+      panel.innerHTML = renderPage(page);
+      if (page === 'struc') initCanvas();
+      panel.scrollTop = 0;
+
+      contentLayer.style.transition = 'opacity 0.25s';
+      contentLayer.style.opacity = '1';
+      setTimeout(() => {
+        contentLayer.style.opacity = '';
+        contentLayer.style.transition = '';
+      }, 280);
+    }, 220);
+  }
+
+  // Update HUD immediately
+  document.getElementById('breadcrumb').style.display = 'flex';
+  document.getElementById('crumb-current').textContent = PAGE_NAMES[page] || page;
+  document.getElementById('back-btn').classList.add('show');
+  const hudBack = document.getElementById('hud-back'); if(hudBack) hudBack.style.display='flex';
+  document.getElementById('zoom-hint').classList.add('hidden');
+
+  // Nav dots + XP + nav hint
+  _navDots(page);
+  _trackVisit(page);
+  var _ni = MODULES_ORDER.indexOf(page);
+  var _hp = _ni <= 0 ? 'Startseite' : MODULE_NAMES[_ni-1];
+  var _hn = _ni >= MODULES_ORDER.length-1 ? 'Startseite' : MODULE_NAMES[_ni+1];
+  var _hint = document.getElementById('zoom-hint');
+  if(_hint){ _hint.textContent = '\u2191 '+_hp+' \u00b7 Scrollen \u00b7 '+_hn+' \u2193'; _hint.classList.remove('hidden'); clearTimeout(_hint._ht); _hint._ht = setTimeout(function(){ _hint.classList.add('hidden'); }, 4000); }
 }
 
 function zoomHome() {
@@ -876,18 +972,13 @@ function zoomHome() {
     document.getElementById('back-btn').classList.remove('show');
     const hudBackEl = document.getElementById('hud-back'); if(hudBackEl) hudBackEl.style.display='none';
     document.getElementById('zoom-hint').classList.remove('hidden');
-    // Reset scroll state
-    _scrollY = 0; _scrollTarget = 0; _highlightIdx = -1; _zoomActive = false;
-    document.querySelectorAll('.module-orbit').forEach(m => {
-      m.style.transform = ''; m.style.boxShadow = ''; m.style.borderColor = '';
-    });
-    const w = document.getElementById('zoom-world');
-    if(w) w.style.transform = 'scale(1) translateZ(0)';
+    // Reset scroll state via helper
+    _resetHS();
+    _navDots('home');
+    _transitioning = false;
+    _edgeAccum = 0;
     const hint = document.getElementById('zoom-hint');
-    if(hint) hint.textContent = '↓ Scrollen zum Einzoomen · Klick auf Kachel zum Öffnen';
-    const spRestore = document.getElementById('scroll-progress');
-    if(spRestore) spRestore.classList.add('hidden');
-    document.querySelectorAll('.sp-dot').forEach(d => d.classList.remove('active'));
+    if(hint) hint.textContent = '\u2193 Scrollen zum Einzoomen \u00b7 Klick auf Kachel zum \u00d6ffnen';
   }, 400);
 }
 
@@ -898,30 +989,71 @@ function toggleDark() {
   DARK = !DARK;
   document.getElementById('app') && document.getElementById('app').classList.toggle('dk', DARK);
   document.documentElement.classList.toggle('dk', DARK);
-  document.getElementById('dk-ic').className = DARK ? 'ti ti-sun' : 'ti ti-moon';
+  const btn = document.getElementById('dk-btn');
+  if (btn) btn.textContent = DARK ? '☀️' : '🌙';
 }
 
 /* ═══ SEARCH ═══ */
 const SRCH_IDX = [
-  ...EL.filter(e=>EL_DETAIL[e.z]).map(e=>({l:e.n,s:e.s+' · Z='+e.z,c:'Element',a:()=>{PSE_SEL=e;zoomTo('pse');}})),
-  ...Object.entries(WIKI).map(([k,v])=>({l:v.t,s:v.desc,c:'Wiki',a:()=>{WIKI_KEY=k;zoomTo('wiki');}})),
-  {l:'Reaktionsrechner',s:'Gleichungen ausgleichen',c:'Tool',a:()=>zoomTo('rxn')},
-  {l:'Strukturzeichner',s:'Moleküle zeichnen',c:'Tool',a:()=>zoomTo('struc')},
-  {l:'Quiz',s:'Chemiewissen testen',c:'Tool',a:()=>zoomTo('quiz')},
+  // Module
+  {l:'Periodensystem',s:'118 Elemente interaktiv',c:'Modul',ico:'🔬',a:()=>zoomTo('pse')},
+  {l:'Chemie-Wiki',s:'Artikel zu Reaktionen, Bindungen',c:'Modul',ico:'📚',a:()=>zoomTo('wiki')},
+  {l:'Lernbereich',s:'PSE-Grundlagen einfach erklärt',c:'Modul',ico:'🎓',a:()=>zoomTo('learn')},
+  {l:'Strukturzeichner',s:'Moleküle zeichnen & erkunden',c:'Modul',ico:'✏️',a:()=>zoomTo('struc')},
+  {l:'Reaktionsrechner',s:'Gleichungen ausgleichen',c:'Modul',ico:'⚖️',a:()=>zoomTo('rxn')},
+  {l:'Quiz',s:'Wissen in 8 Kategorien testen',c:'Modul',ico:'🧠',a:()=>zoomTo('quiz')},
+  {l:'Info & Impressum',s:'Kontakt, Über ChemLab',c:'Modul',ico:'ℹ️',a:()=>zoomTo('info')},
+  // Alle Elemente (auch ohne Detail-Seite)
+  ...EL.map(e=>({l:e.n,s:e.s+' · Z='+e.z+' · '+e.g,c:'Element',ico:'⚛️',a:()=>{PSE_SEL=e;zoomTo('pse');}})),
+  // Wiki-Artikel
+  ...Object.entries(WIKI).map(([k,v])=>({l:v.t,s:v.desc||'',c:'Wiki',ico:'📖',a:()=>{WIKI_KEY=k;zoomTo('wiki');}})),
+  // Moleküle aus Bibliothek
+  ...MOLECULES.map(m=>({l:m.name,s:m.formula+' · '+m.cat,c:'Molekül',ico:'🧬',a:()=>{zoomTo('struc');setTimeout(()=>loadMol(m),600);}})),
 ];
 let _srchActs = [];
+
 function doSearch(q) {
   const dd = document.getElementById('srch-dd');
-  if (!q.trim()) { dd.style.display='none'; return; }
-  const ql = q.toLowerCase();
-  const res = SRCH_IDX.filter(d=>d.l.toLowerCase().includes(ql)||d.s.toLowerCase().includes(ql)).slice(0,8);
+  const ql = q.trim().toLowerCase();
+  // On empty focus: show modules as default suggestions
+  if (!ql) {
+    const mods = SRCH_IDX.filter(d=>d.c==='Modul');
+    _srchActs = mods;
+    dd.innerHTML = '<div style="padding:6px 12px;font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.06em">Module</div>' +
+      mods.map((r,i)=>`<div class="srch-item" onmousedown="pickSrch(${i})">
+        <span style="font-size:15px">${r.ico}</span>
+        <div><div style="font-weight:500">${r.l}</div><div style="font-size:10.5px;color:var(--t3)">${r.s}</div></div>
+      </div>`).join('');
+    dd.style.display = 'block';
+    return;
+  }
+  const res = SRCH_IDX.filter(d=>
+    d.l.toLowerCase().includes(ql) ||
+    d.s.toLowerCase().includes(ql) ||
+    (d.c==='Element' && d.l.toLowerCase().startsWith(ql))
+  ).slice(0,10);
   _srchActs = res;
-  if (!res.length) { dd.style.display='none'; return; }
-  dd.innerHTML = res.map((r,i)=>`<div class="srch-item" onmousedown="pickSrch(${i})">
-    <span style="font-size:14px">${r.c==='Element'?'🔬':r.c==='Wiki'?'📚':'🔧'}</span>
-    <div><div>${r.l}</div><div style="font-size:10.5px;color:var(--t3)">${r.s}</div></div>
-    <span style="margin-left:auto;font-size:10px;background:var(--bg3);color:var(--t3);padding:2px 7px;border-radius:8px">${r.c}</span>
-  </div>`).join('');
+  if (!res.length) {
+    dd.innerHTML = '<div style="padding:10px 12px;font-size:12px;color:var(--t3)">Keine Ergebnisse für „'+q+'"</div>';
+    dd.style.display = 'block';
+    return;
+  }
+  // Group by category
+  const groups = {};
+  res.forEach(r=>{ if(!groups[r.c]) groups[r.c]=[]; groups[r.c].push(r); });
+  dd.innerHTML = Object.entries(groups).map(([cat,items])=>
+    `<div style="padding:5px 12px 2px;font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.06em">${cat}</div>`+
+    items.map(r=>{
+      const i=_srchActs.indexOf(r);
+      // Highlight match
+      const hl=r.l.replace(new RegExp('('+ql+')','gi'),'<mark style="background:var(--acl);color:var(--acc);border-radius:2px">$1</mark>');
+      return `<div class="srch-item" onmousedown="pickSrch(${i})">
+        <span style="font-size:15px">${r.ico}</span>
+        <div><div>${hl}</div><div style="font-size:10.5px;color:var(--t3)">${r.s}</div></div>
+        <span style="margin-left:auto;font-size:10px;background:var(--bg3);color:var(--t3);padding:2px 7px;border-radius:8px;flex-shrink:0">${r.c}</span>
+      </div>`;
+    }).join('')
+  ).join('');
   dd.style.display = 'block';
 }
 function pickSrch(i) { if(_srchActs[i]){_srchActs[i].a();document.getElementById('srch').value='';hideDd();} }
@@ -1088,52 +1220,77 @@ function renderLearn() {
 /* ═══ STRUKTURZEICHNER ═══ */
 function renderStruc() {
   const cats=[...new Set(MOLECULES.map(m=>m.cat))];
-  const molList=cats.map(cat=>`<div class="mol-group-lbl">${cat}</div>${MOLECULES.filter(m=>m.cat===cat).map(m=>`<button class="mol-btn" onclick='loadMol(${JSON.stringify(m)})'>${m.name}<span>${m.formula}</span></button>`).join('')}`).join('');
-  return `<div class="page-hdr"><h1>✏️ Strukturzeichner</h1><p>Zeichne Moleküle auf der Leinwand oder lade ein Preset aus der Bibliothek.</p></div>
-  <div class="struc-wrap" style="height:460px">
-  <div class="struc-left">
-    <div class="struc-panel-hd">Werkzeuge</div>
-    <div class="tool-grid">
-      <button class="tbtn on" id="tbtn-C"  onclick="sTool('C')"><div class="atom-pip" style="background:#546E7A"></div>C</button>
-      <button class="tbtn" id="tbtn-H"  onclick="sTool('H')"><div class="atom-pip" style="background:#1E88E5"></div>H</button>
-      <button class="tbtn" id="tbtn-O"  onclick="sTool('O')"><div class="atom-pip" style="background:#E53935"></div>O</button>
-      <button class="tbtn" id="tbtn-N"  onclick="sTool('N')"><div class="atom-pip" style="background:#43A047"></div>N</button>
-      <button class="tbtn" id="tbtn-S"  onclick="sTool('S')"><div class="atom-pip" style="background:#FB8C00"></div>S</button>
-      <button class="tbtn" id="tbtn-Cl" onclick="sTool('Cl')"><div class="atom-pip" style="background:#00897B"></div>Cl</button>
-      <button class="tbtn" id="tbtn-b1" onclick="sTool('b1')"><i class="ti ti-minus" style="font-size:12px"></i>Einfach</button>
-      <button class="tbtn" id="tbtn-b2" onclick="sTool('b2')"><i class="ti ti-equal" style="font-size:12px"></i>Doppel</button>
-      <button class="tbtn" id="tbtn-b3" onclick="sTool('b3')"><i class="ti ti-menu-2" style="font-size:12px"></i>Dreifach</button>
-      <button class="tbtn" id="tbtn-move" onclick="sTool('move')"><i class="ti ti-hand-move" style="font-size:12px"></i>Bewegen</button>
-      <button class="tbtn" id="tbtn-erase" onclick="sTool('erase')"><i class="ti ti-eraser" style="font-size:12px"></i>Löschen</button>
+  const molList=cats.map(cat=>`
+    <div class="sl-cat">${cat}</div>
+    ${MOLECULES.filter(m=>m.cat===cat).map(m=>`
+      <button class="sl-mol" onclick='loadMol(${JSON.stringify(m)})'>
+        <span class="sl-mol-ico">⬡</span>
+        <span class="sl-mol-name">${m.name}<br><span class="sl-mol-f">${m.formula}</span></span>
+      </button>`).join('')}`).join('');
+
+  return `<div class="page-hdr" style="margin-bottom:12px"><h1>✏️ Strukturzeichner</h1><p>Zeichne Moleküle auf der Leinwand oder lade ein Preset aus der Bibliothek.</p></div>
+  <div class="snew-wrap">
+
+    <!-- LINKE SPALTE: Werkzeuge + Bibliothek -->
+    <div class="snew-left">
+      <div class="snew-sec-hd">WERKZEUGE</div>
+      <div class="snew-atoms">
+        <button class="snew-atom on" id="tbtn-C"  onclick="sTool('C')"  style="--ac:#546E7A"><span class="sa-pip" style="background:#546E7A"></span><div><div class="sa-sym">C</div><div class="sa-name">Kohlenstoff</div></div></button>
+        <button class="snew-atom"    id="tbtn-H"  onclick="sTool('H')"  style="--ac:#1E88E5"><span class="sa-pip" style="background:#1E88E5"></span><div><div class="sa-sym">H</div><div class="sa-name">Wasserstoff</div></div></button>
+        <button class="snew-atom"    id="tbtn-O"  onclick="sTool('O')"  style="--ac:#E53935"><span class="sa-pip" style="background:#E53935"></span><div><div class="sa-sym">O</div><div class="sa-name">Sauerstoff</div></div></button>
+        <button class="snew-atom"    id="tbtn-N"  onclick="sTool('N')"  style="--ac:#43A047"><span class="sa-pip" style="background:#43A047"></span><div><div class="sa-sym">N</div><div class="sa-name">Stickstoff</div></div></button>
+        <button class="snew-atom"    id="tbtn-S"  onclick="sTool('S')"  style="--ac:#FB8C00"><span class="sa-pip" style="background:#FB8C00"></span><div><div class="sa-sym">S</div><div class="sa-name">Schwefel</div></div></button>
+        <button class="snew-atom"    id="tbtn-Cl" onclick="sTool('Cl')" style="--ac:#00897B"><span class="sa-pip" style="background:#00897B"></span><div><div class="sa-sym">Cl</div><div class="sa-name">Chlor</div></div></button>
+      </div>
+      <div class="snew-bonds">
+        <button class="snew-bond" id="tbtn-b1"   onclick="sTool('b1')">─ Einfach</button>
+        <button class="snew-bond" id="tbtn-b2"   onclick="sTool('b2')">═ Doppel</button>
+        <button class="snew-bond" id="tbtn-b3"   onclick="sTool('b3')">≡ Dreifach</button>
+        <button class="snew-bond" id="tbtn-move" onclick="sTool('move')">✥ Bewegen</button>
+        <button class="snew-bond danger" id="tbtn-erase" onclick="sTool('erase')">✕ Löschen</button>
+      </div>
+
+      <div class="snew-sec-hd" style="margin-top:12px">BIBLIOTHEK</div>
+      <div class="snew-lib">${molList}</div>
+      <button class="snew-libadd">+ Eigene Bibliothek</button>
     </div>
-    <div class="struc-panel-hd" style="margin-top:6px">Bibliothek</div>
-    <div class="struc-scroll">${molList}</div>
-  </div>
-  <div class="struc-center">
-    <div class="struc-topbar">
-      <button class="act-btn" onclick="sUndo()"><i class="ti ti-arrow-back-up"></i></button>
-      <button class="act-btn${_S.grid?' on':''}" id="sbtn-grid" onclick="sGrid()"><i class="ti ti-grid-dots"></i></button>
-      <button class="act-btn${_S.snap?' on':''}" id="sbtn-snap" onclick="sSnap()"><i class="ti ti-magnet"></i></button>
-      <button class="act-btn" onclick="sAutoH()"><i class="ti ti-plus"></i> H</button>
-      <button class="act-btn" onclick="sCenter()"><i class="ti ti-focus-centered"></i></button>
-      <button class="act-btn danger" onclick="sClear()"><i class="ti ti-trash"></i></button>
-      <span style="margin-left:auto;font-size:10.5px;color:var(--t3);background:var(--bg3);padding:3px 8px;border-radius:7px" id="s-mode">C-Atom</span>
+
+    <!-- MITTLERE SPALTE: Leinwand -->
+    <div class="snew-center">
+      <div class="snew-toolbar">
+        <button class="snew-tbtn${_S.grid?' on':''}" id="sbtn-grid" onclick="sGrid()" title="Raster">⊞</button>
+        <button class="snew-tbtn${_S.snap?' on':''}" id="sbtn-snap" onclick="sSnap()" title="Einrasten">⊕</button>
+        <button class="snew-tbtn" onclick="sAutoH()" title="H-Atome ergänzen">H⁺</button>
+        <button class="snew-tbtn" onclick="sCenter()" title="Zentrieren">⊙</button>
+        <button class="snew-tbtn" onclick="sUndo()" title="Rückgängig">↩</button>
+        <button class="snew-tbtn danger" onclick="sClear()" title="Alles löschen">🗑</button>
+        <span class="snew-mode-badge" id="s-mode">C-Atom</span>
+      </div>
+      <div class="snew-canvas-wrap"><canvas class="mol-canvas" id="mol-cv"></canvas></div>
+      <div class="snew-tip" id="s-fbar">💡 Tipp: Klicke auf ein Atom, um es zu verändern. Ziehe, um die Ansicht zu bewegen.</div>
+      <div class="snew-loadbar">
+        <input id="s-fi" placeholder="Molekül: Ethanol, Benzol, CH4 …" autocomplete="off" onkeydown="if(event.key==='Enter')sLoad()">
+        <button onclick="sLoad()">Laden</button>
+      </div>
+      <div class="snew-footer-chips">
+        <div class="snew-chip">🛡 Einfach zu bedienen</div>
+        <div class="snew-chip">📋 Keine Registrierung</div>
+        <div class="snew-chip">💾 Export möglich</div>
+        <div class="snew-chip">🆓 100% Kostenlos</div>
+      </div>
     </div>
-    <div class="cvs-wrap"><canvas class="mol-canvas" id="mol-cv"></canvas></div>
-    <div class="fbar-info" id="s-fbar">Werkzeug wählen und auf Leinwand klicken</div>
-    <div class="struc-fbar">
-      <input id="s-fi" placeholder="Molekül: Ethanol, Benzol, CH4 …" autocomplete="off" onkeydown="if(event.key==='Enter')sLoad()">
-      <button onclick="sLoad()">Laden</button>
+
+    <!-- RECHTE SPALTE: Smart Suggestions + Molekül-Info -->
+    <div class="snew-right">
+      <div class="snew-sec-hd">SMART SUGGESTIONS</div>
+      <div id="s-suggest" class="snew-suggestions"></div>
+
+      <div class="snew-sec-hd" style="margin-top:14px">MOLEKÜL-INFO</div>
+      <div id="s-info" class="snew-molinfo">
+        <div style="font-size:12px;color:var(--t3);padding:8px 0">Noch kein Molekül gezeichnet.</div>
+      </div>
     </div>
-  </div>
-  <div class="struc-right">
-    <div class="struc-panel-hd">Smart Suggestions</div>
-    <div class="struc-scroll" id="s-suggest"><div class="suggest-card hl"><div class="sc-hd"><div class="sc-ico">⚗</div><div class="sc-title">Starte mit C-Atom</div></div><div class="sc-desc">Kohlenstoff ist das Grundgerüst.</div></div></div>
-    <div style="padding:8px;border-top:0.5px solid var(--bdr)">
-      <div class="struc-panel-hd" style="padding:0 4px 5px">Molekül-Info</div>
-      <div id="s-info"></div>
-    </div>
-  </div>
+
   </div>`;
 }
 
@@ -1170,7 +1327,14 @@ function sSnapG(x,y){if(!_S.snap)return{x,y};const g=26;return{x:Math.round(x/g)
 function sSnapA(x,y){if(!_S.snap)return null;const BL=52;for(const a of _S.atoms){const d=Math.hypot(a.x-x,a.y-y);if(d>2&&d<BL*1.4){const ang=Math.atan2(y-a.y,x-a.x);return{x:a.x+BL*Math.cos(ang),y:a.y+BL*Math.sin(ang)};}}return null;}
 function sSaveU(){_S.undoStack.push(JSON.stringify({atoms:_S.atoms.map((a,i)=>({...a})),bonds:_S.bonds.map(b=>({order:b.order,ai:_S.atoms.indexOf(b.a),bi:_S.atoms.indexOf(b.b)}))}))}
 function sUndo(){if(!_S.undoStack.length)return;const sn=JSON.parse(_S.undoStack.pop());const na=sn.atoms.map(a=>({...a}));_S.atoms=na;_S.bonds=sn.bonds.map(b=>({...b,a:na[b.ai],b:na[b.bi]}));_S.sel=null;sDraw();sSuggest();}
-function sTool(t){_S.tool=t;_S.sel=null;document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('on'));const tb=document.getElementById('tbtn-'+t);if(tb)tb.classList.add('on');const cv=document.getElementById('mol-cv');if(cv)cv.style.cursor=t==='move'?'grab':t==='erase'?'not-allowed':'crosshair';const mb=document.getElementById('s-mode');if(mb)mb.textContent={C:'C-Atom',H:'H-Atom',O:'O-Atom',N:'N-Atom',S:'S-Atom',Cl:'Cl-Atom',b1:'Einfachbindung',b2:'Doppelbindung',b3:'Dreifachbindung',move:'Bewegen',erase:'Löschen'}[t]||t;sDraw();}
+function sTool(t){_S.tool=t;_S.sel=null;
+  // Clear all tool buttons (both old and new classes)
+  document.querySelectorAll('.tbtn,.snew-atom,.snew-bond').forEach(b=>b.classList.remove('on'));
+  const tb=document.getElementById('tbtn-'+t);if(tb)tb.classList.add('on');
+  const cv=document.getElementById('mol-cv');if(cv)cv.style.cursor=t==='move'?'grab':t==='erase'?'not-allowed':'crosshair';
+  const mb=document.getElementById('s-mode');if(mb)mb.textContent={C:'C-Atom',H:'H-Atom',O:'O-Atom',N:'N-Atom',S:'S-Atom',Cl:'Cl-Atom',b1:'Einfachbindung',b2:'Doppelbindung',b3:'Dreifachbindung',move:'Bewegen',erase:'Löschen'}[t]||t;
+  sDraw();
+}
 function sGrid(){_S.grid=!_S.grid;document.getElementById('sbtn-grid')?.classList.toggle('on',_S.grid);sDraw();}
 function sSnap(){_S.snap=!_S.snap;document.getElementById('sbtn-snap')?.classList.toggle('on',_S.snap);}
 function sClear(){sSaveU();_S.atoms=[];_S.bonds=[];_S.sel=null;sDraw();sSuggest();}
@@ -1190,7 +1354,18 @@ function sDraw(){
   const order=['C','H','N','O','S','Cl'];const f=order.filter(e=>ct[e]).map(e=>`${e}${ct[e]>1?ct[e]:''}`).join('')+Object.keys(ct).filter(e=>!order.includes(e)).map(e=>`${e}${ct[e]>1?ct[e]:''}`).join('');
   const mw=Object.entries(ct).reduce((s,[el,n])=>s+n*({'H':1,'C':12,'O':16,'N':14,'S':32,'Cl':35.5}[el]||10),0);
   const fb=document.getElementById('s-fbar');if(fb)fb.innerHTML=`<strong style="font-family:monospace">${f||'–'}</strong> &nbsp;<span style="color:var(--t3)">${_S.atoms.length} Atome · ${_S.bonds.length} Bindungen · M≈${mw.toFixed(1)} g/mol</span>`;
-  const si=document.getElementById('s-info');if(si&&_S.atoms.length){si.innerHTML=['C','H','O','N','S'].map(e=>`<div class="mol-info-row"><span class="mol-info-l">${e}</span><span class="mol-info-v">${ct[e]||0}</span></div>`).join('')+`<div class="mol-info-row"><span class="mol-info-l">Mol.masse</span><span class="mol-info-v">${mw.toFixed(1)}</span></div>`;}
+  const si=document.getElementById('s-info');
+  if(si&&_S.atoms.length){
+    const molName=f||'Unbekannt';
+    si.innerHTML=`<div style="font-size:13px;font-weight:500;color:var(--t1);margin-bottom:8px">${molName}</div>`+
+      ['C','H','O','N','S','Cl'].filter(e=>ct[e]).map(e=>`<div class="snew-info-row"><span class="snew-info-lbl">${e}-Atome</span><span class="snew-info-val">${ct[e]}</span></div>`).join('')+
+      `<div class="snew-info-row"><span class="snew-info-lbl">Atome gesamt</span><span class="snew-info-val">${_S.atoms.length}</span></div>`+
+      `<div class="snew-info-row"><span class="snew-info-lbl">Bindungen</span><span class="snew-info-val">${_S.bonds.length}</span></div>`+
+      `<div class="snew-info-row"><span class="snew-info-lbl">Mol.masse</span><span class="snew-info-val">${mw.toFixed(1)} g/mol</span></div>`+
+      `<div class="snew-info-row"><span class="snew-info-lbl">Summenformel</span><span class="snew-info-val">${f||'–'}</span></div>`;
+  } else if(si) {
+    si.innerHTML='<div style="font-size:12px;color:var(--t3);padding:8px 0">Noch kein Molekül gezeichnet.</div>';
+  }
 }
 const _SG={empty:[{i:'⚗',t:'Starte mit C',d:'C ist das Grundgerüst organischer Moleküle.',hl:true,a:null}],singleC:[{i:'➕',t:'Kette verlängern',d:'Weiteres C → Ethan',a:'loadMol(MOLECULES.find(m=>m.name==="Ethan"))'},{i:'🔴',t:'O anfügen',d:'→ Alkohol/Keton',a:null},{i:'🔵',t:'H ergänzen',d:'Methyl vervollständigen',a:'sAutoH()'}],twoC:[{i:'➕',t:'H ergänzen',d:'→ Ethan vollständig',a:'sAutoH()'},{i:'⬡',t:'Doppelbindung',d:'C=C → Ethen',a:"sTool('b2')"}],threeC:[{i:'➕',t:'H ergänzen',d:'→ Propan',a:'sAutoH()'},{i:'🔴',t:'C=O',d:'→ Aldehyd/Säure',a:"sTool('b2')"}],hasO:[{i:'🔵',t:'OH vervollst.',d:'O+H → OH-Gruppe',a:"sTool('H')"},{i:'🔴',t:'C=O',d:'Carbonylgruppe',a:"sTool('b2')"}],hasDouble:[{i:'🔵',t:'Addition möglich',d:'Doppelbindungen sind reaktiv',a:null},{i:'⬡',t:'Benzol laden',d:'Aromatischer Ring',a:"loadMol(MOLECULES.find(m=>m.name==='Benzol'))"}],complete:[{i:'✅',t:'Valenz gesättigt',d:'Alle Atome haben max. Valenz.',hl:true,a:null}]};
 function sSuggest(){const sp=document.getElementById('s-suggest');if(!sp)return;let key='empty';if(_S.atoms.length){const cs=_S.atoms.filter(a=>a.s==='C').length;const hasO=_S.atoms.some(a=>a.s==='O');const hasD=_S.bonds.some(b=>b.order>=2);const allSat=_S.atoms.every(a=>{const mv=MAX_VAL[a.s];if(!mv)return true;return _S.bonds.filter(b=>b.a===a||b.b===a).reduce((s,b)=>s+b.order,0)>=mv;});if(allSat&&_S.atoms.length>4)key='complete';else if(hasD)key='hasDouble';else if(hasO)key='hasO';else if(cs>=3)key='threeC';else if(cs===2)key='twoC';else if(cs===1)key='singleC';}sp.innerHTML=(_SG[key]||[]).map(s=>`<div class="suggest-card${s.hl?' hl':''}"${s.a?` onclick="${s.a}"`:''}><div class="sc-hd"><div class="sc-ico">${s.i}</div><div class="sc-title">${s.t}</div></div><div class="sc-desc">${s.d}</div>${s.a?'<div style="font-size:10.5px;color:var(--acc);margin-top:4px">↗ Anwenden</div>':''}</div>`).join('');}
@@ -1243,8 +1418,8 @@ setTimeout(()=>{const h=document.getElementById('zoom-hint');if(h)h.classList.ad
 // ════════════════════════════════════════════════════════════════
 let _scrollY = 0, _scrollTarget = 0, _scrollRaf = null;
 let _transitioning = false, _highlightIdx = -1, _edgeAccum = 0;
-const MODULES_ORDER = ['pse','wiki','learn','struc','rxn','quiz'];
-const MODULE_NAMES = ['Periodensystem','Chemie-Wiki','Lernbereich','Strukturzeichner','Reaktionsrechner','Quiz'];
+const MODULES_ORDER = ['pse','wiki','learn','struc','rxn','quiz','info'];
+const MODULE_NAMES = ['Periodensystem','Chemie-Wiki','Lernbereich','Strukturzeichner','Reaktionsrechner','Quiz','Info & Impressum'];
 
 function _goNext() {
   if (_transitioning) return;
@@ -1414,30 +1589,75 @@ document.addEventListener('click',function(e){ var p=document.getElementById('xp
 // ════════════════════════════════════════════════════════════════
 // WRAPPERS: zoomTo / zoomHome / renderPage / quizAns
 // ════════════════════════════════════════════════════════════════
-var _oz=zoomTo, _oh=zoomHome, _op=renderPage, _oqa=quizAns;
+var _op=renderPage, _oqa=quizAns;
 
-zoomTo=function(page){
-  _oz(page);
-  _navDots(page);
-  _trackVisit(page);
-  var idx=MODULES_ORDER.indexOf(page);
-  var prev=idx===0?'Startseite':MODULE_NAMES[idx-1];
-  var next=idx===MODULES_ORDER.length-1?'Startseite':MODULE_NAMES[idx+1];
-  var hint=document.getElementById('zoom-hint');
-  if(hint){ hint.textContent='\u2191 '+prev+' \u00b7 Scrollen \u00b7 '+next+' \u2193'; hint.classList.remove('hidden'); clearTimeout(hint._ht); hint._ht=setTimeout(function(){ hint.classList.add('hidden'); },4000); }
-};
-
-zoomHome=function(){
-  _oh(); _resetHS(); _navDots('home'); _transitioning=false; _edgeAccum=0;
-};
+// XP + nav hints are called directly from inside zoomTo above
+// Just patch renderPage and quizAns here:
 
 renderPage=function(p){
+  if(p==='info') return renderInfo();
   var withFact=['wiki','learn','rxn','quiz'];
   var fact=withFact.includes(p)?_renderFact():'';
-  var yr=new Date().getFullYear();
-  var footer='<footer class="site-footer"><div class="footer-inner"><div><div class="footer-brand"><div class="footer-brand-ico">C</div>Chem<span style="color:var(--acc)">Lab</span></div><div class="footer-sub">Deine interaktive Chemie-Lernplattform</div></div><div class="footer-col"><h4>Module</h4><button class="footer-link" onclick="zoomTo(\'pse\')">Periodensystem</button><button class="footer-link" onclick="zoomTo(\'wiki\')">Chemie-Wiki</button><button class="footer-link" onclick="zoomTo(\'learn\')">Lernbereich</button><button class="footer-link" onclick="zoomTo(\'struc\')">Strukturzeichner</button><button class="footer-link" onclick="zoomTo(\'rxn\')">Reaktionsrechner</button><button class="footer-link" onclick="zoomTo(\'quiz\')">Quiz</button></div><div class="footer-col"><h4>Info</h4><button class="footer-link" onclick="alert(\'ChemLab \u00b7 Schulprojekt\')">Impressum</button><button class="footer-link" onclick="alert(\'Kontakt: chemlab@schule.de\')">Kontakt</button><button class="footer-link" onclick="toggleDark()">Dunkelmodus</button></div></div><div class="footer-bottom"><div class="footer-copy">\u00a9 '+yr+' ChemLab</div><div class="footer-chips"><div class="footer-chip">118 Elemente</div><div class="footer-chip">97 Quizfragen</div></div></div></footer>';
-  return fact+_op(p)+footer;
+  return fact+_op(p);
 };
+
+function renderInfo(){
+  var yr=new Date().getFullYear();
+  return '<div class="page-hdr"><h1>ℹ️ Info & Impressum</h1><p>Alles über ChemLab und Kontakt.</p></div>'+
+  '<div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:24px">'+
+
+  '<div class="wiki-card" style="padding:20px">'+
+  '<div style="font-size:22px;margin-bottom:10px">📄</div>'+
+  '<h3 style="margin-bottom:10px;font-size:15px">Impressum</h3>'+
+  '<div style="font-size:13px;color:var(--t2);line-height:1.9">'+
+  '<strong>Angaben gemäß § 5 TMG</strong><br>'+
+  'Martin Werner<br>'+
+  'Privates Schulprojekt<br>'+
+  'Nicht-kommerziell<br><br>'+
+  '<strong>Haftungshinweis</strong><br>'+
+  'Trotz sorgfältiger Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. '+
+  'Für den Inhalt verlinkter Seiten sind ausschließlich deren Betreiber verantwortlich.'+
+  '</div></div>'+
+
+  '<div class="wiki-card" style="padding:20px">'+
+  '<div style="font-size:22px;margin-bottom:10px">✉️</div>'+
+  '<h3 style="margin-bottom:10px;font-size:15px">Kontakt</h3>'+
+  '<div style="font-size:13px;color:var(--t2);line-height:1.9">'+
+  '<strong>E-Mail</strong><br>'+
+  '<a href="mailto:mango10@snafu.de" style="color:var(--acc);text-decoration:none">mango10@snafu.de</a><br><br>'+
+  '<strong>Erstellt von</strong><br>Martin Werner<br><br>'+
+  '<strong>Projekt</strong><br>ChemLab – Interaktive Chemie-Lernplattform'+
+  '</div></div>'+
+
+  '</div>'+
+
+  '<div class="wiki-card" style="padding:20px;margin-bottom:18px">'+
+  '<div style="font-size:22px;margin-bottom:10px">🧪</div>'+
+  '<h3 style="margin-bottom:10px;font-size:15px">Über ChemLab</h3>'+
+  '<div style="font-size:13px;color:var(--t2);line-height:1.8">'+
+  'ChemLab ist eine interaktive Chemie-Lernplattform, die als privates Schulprojekt entstanden ist. '+
+  'Sie bietet ein interaktives Periodensystem mit allen 118 Elementen, ein Chemie-Wiki, '+
+  'einen Strukturzeichner, einen Reaktionsrechner und ein Quiz mit 97 Fragen in 8 Kategorien.'+
+  '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px">'+
+  '<span class="footer-chip">118 Elemente</span>'+
+  '<span class="footer-chip">97 Quizfragen</span>'+
+  '<span class="footer-chip">8 Quiz-Kategorien</span>'+
+  '<span class="footer-chip">8 Module</span>'+
+  '</div></div></div>'+
+
+  '<div class="wiki-card" style="padding:20px">'+
+  '<div style="font-size:22px;margin-bottom:10px">🔗</div>'+
+  '<h3 style="margin-bottom:10px;font-size:15px">Schnellnavigation</h3>'+
+  '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px">'+
+  ['pse','wiki','learn','struc','rxn','quiz'].map(function(m){
+    var icons={pse:'🔬',wiki:'📚',learn:'🎓',struc:'✏️',rxn:'⚖️',quiz:'🧠'};
+    var names={pse:'Periodensystem',wiki:'Chemie-Wiki',learn:'Lernbereich',struc:'Strukturzeichner',rxn:'Reaktionsrechner',quiz:'Quiz'};
+    return '<button class="btn" style="width:100%;justify-content:flex-start;gap:8px" onclick="zoomTo(\''+m+'\')">'+icons[m]+' '+names[m]+'</button>';
+  }).join('')+
+  '</div></div>'+
+  '<div style="text-align:center;color:var(--t4);font-size:11px;margin-top:24px;padding-top:16px;border-top:0.5px solid var(--bdr)">'+
+  '© '+yr+' ChemLab · Martin Werner · Privates Schulprojekt</div>';
+}
 
 quizAns=function(idx){
   var q=QUIZ_Q[QZ.cat][QZ.q];
@@ -1451,15 +1671,16 @@ quizAns=function(idx){
 // CHEMIE-FAKT
 // ════════════════════════════════════════════════════════════════
 var FACTS=[
-  {t:'Gallium schmilzt bei 29,8\u00b0C und wird in der Hand fl\u00fcssig.',s:'Ga, Z=31'},
-  {t:'Graphen ist 200x st\u00e4rker als Stahl und fast transparent.',s:'C, Z=6'},
-  {t:'HF l\u00f6st Glas auf und wird in Kunststoffbeh\u00e4ltern gelagert.',s:'F, Z=9'},
-  {t:'Haber-Bosch ern\u00e4hrt ca. 50\u202f% der Weltbev\u00f6lkerung durch K\u00fcnstd\u00fcnger.',s:'N\u2082 + 3H\u2082 \u21cc 2NH\u2083'},
-  {t:'Wasserstoff macht ca. 75\u202f% der Baryonenmasse des Universums aus.',s:'H, Z=1'},
-  {t:'Osmium ist das dichteste Element: 22,59\u202fg/cm\u00b3.',s:'Os, Z=76'},
-  {t:'Diamant und Graphit bestehen aus denselben C-Atomen.',s:'C, Z=6 \u00b7 Allotrope'},
-  {t:'Ein Teelöffel Neutronensternmaterial w\u00fcrde ~1 Mrd. Tonnen wiegen.',s:'Kernphysik'},
+  {t:'Gallium (Ga, Z=31) schmilzt bereits bei 29,8\u00b0C \u2014 also schon in deiner Hand. Das liegt an der ungewöhnlichen Kristallstruktur: Gallium-Atome bilden Paare (Ga\u2082), die sich nur schwach anziehen. Faszinierend: Flüssiges Gallium benetzt Glas und sieht wie Quecksilber aus, ist aber ungiftig.',s:'Ga, Z=31 \u00b7 Gruppe 13 \u00b7 Schmp. 29,8\u00b0C'},
+  {t:'Graphen ist eine einzelne Lage Kohlenstoffatome im Honigwabenmuster. Es ist 200\u00d7 stärker als Stahl, leitet Elektrizität besser als Kupfer und ist fast komplett transparent. Entdeckt 2004 mit Tesafilm \u2014 dafür gab es 2010 den Nobelpreis.',s:'C, Z=6 \u00b7 sp\u00b2-Hybridisierung \u00b7 Nobelpreis 2010'},
+  {t:'Fluorwasserstoffsäure (HF) löst Glas auf, weil F\u207b-Ionen mit SiO\u2082 zu SiF\u2084 reagieren. Sie wird daher in Kunststoffbehältern gelagert. Trotz ihrer Wirkung ist HF chemisch gesehen eine schwache Säure (pKs = 3,17) \u2014 was sie aber nicht weniger gefährlich macht.',s:'HF \u00b7 pKs = 3,17 \u00b7 SiO\u2082 + 4HF \u2192 SiF\u2084 + 2H\u2082O'},
+  {t:'Das Haber-Bosch-Verfahren synthetisiert Ammoniak aus Stickstoff und Wasserstoff: N\u2082 + 3H\u2082 \u21cc 2NH\u2083. Der Katalysator ist Eisen bei 400\u2013500\u00b0C und 200\u202fbar. Ohne diesen Prozess wäre moderne Landwirtschaft unmöglich \u2014 er ernährt schätzungsweise 50\u202f% der Weltbevölkerung.',s:'N\u2082 + 3H\u2082 \u21cc 2NH\u2083 \u00b7 Fe-Katalysator \u00b7 400-500\u00b0C'},
+  {t:'Wasserstoff (H, Z=1) ist das häufigste Element im Universum \u2014 ca. 75\u202f% der Baryonenmasse. In Sternen fusionieren 4 Protonen zu einem Helium-Kern (Kernfusion), wobei enorme Energie frei wird: E=mc\u00b2. Unsere Sonne verbraucht dabei 600 Mio. Tonnen H pro Sekunde.',s:'H, Z=1 \u00b7 4\u00b9H \u2192 \u2074He + 2e\u207a + 2\u03bd + Energie'},
+  {t:'Osmium (Os, Z=76) ist das dichteste Element: 22,59\u202fg/cm\u00b3. Ein Würfel mit 10\u202fcm Kantenlänge würde 22,6\u202fkg wiegen. Der Grund ist die dichte Kugelpackung der schweren Atome im hexagonalen Kristallgitter. Zum Vergleich: Blei hat nur 11,3\u202fg/cm\u00b3.',s:'Os, Z=76 \u00b7 22,59 g/cm\u00b3 \u00b7 hcp-Kristallstruktur'},
+  {t:'Diamant und Graphit bestehen aus identischen C-Atomen (Z=6) \u2014 allein die Bindungsgeometrie macht den Unterschied. Im Diamant: sp\u00b3 (tetraedrisch, 3D-Netz) \u2192 hart. Im Graphit: sp\u00b2 (hexagonal, Schichten) \u2192 weich und elektrisch leitend. Beide sind Allotrope.',s:'C, Z=6 \u00b7 sp\u00b3 (Diamant) vs. sp\u00b2 (Graphit)'},
+  {t:'Helium (He, Z=2) bleibt als einziges Element unter Normaldruck auch beim absoluten Nullpunkt (0\u202fK = \u2212273,15\u202f\u00b0C) flüssig. Grund: Quantenmechanische Nullpunktsenergie verhindert das Einfrieren. Zum Verfestigen braucht man mindestens 25\u202fbar Druck.',s:'He, Z=2 \u00b7 Sdp. \u22124,2\u00b0C \u00b7 kein Festkörper bei Normaldruck'},
 ];
+
 var _fi=Math.floor((Date.now()/(1000*60*60*24*7))%FACTS.length);
 function _renderFact(){
   var f=FACTS[_fi];
